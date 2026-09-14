@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Work Hub — v1.1</title>
+<style>
+:root{
+  --bg:#f5f3f0;--card:#fff;--soft:#faf8f6;--ink:#181716;--muted:#85807b;
+  --line:#e6e1dc;--accent:#8e1f3f;--accent2:#f4e5ea;--dark:#1a1918;
+  --green:#47725a;--green-bg:#edf5ef;--yellow:#9a7421;--yellow-bg:#f7f0df;
+  --shadow:0 14px 40px rgba(25,22,20,.055);--r:18px;--sidebar:238px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+.app{min-height:100vh}
+.sidebar{position:fixed;z-index:20;left:0;top:0;bottom:0;width:var(--sidebar);background:#191817;color:#fff;padding:28px 15px}
+.logo{font-size:22px;font-weight:800;letter-spacing:-.8px;padding:0 12px 34px}.logo span{color:#b96783}
+.nav-group{margin-top:22px}.nav-label{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#716c68;padding:0 12px 8px}
+.nav button{display:block;width:100%;border:0;background:transparent;color:#aaa6a2;text-align:left;padding:11px 12px;border-radius:10px;margin:2px 0;font-size:14px}
+.nav button:hover,.nav button.active{background:#2b2927;color:#fff}.nav button.active{font-weight:700}
+.main{margin-left:var(--sidebar);padding:32px 38px 64px;max-width:1500px}
+.shell{max-width:1240px;margin:0 auto}
+.topbar{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;margin-bottom:28px}
+.eyebrow{font-size:11px;color:var(--muted);letter-spacing:.7px;text-transform:uppercase}
+h1{font-size:32px;line-height:1.05;letter-spacing:-1.4px;margin:7px 0 5px}
+.sub{font-size:13px;color:var(--muted)}
+.top-actions{display:flex;align-items:center;gap:10px}
+.avatar{width:40px;height:40px;border-radius:50%;background:#e1cbd3;color:#6d2943;display:grid;place-items:center;font-weight:800}
+.primary,.dark-btn,.ghost,.soft-btn{border-radius:11px;padding:11px 15px;border:1px solid var(--line);font-weight:650}
+.primary{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 8px 20px rgba(142,31,63,.16)}
+.dark-btn{background:var(--dark);border-color:var(--dark);color:#fff}.ghost,.soft-btn{background:#fff;color:var(--ink)}.soft-btn{background:var(--soft)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
+.pad{padding:22px}
+.page{display:none}.page.active{display:block}
+.page-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:20px}
+.span-12{grid-column:span 12}.span-8{grid-column:span 8}.span-7{grid-column:span 7}.span-6{grid-column:span 6}.span-5{grid-column:span 5}.span-4{grid-column:span 4}.span-3{grid-column:span 3}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:17px}
+.section-head h2,.section-head h3{margin:0;font-size:17px;letter-spacing:-.4px}.section-head p{margin:4px 0 0;color:var(--muted);font-size:12px}
+.link{border:0;background:none;color:var(--accent);font-size:12px;font-weight:700}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.home-kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.home-kpis .kpi{min-height:150px;display:flex;flex-direction:column;justify-content:flex-start}
+.kpi{padding:18px}.kpi small{font-size:11px;color:var(--muted)}.kpi strong{display:block;font-size:24px;letter-spacing:-.8px;margin-top:8px}.kpi span{display:block;font-size:11px;color:var(--muted);margin-top:5px}
+.badge{display:inline-flex;align-items:center;padding:5px 8px;border-radius:7px;background:var(--accent2);color:var(--accent);font-size:10px;font-weight:800}
+.status{display:inline-flex;padding:5px 8px;border-radius:7px;background:#f1efec;color:#706a65;font-size:10px;font-weight:650}.status.good{background:var(--green-bg);color:var(--green)}.status.warn{background:var(--yellow-bg);color:var(--yellow)}.status.hot{background:var(--accent2);color:var(--accent)}
+.progress{height:7px;background:#ebe8e4;border-radius:99px;overflow:hidden}.progress i{display:block;height:100%;background:var(--accent);border-radius:99px}
+.next{padding:26px}.next-top{display:flex;justify-content:space-between;align-items:center}.next h2{font-size:27px;letter-spacing:-1px;margin:28px 0 7px}.meta{font-size:12px;color:var(--muted)}
+.actions{display:flex;gap:9px;margin-top:22px}.progress-wrap{margin-top:25px}.progress-label{display:flex;justify-content:space-between;color:var(--muted);font-size:11px;margin-bottom:7px}.win{margin-top:20px;padding:15px;background:var(--soft);border-radius:12px}.win b{font-size:10px;letter-spacing:.5px}.win p{margin:5px 0 0;font-size:13px}
+.task-list{display:flex;flex-direction:column}.task{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}.task:last-child{border-bottom:0}.check{width:19px;height:19px;border:1.5px solid #bbb5af;border-radius:6px;background:#fff;flex:none}.task.done .check{background:var(--accent);border-color:var(--accent);position:relative}.task.done .check:after{content:"✓";color:#fff;position:absolute;left:4px;top:0;font-size:12px}.task.done .title{text-decoration:line-through;color:var(--muted)}.task-info{flex:1;min-width:0}.title{font-size:13px}.task .meta{margin-top:3px;font-size:10px}
+.timeline{display:grid;grid-template-columns:58px 1fr;gap:0}.time{font-size:10px;color:var(--muted);padding-top:13px;text-align:left}.slot{min-height:56px;border-left:1px solid #ddd8d3;padding:7px 0 7px 13px;position:relative}.slot:before{content:"";position:absolute;left:-4px;top:18px;width:7px;height:7px;background:#c8c2bc;border-radius:50%}.slot-card{background:var(--soft);border:1px solid var(--line);border-radius:11px;padding:10px 12px}.slot-card.focus-slot{background:var(--accent2);border-color:#e6cbd3}.slot-card b{font-size:12px}.slot-card span{display:block;font-size:10px;color:var(--muted);margin-top:3px}
+.table{width:100%}.tr{display:grid;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--line);font-size:12px}.tr:last-child{border-bottom:0}.th{font-size:10px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted)}
+.projects .tr{grid-template-columns:1.6fr .7fr .7fr .6fr}.tasks .tr{grid-template-columns:1.65fr .8fr .55fr .65fr .5fr}.clients .tr{grid-template-columns:1.3fr 1fr .6fr .65fr .65fr}.finance .tr{grid-template-columns:1.35fr .6fr .7fr .7fr}
+.project-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.project-card{padding:20px}.project-card h3{font-size:16px;margin:0}.project-card p{font-size:11px;color:var(--muted);margin:5px 0 0}.project-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:17px}.project-meta div{background:var(--soft);border-radius:10px;padding:9px}.project-meta small{font-size:9px;color:var(--muted);display:block}.project-meta b{font-size:11px;display:block;margin-top:3px}.project-card .progress{margin-top:16px}.project-actions{display:flex;gap:8px;margin-top:15px}.project-actions button{font-size:11px;padding:8px 10px;border-radius:9px;border:1px solid var(--line);background:#fff}.project-actions .accent{background:var(--accent);border-color:var(--accent);color:#fff}
+.board{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.board-col{background:#eeece9;border-radius:14px;padding:12px;min-height:410px}.board-head{display:flex;justify-content:space-between;font-size:11px;font-weight:750;margin-bottom:10px}.board-count{font-weight:500;color:var(--muted)}.lead{background:#fff;border:1px solid var(--line);border-radius:11px;padding:12px;margin-bottom:8px}.lead b{font-size:12px}.lead small{display:block;font-size:10px;color:var(--muted);margin-top:4px}.lead .tag{display:inline-block;margin-top:9px;padding:4px 6px;border-radius:6px;background:var(--accent2);color:var(--accent);font-size:9px}
+.client{display:flex;align-items:center;gap:12px}.client-avatar{width:36px;height:36px;border-radius:50%;background:#ead9df;color:#6b2942;display:grid;place-items:center;font-weight:800;flex:none}.money{font-weight:800;white-space:nowrap}
+.finance-main{padding:25px}.finance-main strong{display:block;font-size:35px;letter-spacing:-1.4px;margin:8px 0}.finance-main p{font-size:12px;color:var(--muted);margin:0 0 15px}.finance-box{padding:18px}.finance-box small{color:var(--muted);font-size:11px}.finance-box strong{display:block;font-size:22px;margin-top:7px}.finance-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.bars{height:170px;display:flex;align-items:flex-end;gap:12px}.bar-wrap{flex:1;text-align:center}.bar{height:var(--h);background:var(--accent);border-radius:6px 6px 0 0;min-height:5px}.bar-wrap span{font-size:10px;color:var(--muted);display:block;margin-top:7px}
+.case-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.case{overflow:hidden}.case-cover{height:145px;background:#e8e2dd;padding:15px;display:flex;align-items:flex-end;font-weight:800;font-size:13px}.case:nth-child(2) .case-cover{background:#ddd5cf}.case:nth-child(3) .case-cover{background:#ece7e2}.case-body{padding:16px}.case-body h3{font-size:14px;margin:0}.case-body p{font-size:11px;color:var(--muted);margin:5px 0 0}.case-foot{display:flex;justify-content:space-between;margin-top:14px;font-size:10px;color:var(--muted)}
+.resource-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.resource{padding:17px}.resource-icon{width:34px;height:34px;border-radius:9px;background:var(--accent2);color:var(--accent);display:grid;place-items:center;font-weight:800;margin-bottom:13px}.resource h3{font-size:13px;margin:0}.resource p{font-size:11px;color:var(--muted);line-height:1.45;margin:6px 0 0}
+.assistant-layout{display:grid;grid-template-columns:280px 1fr;min-height:610px}.chat-list{border-right:1px solid var(--line);padding:16px}.chat-list-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.chat-list h3{font-size:14px;margin:0}.chat{padding:12px;border-radius:11px;margin-bottom:4px;cursor:pointer}.chat.active,.chat:hover{background:var(--soft)}.chat b{font-size:12px}.chat small{display:block;color:var(--muted);font-size:10px;margin-top:4px}.chat-main{display:flex;flex-direction:column;min-width:0}.chat-head{padding:18px 20px;border-bottom:1px solid var(--line)}.chat-head b{font-size:14px}.chat-head span{display:block;font-size:10px;color:var(--muted);margin-top:4px}.messages{flex:1;padding:24px;display:flex;flex-direction:column;gap:12px;overflow:auto}.msg{max-width:76%;padding:13px 15px;border-radius:13px;font-size:12px;line-height:1.5}.msg.ai{background:var(--soft);align-self:flex-start}.msg.me{background:var(--accent);color:#fff;align-self:flex-end}.msg b{display:block;margin-bottom:5px}.composer{padding:14px 18px;border-top:1px solid var(--line);display:flex;gap:9px}.composer input{flex:1;border:1px solid var(--line);border-radius:11px;padding:11px 12px;outline:0}
+.ai-tools{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.tool{padding:16px}.tool h3{font-size:13px;margin:0}.tool p{font-size:10px;color:var(--muted);line-height:1.45;margin:5px 0 12px}
+.finder{padding:23px}.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.field label{display:block;font-size:10px;color:var(--muted);margin-bottom:6px}.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 11px;outline:0}.field textarea{min-height:85px;resize:vertical}.full{grid-column:1/-1}.finder-result{margin-top:18px;border-top:1px solid var(--line);padding-top:18px}.strategy{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.strategy-item{padding:14px;background:var(--soft);border-radius:11px}.strategy-item b{font-size:12px}.strategy-item p{font-size:11px;color:var(--muted);line-height:1.45;margin:5px 0}.micro{font-size:10px;color:var(--muted)}
+.generator{padding:23px}.generator-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}.template-preview{background:var(--soft);border:1px solid var(--line);border-radius:13px;padding:18px;min-height:300px}.template-preview h3{margin:0 0 12px;font-size:14px}.doc-line{height:8px;background:#e6e0db;border-radius:4px;margin:9px 0}.doc-line.short{width:55%}.doc-line.mid{width:78%}.doc-price{font-size:24px;font-weight:800;margin:20px 0}
+.price-output{padding:23px}.range{display:flex;justify-content:space-between;align-items:end}.range strong{font-size:35px;letter-spacing:-1px}.recommend{margin-top:17px;padding:16px;background:var(--accent2);border-radius:12px}.recommend b{font-size:12px}.recommend strong{font-size:23px;display:block;margin-top:5px;color:var(--accent)}
+.focus-card{padding:28px}.focus-layout{display:grid;grid-template-columns:1fr 360px;gap:28px;align-items:center}.focus-time{font-size:70px;letter-spacing:-4px;font-variant-numeric:tabular-nums;text-align:center}.focus-title{text-align:center;font-size:20px;font-weight:750;margin-top:6px}.focus-desc{text-align:center;color:var(--muted);font-size:12px;margin-top:6px}.focus-buttons{display:flex;justify-content:center;gap:9px;margin-top:20px}
+.difficult{padding:22px}.choices{display:flex;flex-wrap:wrap;gap:8px;margin-top:13px}.choices button{border:1px solid var(--line);background:#fff;border-radius:9px;padding:9px 11px;font-size:11px}.help-output{margin-top:15px;background:var(--soft);padding:15px;border-radius:11px;font-size:12px;line-height:1.55;display:none}
+.modal-bg{position:fixed;inset:0;background:rgba(18,16,15,.54);display:none;align-items:center;justify-content:center;padding:20px;z-index:50}.modal-bg.show{display:flex}.modal{width:min(650px,100%);background:#fff;border-radius:18px;padding:23px;box-shadow:0 30px 80px rgba(0,0,0,.25)}.modal-head{display:flex;justify-content:space-between;align-items:center}.modal h2{font-size:20px;margin:0}.close{border:0;background:#f0ede9;border-radius:9px;width:32px;height:32px}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}
+.toast{position:fixed;right:22px;bottom:22px;background:#1e1d1b;color:#fff;border-radius:11px;padding:12px 15px;font-size:12px;display:none;z-index:70}
+@media(max-width:1050px){.main{padding:26px 24px}.project-grid,.case-grid,.resource-grid{grid-template-columns:1fr 1fr}.assistant-layout{grid-template-columns:230px 1fr}.focus-layout{grid-template-columns:1fr}.ai-tools{grid-template-columns:1fr 1fr}}
+@media(max-width:820px){:root{--sidebar:72px}.sidebar{padding:22px 10px}.logo{font-size:0;padding-left:12px}.logo:after{content:"WH";font-size:18px}.nav-label{display:none}.nav button{font-size:0;text-align:center}.nav button:before{content:"•";font-size:18px}.main{padding:22px 16px}.page-grid{grid-template-columns:1fr}.span-12,.span-8,.span-7,.span-6,.span-5,.span-4,.span-3{grid-column:1}.kpis{grid-template-columns:1fr 1fr}.project-grid,.case-grid,.resource-grid,.board{grid-template-columns:1fr}.board-col{min-height:0}.assistant-layout{grid-template-columns:1fr}.chat-list{border-right:0;border-bottom:1px solid var(--line);display:flex;gap:5px;overflow:auto}.chat{min-width:190px}.generator-grid,.strategy{grid-template-columns:1fr}.table{overflow:auto}.tr{min-width:680px}}
+@media(max-width:520px){.home-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.home-kpis .kpi{min-height:125px}.topbar{flex-direction:column}.top-actions{width:100%}.top-actions .ghost{display:none}.kpis{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.full{grid-column:auto}.focus-time{font-size:52px}.next h2{font-size:23px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div class="logo">Work <span>Hub</span></div>
+  <nav class="nav">
+    <div class="nav-group"><div class="nav-label">Работа</div>
+      <button class="active" data-page="home">⌂ &nbsp; Главная</button>
+      <button data-page="today">◷ &nbsp; Сегодня</button>
+      <button data-page="projects">▣ &nbsp; Проекты</button>
+      <button data-page="tasks">✓ &nbsp; Задачи</button>
+      <button data-page="focus">◉ &nbsp; Фокус</button>
+    </div>
+    <div class="nav-group"><div class="nav-label">Бизнес</div>
+      <button data-page="clients">◌ &nbsp; Клиенты</button>
+      <button data-page="leads">↗ &nbsp; Лиды</button>
+      <button data-page="finance">₽ &nbsp; Финансы</button>
+    </div>
+    <div class="nav-group"><div class="nav-label">Развитие</div>
+      <button data-page="portfolio">◇ &nbsp; Портфолио</button>
+      <button data-page="library">⌁ &nbsp; Библиотека</button>
+    </div>
+    <div class="nav-group"><div class="nav-label">ИИ</div>
+      <button data-page="assistant">✦ &nbsp; Помощник</button>
+    </div>
+  </nav>
+</aside>
+
+<main class="main"><div class="shell">
+<header class="topbar">
+  <div><div class="eyebrow" id="topEyebrow"></div><h1 id="pageTitle">Доброе утро, Эля.</h1><div class="sub" id="pageSub">Не нужно думать обо всей работе. Work Hub уже выбрал следующий шаг.</div></div>
+  <div class="top-actions"><button class="ghost" onclick="openTaskModal()">＋ Новая задача</button><div class="avatar">Э</div></div>
+</header>
+
+<!-- HOME -->
+<section class="page active" id="home">
+<div class="page-grid">
+  <section class="card next span-8">
+    <div class="next-top"><span class="badge">СЛЕДУЮЩЕЕ ДЕЙСТВИЕ</span><span class="eyebrow">Работа</span></div>
+    <h2 id="nextTask">Собрать первый экран сайта</h2><div class="meta">Проект: Сайт эксперта Анны · Дизайн</div>
+    <div class="actions"><button class="dark-btn" onclick="openFocus()">Начать фокус</button><button class="ghost" onclick="finishNext()">Готово</button></div>
+    <div class="progress-wrap"><div class="progress-label"><span>Прогресс проекта</span><b>68%</b></div><div class="progress"><i style="width:68%"></i></div></div>
+    <div class="win"><b>УСЛОВИЕ УСПЕШНОГО ДНЯ</b><p>Закончить первый экран и отправить его клиенту.</p></div>
+  </section>
+  <div class="kpis home-kpis span-4">
+    <div class="card kpi"><small>Фокус сегодня</small><strong>2ч 34м</strong><span>рабочего времени</span></div>
+    <div class="card kpi"><small>Заработано</small><strong>₽82 000</strong><span>за месяц</span></div>
+    <div class="card kpi"><small>Активных проектов</small><strong>3</strong><span>в работе</span></div>
+    <div class="card kpi"><small>До цели месяца</small><strong>₽168 000</strong><span>осталось</span></div>
+  </div>
+
+  <section class="card pad span-7"><div class="section-head"><div><h3>План дня</h3><p>Только то, что запланировано на сегодня.</p></div><button class="link" onclick="go('today')">Настроить →</button></div>
+    <div class="timeline">
+      <div class="time">10:00</div><div class="slot"><div class="slot-card"><b>Разбор входящих</b><span>15 минут · Администрирование</span></div></div>
+      <div class="time">10:30</div><div class="slot"><div class="slot-card focus-slot"><b>Собрать первый экран</b><span>90 минут · Сайт эксперта Анны</span></div></div>
+      <div class="time">12:00</div><div class="slot"><div class="slot-card"><b>Перерыв</b><span>30 минут</span></div></div>
+      <div class="time">12:30</div><div class="slot"><div class="slot-card"><b>Отправить дизайн клиенту</b><span>20 минут · Сайт эксперта Анны</span></div></div>
+      <div class="time">13:00</div><div class="slot"><div class="slot-card"><b>Обед</b><span>60 минут</span></div></div>
+    </div>
+  </section>
+  <section class="card pad span-5"><div class="section-head"><h3>Рабочие задачи</h3><button class="link" onclick="go('tasks')">Все →</button></div>
+    <div class="task-list">
+      <div class="task" id="ht1"><button class="check" onclick="toggleTask('ht1')"></button><div class="task-info"><div class="title">Собрать первый экран сайта</div><div class="meta">Сайт эксперта Анны</div></div><span class="status hot">Высокий</span></div>
+      <div class="task" id="ht2"><button class="check" onclick="toggleTask('ht2')"></button><div class="task-info"><div class="title">Отправить дизайн клиенту</div><div class="meta">Сегодня · до 18:00</div></div><span class="status warn">Важно</span></div>
+      <div class="task" id="ht3"><button class="check" onclick="toggleTask('ht3')"></button><div class="task-info"><div class="title">Подготовить 3 лида</div><div class="meta">Продажи</div></div><span class="status">Обычный</span></div>
+    </div>
+  </section>
+</div>
+</section>
+
+<!-- TODAY -->
+<section class="page" id="today"><div class="page-grid">
+  <div class="kpis span-12">
+    <div class="card kpi"><small>Запланировано</small><strong>3ч 35м</strong><span>5 рабочих блоков</span></div><div class="card kpi"><small>Фокус</small><strong>2ч 34м</strong><span>сегодня</span></div><div class="card kpi"><small>Дедлайны</small><strong>1</strong><span>до 18:00</span></div><div class="card kpi"><small>Задач</small><strong>4</strong><span>2 уже в Планере</span></div>
+  </div>
+  <section class="card pad span-8"><div class="section-head"><div><h3>План дня</h3><p>День собран вокруг конкретных рабочих действий.</p></div><button class="ghost" onclick="toast('Настройки дня будут подключены')">Настроить день</button></div>
+    <div class="timeline">
+      <div class="time">10:00</div><div class="slot"><div class="slot-card"><b>Разбор входящих</b><span>15 минут · Администрирование</span></div></div>
+      <div class="time">10:30</div><div class="slot"><div class="slot-card focus-slot"><b>Собрать первый экран</b><span>90 минут · Сайт эксперта Анны</span></div></div>
+      <div class="time">12:00</div><div class="slot"><div class="slot-card"><b>Перерыв</b><span>30 минут</span></div></div>
+      <div class="time">12:30</div><div class="slot"><div class="slot-card"><b>Отправить дизайн клиенту</b><span>20 минут · Сайт эксперта Анны</span></div></div>
+      <div class="time">13:00</div><div class="slot"><div class="slot-card"><b>Обед</b><span>60 минут</span></div></div>
+    </div>
+  </section>
+  <section class="card pad span-4"><div class="section-head"><h3>Что делать сейчас</h3></div>
+    <div class="win"><span class="badge">СЛЕДУЮЩИЙ ШАГ</span><p style="font-size:15px;font-weight:750;margin-top:10px">Собрать первый экран сайта</p><p class="meta">Не открывай весь проект. Тебе нужен только первый экран.</p><button class="primary" style="margin-top:12px" onclick="openFocus()">Начать 25 минут</button></div>
+    <div class="win"><b>Застряла?</b><p class="meta">Work Hub поможет превратить задачу в одно действие.</p><button class="ghost" style="margin-top:10px" onclick="go('focus')">Мне тяжело начать</button></div>
+  </section>
+</div></section>
+
+<!-- PROJECTS -->
+<section class="page" id="projects"><div class="page-grid">
+  <div class="kpis span-12"><div class="card kpi"><small>Активных</small><strong>3</strong><span>в работе</span></div><div class="card kpi"><small>Стоимость</small><strong>₽285 000</strong><span>активные проекты</span></div><div class="card kpi"><small>Ближайший дедлайн</small><strong>17 сент.</strong><span>Сайт эксперта Анны</span></div><div class="card kpi"><small>Под риском</small><strong>1</strong><span>нужен контроль</span></div></div>
+  <div class="project-grid span-12">
+    <article class="card project-card"><div class="section-head"><div><h3>Сайт эксперта Анны</h3><p>Лендинг · дизайн + разработка</p></div><span class="status good">В норме</span></div><div class="project-meta"><div><small>Сумма</small><b>₽75 000</b></div><div><small>Этап</small><b>Дизайн</b></div><div><small>Дедлайн</small><b>17 сент.</b></div></div><div class="progress"><i style="width:68%"></i></div><div class="meta" style="margin-top:6px">68% готово</div><div class="project-actions"><button class="accent" onclick="toast('Открыт проект')">Открыть</button><button onclick="go('tasks')">Задачи</button><button onclick="go('assistant')">ИИ</button></div></article>
+    <article class="card project-card"><div class="section-head"><div><h3>Лендинг ROAST</h3><p>Лендинг · структура + дизайн</p></div><span class="status warn">Внимание</span></div><div class="project-meta"><div><small>Сумма</small><b>₽90 000</b></div><div><small>Этап</small><b>Структура</b></div><div><small>Дедлайн</small><b>22 сент.</b></div></div><div class="progress"><i style="width:42%"></i></div><div class="meta" style="margin-top:6px">42% готово</div><div class="project-actions"><button class="accent" onclick="toast('Открыт проект')">Открыть</button><button onclick="go('tasks')">Задачи</button><button onclick="go('assistant')">ИИ</button></div></article>
+    <article class="card project-card"><div class="section-head"><div><h3>Сайт студии N</h3><p>Корпоративный сайт · бриф</p></div><span class="status good">В норме</span></div><div class="project-meta"><div><small>Сумма</small><b>₽120 000</b></div><div><small>Этап</small><b>Бриф</b></div><div><small>Дедлайн</small><b>30 сент.</b></div></div><div class="progress"><i style="width:18%"></i></div><div class="meta" style="margin-top:6px">18% готово</div><div class="project-actions"><button class="accent" onclick="toast('Открыт проект')">Открыть</button><button onclick="go('tasks')">Задачи</button><button onclick="go('assistant')">ИИ</button></div></article>
+  </div>
+</div></section>
+
+<!-- TASKS -->
+<section class="page" id="tasks"><div class="page-grid">
+  <section class="card pad span-12"><div class="section-head"><div><h3>Все рабочие задачи</h3><p>Один список для любой работы: дизайн, Tilda, продажи, клиенты, контент и всё остальное.</p></div><div style="display:flex;gap:8px"><button class="ghost">Фильтры</button><button class="primary" onclick="openTaskModal()">＋ Новая задача</button></div></div>
+    <div class="filters" style="display:flex;gap:7px;margin-bottom:4px"><span class="badge">Все</span><span class="status">Сегодня</span><span class="status">Просроченные</span><span class="status">Без проекта</span></div>
+    <div class="table tasks"><div class="tr th"><div>Задача</div><div>Проект</div><div>Приоритет</div><div>Дедлайн</div><div>Планер</div></div>
+      <div class="tr"><div><b>Собрать первый экран сайта</b><div class="meta">Дизайн первого экрана</div></div><div>Анна</div><div><span class="status hot">Высокий</span></div><div>17 сент.</div><div><button class="switch on" onclick="switchIt(this)"><i></i></button></div></div>
+      <div class="tr"><div><b>Отправить дизайн клиенту</b><div class="meta">Проверить ссылку и сообщение</div></div><div>Анна</div><div><span class="status warn">Важно</span></div><div>Сегодня</div><div><button class="switch on" onclick="switchIt(this)"><i></i></button></div></div>
+      <div class="tr"><div><b>Подготовить 3 лида для рассылки</b><div class="meta">Найти релевантных экспертов</div></div><div>Продажи</div><div><span class="status">Обычный</span></div><div>Сегодня</div><div><button class="switch" onclick="switchIt(this)"><i></i></button></div></div>
+      <div class="tr"><div><b>Добавить новый кейс в портфолио</b><div class="meta">Подготовить обложку и описание</div></div><div>Портфолио</div><div><span class="status">Обычный</span></div><div>20 сент.</div><div><button class="switch" onclick="switchIt(this)"><i></i></button></div></div>
+    </div>
+  </section>
+</div></section>
+
+<!-- FOCUS -->
+<section class="page" id="focus"><div class="page-grid">
+  <section class="card focus-card span-8"><div class="focus-layout"><div><div class="eyebrow" style="text-align:center">ТЕКУЩАЯ ЗАДАЧА</div><div class="focus-time" id="focusTime">25:00</div><div class="focus-title">Собрать первый экран сайта</div><div class="focus-desc">Проект: Сайт эксперта Анны · один шаг, не весь проект</div><div class="focus-buttons"><button class="primary" onclick="startTimer()" id="timerBtn">Начать 25 минут</button><button class="ghost" onclick="resetTimer()">Сбросить</button></div></div></div></section>
+  <section class="card difficult span-4"><div class="section-head"><h3>Если тяжело начать</h3></div><p class="meta">Выбери, что происходит. Work Hub даст конкретное действие.</p><div class="choices"><button onclick="help('Не знаю, что делать')">Не знаю, что делать</button><button onclick="help('Задача огромная')">Задача огромная</button><button onclick="help('Боюсь сделать плохо')">Боюсь сделать плохо</button><button onclick="help('Боюсь клиента')">Боюсь клиента</button><button onclick="help('Отвлекаюсь')">Отвлекаюсь</button></div><div class="help-output" id="helpOutput"></div></section>
+</div></section>
+
+<!-- CLIENTS -->
+<section class="page" id="clients"><div class="page-grid">
+  <div class="kpis span-12"><div class="card kpi"><small>Активных клиентов</small><strong>3</strong><span>сейчас</span></div><div class="card kpi"><small>Выручка</small><strong>₽285 000</strong><span>активные проекты</span></div><div class="card kpi"><small>Средний чек</small><strong>₽95 000</strong><span>активные проекты</span></div><div class="card kpi"><small>Нужно связаться</small><strong>2</strong><span>сегодня</span></div></div>
+  <section class="card pad span-12"><div class="section-head"><div><h3>Клиенты</h3><p>Контакты, проекты, деньги и история работы.</p></div><button class="primary" onclick="openClientModal()">＋ Новый клиент</button></div>
+    <div class="table clients"><div class="tr th"><div>Клиент</div><div>Проект</div><div>Сумма</div><div>Статус</div><div>Последний контакт</div></div>
+      <div class="tr"><div class="client"><div class="client-avatar">А</div><div><b>Анна Петрова</b><div class="meta">Эксперт · Telegram</div></div></div><div>Сайт эксперта Анны</div><div class="money">₽75 000</div><div><span class="status good">В работе</span></div><div>Сегодня</div></div>
+      <div class="tr"><div class="client"><div class="client-avatar">R</div><div><b>ROAST</b><div class="meta">Кофейня · Telegram</div></div></div><div>Лендинг ROAST</div><div class="money">₽90 000</div><div><span class="status warn">Ждём</span></div><div>Вчера</div></div>
+      <div class="tr"><div class="client"><div class="client-avatar">N</div><div><b>Студия N</b><div class="meta">Компания · Почта</div></div></div><div>Сайт студии N</div><div class="money">₽120 000</div><div><span class="status good">В работе</span></div><div>9 сент.</div></div>
+    </div>
+  </section>
+</div></section>
+
+<!-- LEADS -->
+<section class="page" id="leads"><div class="page-grid">
+  <section class="card pad span-12"><div class="section-head"><div><h3>Лиды</h3><p>Воронка: кого нашла → кому написала → диалог → клиент.</p></div><div style="display:flex;gap:8px"><button class="ghost" onclick="go('assistant')">Найти клиентов с ИИ</button><button class="primary" onclick="openLeadModal()">＋ Добавить лид</button></div></div>
+    <div class="board">
+      <div class="board-col"><div class="board-head">Найти <span class="board-count">3</span></div><div class="lead"><b>Мария · психолог</b><small>Нужен личный сайт</small><span class="tag">тёплый</span></div><div class="lead"><b>Дмитрий · эксперт</b><small>Запуск курса в октябре</small></div><div class="lead"><b>Студия A</b><small>Корпоративный сайт</small></div></div>
+      <div class="board-col"><div class="board-head">Написать <span class="board-count">2</span></div><div class="lead"><b>Ольга · нутрициолог</b><small>Подготовить персональное сообщение</small><span class="tag">сегодня</span></div><div class="lead"><b>Илья · фотограф</b><small>Отправить кейс</small></div></div>
+      <div class="board-col"><div class="board-head">Диалог <span class="board-count">2</span></div><div class="lead"><b>Катя · эксперт</b><small>Ждём ответ по бюджету</small><span class="tag">ждём</span></div><div class="lead"><b>ROAST</b><small>Обсуждаем второй этап</small></div></div>
+      <div class="board-col"><div class="board-head">Клиент <span class="board-count">1</span></div><div class="lead"><b>Анна Петрова</b><small>Сайт эксперта Анны · ₽75 000</small><span class="tag">проект</span></div></div>
+    </div>
+  </section>
+</div></section>
+
+<!-- FINANCE -->
+<section class="page" id="finance"><div class="page-grid">
+  <section class="card finance-main span-8"><small class="eyebrow">Доход за месяц</small><strong>₽82 000</strong><p>Цель месяца — ₽250 000</p><div class="progress"><i style="width:33%"></i></div><div class="meta" style="margin-top:7px">33% цели</div></section>
+  <div class="finance-2 span-4"><div class="card finance-box"><small>Оплачено</small><strong>₽60 000</strong></div><div class="card finance-box"><small>Должны клиенты</small><strong>₽22 000</strong></div><div class="card finance-box"><small>Ожидаемые деньги</small><strong>₽95 000</strong></div><div class="card finance-box"><small>Расходы</small><strong>₽18 400</strong></div></div>
+  <section class="card pad span-7"><div class="section-head"><h3>До цели месяца</h3><span class="status hot">Финансовый фокус</span></div><div class="range"><div><div class="meta">Осталось заработать</div><strong>₽168 000</strong></div><div style="text-align:right"><div class="meta">Нужно продаж</div><b>2 × ~₽84 000</b></div></div><div class="progress" style="margin-top:20px"><i style="width:33%"></i></div><div class="win"><b>Следующий финансовый шаг</b><p>Закрыть один активный проект и выставить следующий счёт.</p></div></section>
+  <section class="card pad span-5"><div class="section-head"><h3>Динамика</h3></div><div class="bars"><div class="bar-wrap"><div class="bar" style="--h:45px"></div><span>Июн</span></div><div class="bar-wrap"><div class="bar" style="--h:80px"></div><span>Июл</span></div><div class="bar-wrap"><div class="bar" style="--h:115px"></div><span>Авг</span></div><div class="bar-wrap"><div class="bar" style="--h:145px"></div><span>Сен</span></div></div></section>
+  <section class="card pad span-12"><div class="section-head"><h3>Последние операции</h3><button class="link">Все операции →</button></div><div class="table finance"><div class="tr th"><div>Операция</div><div>Тип</div><div>Дата</div><div>Сумма</div></div><div class="tr"><div><b>Сайт эксперта Анны</b><div class="meta">Предоплата</div></div><div>Доход</div><div>10 сент.</div><div class="money">+₽45 000</div></div><div class="tr"><div><b>Лендинг ROAST</b><div class="meta">Предоплата</div></div><div>Доход</div><div>6 сент.</div><div class="money">+₽37 000</div></div><div class="tr"><div><b>Сервисы</b><div class="meta">Подписки для работы</div></div><div>Расход</div><div>5 сент.</div><div class="money">−₽4 800</div></div></div></section>
+</div></section>
+
+<!-- PORTFOLIO -->
+<section class="page" id="portfolio"><div class="page-grid"><div class="case-grid span-12">
+  <article class="card case"><div class="case-cover">Сайт эксперта Анны</div><div class="case-body"><h3>Сайт эксперта Анны</h3><p>Лендинг · стратегия · UX/UI · Tilda</p><div class="case-foot"><span>Опубликован</span><b>Открыть →</b></div></div></article>
+  <article class="card case"><div class="case-cover">ROAST</div><div class="case-body"><h3>Лендинг ROAST</h3><p>Концепт · визуальная система · дизайн</p><div class="case-foot"><span>Черновик</span><b>Продолжить →</b></div></div></article>
+  <article class="card case"><div class="case-cover">Концепт студии N</div><div class="case-body"><h3>Сайт студии N</h3><p>Корпоративный сайт · структура · UI</p><div class="case-foot"><span>Черновик</span><b>Продолжить →</b></div></div></article>
+</div><section class="card pad span-12"><div class="section-head"><div><h3>Что усилить</h3><p>Work Hub может превращать слабые места портфолио в конкретные задачи.</p></div><span class="status hot">Приоритет</span></div><div class="task"><div class="task-info"><div class="title">Добавить кейс с результатом бизнеса</div><div class="meta">Покажи задачу клиента, решение и результат, а не только картинки.</div></div><span class="status warn">Высокий</span></div><div class="task"><div class="task-info"><div class="title">Оформить ROAST как полноценный кейс</div><div class="meta">Сейчас есть дизайн, но нет истории проекта.</div></div><span class="status">Средний</span></div></section></div></section>
+
+<!-- LIBRARY -->
+<section class="page" id="library"><div class="page-grid"><div class="resource-grid span-12">
+  <article class="card resource"><div class="resource-icon">R</div><h3>Референсы первого экрана</h3><p>Подборка сильных hero-блоков для экспертных сайтов.</p></article>
+  <article class="card resource"><div class="resource-icon">T</div><h3>Структура лендинга</h3><p>Шаблон блоков: оффер, доверие, решение, кейсы, CTA.</p></article>
+  <article class="card resource"><div class="resource-icon">C</div><h3>Чек-лист перед отправкой</h3><p>Что проверить в Figma и Tilda перед передачей клиенту.</p></article>
+  <article class="card resource"><div class="resource-icon">W</div><h3>Слова для оффера</h3><p>Формулировки для заголовков, CTA и описаний ценности.</p></article>
+  <article class="card resource"><div class="resource-icon">F</div><h3>Figma — полезные компоненты</h3><p>Набор повторяемых компонентов и рабочих паттернов.</p></article>
+  <article class="card resource"><div class="resource-icon">I</div><h3>Промпты для изображений</h3><p>Готовые формулы для генерации визуалов под веб-проекты.</p></article>
+</div></div></section>
+
+<!-- ASSISTANT -->
+<section class="page" id="assistant"><div class="page-grid">
+  <section class="card assistant-layout span-12">
+    <aside class="chat-list"><div class="chat-list-head"><h3>Мои чаты</h3><button class="link" onclick="newChat()">＋</button></div>
+      <div class="chat active"><b>Сайт эксперта Анны</b><small>Работа над первым экраном</small></div>
+      <div class="chat"><b>Общий рабочий чат</b><small>Любые рабочие вопросы</small></div>
+      <div class="chat"><b>Поиск клиентов</b><small>Стратегия на неделю</small></div>
+      <div class="chat"><b>Ценообразование</b><small>Как назвать цену</small></div>
+    </aside>
+    <div class="chat-main">
+      <div class="chat-head"><b>Сайт эксперта Анны</b><span>Привязан к проекту · ИИ видит контекст проекта</span></div>
+      <div class="messages" id="messages">
+        <div class="msg ai"><b>Work Hub AI</b>Ты сейчас на этапе дизайна. Не открывай весь проект. Следующее действие — собрать первый экран. Если не знаешь, как именно, я разложу его на конкретные шаги.</div>
+        <div class="msg me">Я боюсь, что сделаю что-то не так.</div>
+        <div class="msg ai"><b>Work Hub AI</b>Тогда сейчас не надо решать весь проект. Сделай черновой вариант первого экрана. Я помогу проверить структуру, визуальную иерархию и подготовить сообщение клиенту после этого.</div>
+      </div>
+      <div class="composer"><input id="chatInput" placeholder="Задай любой вопрос по работе…"><button class="primary" onclick="sendChat()">Отправить</button></div>
+    </div>
+  </section>
+  <div class="ai-tools span-12">
+    <div class="card tool"><h3>Поиск клиентов</h3><p>ИИ ищет конкретные каналы и действия под твою цель, а не выдаёт общий список.</p><button class="ghost" onclick="go('leads')">Открыть</button></div>
+    <div class="card tool"><h3>Создать КП</h3><p>Заполняет твой шаблон на основе клиента, проекта, сроков и стоимости.</p><button class="ghost" onclick="openProposal()">Создать</button></div>
+    <div class="card tool"><h3>Создать договор</h3><p>Собирает договор из данных клиента и выбранных условий.</p><button class="ghost" onclick="openContract()">Создать</button></div>
+    <div class="card tool"><h3>Рассчитать цену</h3><p>Учитывает тип проекта, объём, сроки, разработку и текущий уровень.</p><button class="ghost" onclick="openPrice()">Рассчитать</button></div>
+  </div>
+</div></section>
+</div></main>
+</div>
+
+<div class="modal-bg" id="modal"><div class="modal" id="modalBody"></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const titles={
+home:["Доброе утро, Эля.","Не нужно думать обо всей работе. Work Hub уже выбрал следующий шаг."],
+today:["Сегодня","Твой рабочий день без ощущения, что нужно держать всё в голове."],
+projects:["Проекты","Все проекты, деньги, этапы и ближайшие действия в одном месте."],
+tasks:["Задачи","Единый список любых рабочих задач — без привязки к одному типу работы."],
+focus:["Фокус","Один рабочий шаг за раз. Без переключений."],
+clients:["Клиенты","Контакты, проекты, деньги и история работы с каждым клиентом."],
+leads:["Лиды","Воронка продаж и следующий конкретный шаг по каждому лиду."],
+finance:["Финансы","Доходы, оплаты, долги клиентов, расходы и цель месяца."],
+portfolio:["Портфолио","Кейсы, которые помогают продавать тебя как веб-дизайнера."],
+library:["Библиотека","Шаблоны, чек-листы, референсы и рабочие материалы."],
+assistant:["Помощник","Твой ИИ-старший веб-дизайнер: контекст проектов, чаты и конкретные следующие действия."]
+};
+function go(page){
+ document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+ document.getElementById(page).classList.add('active');
+ document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.page===page));
+ document.getElementById('pageTitle').textContent=titles[page][0];
+ document.getElementById('pageSub').textContent=titles[page][1];
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>go(b.dataset.page)));
+function toast(t){const el=document.getElementById('toast');el.textContent=t;el.style.display='block';clearTimeout(window.toastT);window.toastT=setTimeout(()=>el.style.display='none',2100)}
+function toggleTask(id){const x=document.getElementById(id);x.classList.toggle('done');if(x.classList.contains('done'))toast('Задача выполнена. Следующий шаг готов.')}
+function finishNext(){document.getElementById('nextTask').textContent='Отправить дизайн клиенту';toast('Готово. Следующее действие — отправить дизайн клиенту.')}
+function switchIt(b){b.classList.toggle('on');toast(b.classList.contains('on')?'Задача добавлена в Планер':'Задача убрана из Планера')}
+let sec=1500,timer=null;
+function render(){let m=Math.floor(sec/60),s=sec%60;document.getElementById('focusTime').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')}
+function startTimer(){if(timer){clearInterval(timer);timer=null;document.getElementById('timerBtn').textContent='Продолжить';return}document.getElementById('timerBtn').textContent='Пауза';timer=setInterval(()=>{sec--;render();if(sec<=0){clearInterval(timer);timer=null;toast('Фокус завершён. Отличная работа.');document.getElementById('timerBtn').textContent='Начать 25 минут'}},1000)}
+function resetTimer(){clearInterval(timer);timer=null;sec=1500;render();document.getElementById('timerBtn').textContent='Начать 25 минут'}
+function help(x){const map={'Не знаю, что делать':'Открой только Figma. Создай frame первого экрана. Не думай о всём сайте.','Задача огромная':'Разбей её: 1) открыть макет 2) собрать структуру 3) сделать черновик 4) проверить 5) отправить. Сейчас только пункт 1.','Боюсь сделать плохо':'Сейчас нужен черновик, а не финал. Поставь 10 минут и сделай самый простой первый вариант.','Боюсь клиента':'Сейчас клиент не требует ответа. Закончи один рабочий шаг, а сообщение мы составим отдельно.','Отвлекаюсь':'Закрой лишние вкладки, телефон убери подальше и включи 10 минут.','Устала':'Сделай 5 минут паузы, воду — и вернись к одному микрошагу.'};const o=document.getElementById('helpOutput');o.style.display='block';o.innerHTML='<b>'+x+'</b><br>'+map[x]}
+function openModal(content){document.getElementById('modalBody').innerHTML=content;document.getElementById('modal').classList.add('show')}
+function closeModal(){document.getElementById('modal').classList.remove('show')}
+document.getElementById('modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal()});
+function openTaskModal(){openModal(`<div class="modal-head"><h2>Новая задача</h2><button class="close" onclick="closeModal()">×</button></div><div class="form-grid" style="margin-top:18px"><div class="field full"><label>Название задачи</label><input placeholder="Например: собрать первый экран сайта"></div><div class="field"><label>Проект</label><select><option>Без проекта</option><option>Сайт эксперта Анны</option><option>Лендинг ROAST</option></select></div><div class="field"><label>Приоритет</label><select><option>Обычный</option><option>Важно</option><option>Высокий</option></select></div><div class="field"><label>Дедлайн</label><input type="date"></div><div class="field"><label>Показать в Planner</label><select><option>Нет</option><option>Да</option></select></div></div><div class="modal-actions"><button class="ghost" onclick="closeModal()">Отмена</button><button class="primary" onclick="closeModal();toast('Задача добавлена')">Добавить задачу</button></div>`)}
+function openClientModal(){openModal(`<div class="modal-head"><h2>Новый клиент</h2><button class="close" onclick="closeModal()">×</button></div><div class="form-grid" style="margin-top:18px"><div class="field"><label>Имя / компания</label><input placeholder="Имя клиента"></div><div class="field"><label>Контакт</label><input placeholder="Telegram / почта"></div><div class="field"><label>Источник</label><input placeholder="Откуда пришёл"></div><div class="field"><label>Заметка</label><input placeholder="Контекст"></div></div><div class="modal-actions"><button class="ghost" onclick="closeModal()">Отмена</button><button class="primary" onclick="closeModal();toast('Клиент добавлен')">Добавить</button></div>`)}
+function openLeadModal(){openModal(`<div class="modal-head"><h2>Новый лид</h2><button class="close" onclick="closeModal()">×</button></div><div class="form-grid" style="margin-top:18px"><div class="field"><label>Имя / компания</label><input placeholder="Кого нашла"></div><div class="field"><label>Ниша</label><input placeholder="Например: эксперт"></div><div class="field"><label>Где нашла</label><input placeholder="Telegram / сайт / другое"></div><div class="field"><label>Что нужно</label><input placeholder="Сайт / лендинг / другое"></div></div><div class="modal-actions"><button class="ghost" onclick="closeModal()">Отмена</button><button class="primary" onclick="closeModal();toast('Лид добавлен')">Добавить</button></div>`)}
+function openProposal(){openModal(`<div class="modal-head"><h2>Создать КП</h2><button class="close" onclick="closeModal()">×</button></div><p class="meta" style="margin-top:8px">ИИ заполнит твой утверждённый шаблон по данным клиента и проекта.</p><div class="form-grid" style="margin-top:18px"><div class="field"><label>Клиент</label><input value="Анна Петрова"></div><div class="field"><label>Проект</label><input value="Лендинг"></div><div class="field"><label>Срок</label><input value="14 дней"></div><div class="field"><label>Ориентир стоимости</label><input value="85 000 ₽"></div><div class="field full"><label>Что входит</label><textarea>Структура, дизайн Figma, адаптив, сборка Tilda</textarea></div></div><div class="modal-actions"><button class="ghost" onclick="closeModal()">Отмена</button><button class="primary" onclick="closeModal();toast('КП сформировано по шаблону')">Сформировать КП</button></div>`)}
+function openContract(){openModal(`<div class="modal-head"><h2>Создать договор</h2><button class="close" onclick="closeModal()">×</button></div><p class="meta" style="margin-top:8px">ИИ возьмёт данные клиента, проекта, стоимости и сроков из Work Hub.</p><div class="win" style="margin-top:18px"><b>Будет заполнено</b><p>Стороны · предмет · стоимость · этапы · оплата · правки · сроки · передача результата · ответственность.</p></div><div class="modal-actions"><button class="ghost" onclick="closeModal()">Отмена</button><button class="primary" onclick="closeModal();toast('Договор сформирован')">Сформировать договор</button></div>`)}
+function openPrice(){openModal(`<div class="modal-head"><h2>Рассчитать цену</h2><button class="close" onclick="closeModal()">×</button></div><div class="form-grid" style="margin-top:18px"><div class="field"><label>Тип проекта</label><select><option>Лендинг</option><option>Сайт</option><option>Tilda-разработка</option><option>Другое</option></select></div><div class="field"><label>Срок</label><input value="14 дней"></div><div class="field"><label>Дизайн Figma</label><select><option>Да</option><option>Нет</option></select></div><div class="field"><label>Сборка Tilda</label><select><option>Да</option><option>Нет</option></select></div><div class="field full"><label>Дополнительно</label><textarea placeholder="Анимации, сложность, дополнительные страницы…"></textarea></div></div><div class="recommend"><b>Предварительная рекомендация</b><strong>70 000 — 95 000 ₽</strong><div class="micro">После подключения ИИ диапазон будет рассчитываться по твоей модели цены и истории проектов.</div></div><div class="modal-actions"><button class="primary" onclick="closeModal();toast('Расчёт сохранён')">Сохранить расчёт</button></div>`)}
+function newChat(){const name=prompt('Название нового чата');if(name)toast('Чат «'+name+'» создан')}
+function sendChat(){const input=document.getElementById('chatInput'),v=input.value.trim();if(!v)return;const box=document.getElementById('messages');box.insertAdjacentHTML('beforeend','<div class="msg me">'+v+'</div>');input.value='';setTimeout(()=>{box.insertAdjacentHTML('beforeend','<div class="msg ai"><b>Work Hub AI</b>Понял. Давай не решать всё сразу. Сейчас я превращу вопрос в конкретный следующий шаг и скажу, что сделать первым.</div>');box.scrollTop=box.scrollHeight},400)}
+function openFocus(){go('focus');}
+</script>
+</body>
+</html>
