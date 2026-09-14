@@ -84,4 +84,35 @@ function newChat(){let n=prompt("Название чата");if(n)toast("Чат 
 function sendChat(){let i=document.getElementById("chatInput"),v=i.value.trim();if(!v)return;let m=document.getElementById("messages");m.insertAdjacentHTML("beforeend",'<div class="msg me">'+v+"</div>");i.value="";setTimeout(()=>m.insertAdjacentHTML("beforeend",'<div class="msg ai"><b>Work Hub AI</b>Разберём. Я сначала выделю проблему, потом дам конкретный следующий шаг. Для точного ответа можешь прислать контекст, скриншот или документ.</div>'),350)}
 function help(x){let map={"Не знаю, что делать":"Не решай весь проект. Открой только Figma и создай один frame первого экрана.","Задача огромная":"Разбей её до действия на 5–10 минут. Сейчас: открыть проект и написать первый микрошаг.","Боюсь сделать плохо":"Сделай черновик без оценки. Финальное качество проверим после.","Боюсь клиента":"Сейчас не нужно писать клиенту. Сначала подготовим, что именно ты хочешь ему сказать.","Отвлекаюсь":"Убери всё лишнее и поставь таймер на 5 минут. Только одна задача.","Мне тяжело":"Сделай минимальную версию: открой рабочий файл и просто начни с одного элемента."};let e=document.getElementById("help");e.style.display="block";e.innerHTML="<b>"+x+"</b><br>"+map[x]}
 let t5=null,s5=300;function render5(){let m=Math.floor(s5/60),s=s5%60;document.getElementById("focusTime").textContent=String(m).padStart(2,"0")+":"+String(s).padStart(2,"0")}function start5(){if(t5){clearInterval(t5);t5=null;return}t5=setInterval(()=>{s5--;render5();if(s5<=0){clearInterval(t5);t5=null;toast("5 минут закончились. Можешь остановиться или продолжить.")}},1000)}function reset5(){clearInterval(t5);t5=null;s5=300;render5()}
+</script>
+<script>
+(function () {
+  const titles = {
+    home:["Главная","Главное на сегодня — без лишнего шума."],
+    tasks:["Задачи","Любые рабочие задачи и календарь."],
+    clients:["Клиенты и проекты","Клиенты, проекты и путь от контакта до запуска."],
+    money:["Деньги","Доходы, расходы, долги, платежи и цели."],
+    design:["Дизайн","Портфолио, референсы и профессиональная помощь."],
+    assistant:["Помощник","Твой универсальный ИИ-эксперт по работе."],
+    stuck:["Тяжело начать?","Место, куда можно прийти без чувства вины и просто начать."],
+    character:["Мой персонаж","Прокачивай персонажа вместе с реальным рабочим прогрессом."],
+    settings:["Настройки","Настройки поведения и отображения Work Hub."],
+    admin:["Админ","Техническое управление системой."]
+  };
+  function show(page) {
+    document.querySelectorAll(".page").forEach(function(el){el.classList.toggle("active", el.id === page);});
+    document.querySelectorAll(".nav button").forEach(function(el){el.classList.toggle("active", el.dataset.page === page);});
+    if (titles[page]) {
+      var t=document.getElementById("title"), s=document.getElementById("subtitle");
+      if(t)t.textContent=titles[page][0];
+      if(s)s.textContent=titles[page][1];
+    }
+    window.scrollTo(0,0);
+  }
+  window.go = show;
+  document.addEventListener("click", function(e){
+    var b=e.target.closest(".nav button[data-page]");
+    if(b){e.preventDefault();show(b.dataset.page);}
+  });
+})();
 </script></body></html>
