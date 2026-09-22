@@ -194,18 +194,11 @@ h3{font-size:17px;margin:8px 0}
 
 <section id="academy" class="page">
   <div class="topbar"><a class="back" href="#home">← На главную</a><div class="tag">ACADEMY</div></div>
-  <div class="eyebrow">10 УРОВНЕЙ</div><h1>Академия</h1>
-  <p class="sub">Здесь уже не просто карточки. Выбирай модуль → открывай урок → читай → отвечай на мини-тест.</p>
-  <div class="tabs">
-    <button data-module="1" class="active">1. Психология</button><button data-module="2" class="">2. Исследование</button><button data-module="3" class="">3. Позиционирование</button><button data-module="4" class="">4. Копирайтинг</button><button data-module="5" class="">5. Продажи</button><button data-module="6" class="">6. Каналы</button><button data-module="7" class="">7. Growth</button><button data-module="8" class="">8. Эксперименты</button><button data-module="9" class="">9. Брендинг</button><button data-module="10" class="">10. Marketing Brain</button>
-  </div>
-  <div id="academyModule">
-    <div class="card" style="margin-bottom:14px"><div class="tag">МОДУЛЬ 01</div><h2>🧠 Психология покупателя</h2><p>Понимаем не товар, а изменение, за которым человек приходит.</p></div>
-    <div class="lesson-grid">
-      <div class="card click lesson" data-lesson="01"><span class="check"></span><div class="tag">УРОК 01</div><h3>Почему люди вообще покупают херню</h3><p>Человек покупает не характеристику. Он покупает ожидаемое изменение своей ситуации: удобство, эмоцию, статус, безопасность или решение проблемы.</p><div style="margin-top:13px" class="arrow">Открыть урок →</div></div><div class="card click lesson" data-lesson="02"><span class="check"></span><div class="tag">УРОК 02</div><h3>Боль ≠ потребность</h3><p>«Мне нужен сайт» может означать потребность в доверии, заявках, более высоком чеке или ощущении серьёзного бизнеса.</p><div style="margin-top:13px" class="arrow">Открыть урок →</div></div><div class="card click lesson" data-lesson="03"><span class="check"></span><div class="tag">УРОК 03</div><h3>Почему «дорого» не всегда про деньги</h3><p>Цена кажется высокой, когда ценность не ясна, доверие низкое или человек сравнивает тебя с другой альтернативой.</p><div style="margin-top:13px" class="arrow">Открыть урок →</div></div><div class="card click lesson" data-lesson="04"><span class="check"></span><div class="tag">УРОК 04</div><h3>FOMO</h3><p>Дефицит и дедлайн усиливают решение, когда они реальны. Фальшивый дефицит разрушает доверие.</p><div style="margin-top:13px" class="arrow">Открыть урок →</div></div>
-    </div>
-    <div id="lessonOpen" style="margin-top:15px"></div>
-  </div>
+  <div class="eyebrow">10 МОДУЛЕЙ · ОТ ЧЕЛОВЕКА К СИСТЕМЕ</div>
+  <h1>Академия</h1>
+  <p class="sub">Последовательная программа: сначала понимаем человека, потом рынок и ценность, затем учимся превращать это в сообщение, продажу, систему привлечения и измеримый рост.</p>
+  <div class="tabs" id="moduleTabs"></div>
+  <div id="academyModule"></div>
 </section>
 
 <section id="cases" class="page">
@@ -367,6 +360,7 @@ h3{font-size:17px;margin:8px 0}
   });
   document.getElementById("chatInput").addEventListener("keydown",e=>{if(e.key==="Enter")send.click()});
 
+  renderModules(1);
   hash();
 })();
 </script>
