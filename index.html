@@ -282,6 +282,7 @@ h3{font-size:17px;margin:8px 0}
 (function(){
   const pages=[...document.querySelectorAll(".page")];
   const links=[...document.querySelectorAll("[data-page]")];
+
   function show(id){
     id=(id||"home").replace("#","");
     if(!document.getElementById(id)) id="home";
@@ -293,22 +294,134 @@ h3{font-size:17px;margin:8px 0}
   window.addEventListener("hashchange",hash);
   document.querySelectorAll("[data-page-link]").forEach(a=>a.addEventListener("click",()=>show(a.dataset.pageLink)));
 
-  const lessons=[
-    ["01","Почему люди вообще покупают херню","Человек покупает не характеристику. Он покупает ожидаемое изменение своей ситуации: удобство, эмоцию, статус, безопасность или решение проблемы.","Маркетинг начинается не с рекламы. Он начинается с понимания человека."],
-    ["02","Боль ≠ потребность","«Мне нужен сайт» может означать потребность в доверии, заявках, более высоком чеке или ощущении серьёзного бизнеса.","Всегда копай на один уровень глубже формулировки клиента."],
-    ["03","Почему «дорого» не всегда про деньги","Цена кажется высокой, когда ценность не ясна, доверие низкое или человек сравнивает тебя с другой альтернативой.","Не спеши давать скидку. Сначала пойми, что именно человек считает дорогим."],
-    ["04","FOMO","Дефицит и дедлайн усиливают решение, когда они реальны. Фальшивый дефицит разрушает доверие.","Срочность должна опираться на правду, а не на манипуляцию."]
+  /*
+   * CURRICULUM:
+   * 1. Psychology — understand the buyer.
+   * 2. Research — collect evidence before making claims.
+   * 3. Positioning — choose a clear place in the customer's mind.
+   * 4. Offer & copy — turn insight into a message.
+   * 5. Sales — turn conversations into decisions.
+   * 6. Channels — acquire attention where the audience already is.
+   * 7. Funnels & growth — connect attention to revenue.
+   * 8. Experiments — replace guesses with tests.
+   * 9. Branding — build recognition and meaning.
+   * 10. Marketing Brain — integrate everything into diagnosis and strategy.
+   *
+   * The order is deliberate: person -> evidence -> value -> message -> sale
+   * -> acquisition -> economics -> experimentation -> brand -> strategy.
+   */
+  const curriculum=[
+    {id:1,icon:"🧠",name:"Психология покупателя",goal:"Понять, почему человек замечает, хочет, откладывает или покупает — и научиться видеть за словами клиента реальную задачу.",lessons:[
+      {title:"Почему люди вообще покупают",time:"12 мин",objective:"Научиться отделять характеристику продукта от результата, который человек хочет получить.",theory:[
+        "Люди редко покупают вещь или услугу ради самой вещи. Они покупают изменение своей ситуации: решить проблему, получить желаемое состояние, сэкономить время, снизить риск, почувствовать статус или получить эмоцию.",
+        "Поэтому фраза «мне нужен сайт» ещё ничего не говорит о настоящей причине покупки. Один человек хочет больше заявок, другой — поднять чек, третий — выглядеть профессиональнее перед партнёрами, четвёртый — наконец запустить бизнес.",
+        "Маркетолог должен переводить характеристику в результат. «Адаптивный сайт» — характеристика. «Клиенту удобно оставить заявку с телефона» — уже функциональная ценность. «Мы не теряем часть потенциальных заявок с мобильного трафика» — бизнес-результат."
+      ],remember:"Начинай не с вопроса «что мы продаём?», а с вопроса «какое изменение получает человек после покупки?».",practice:"Возьми услугу создания сайта. Выпиши 10 возможных результатов для клиента и раздели их на функциональные, финансовые, эмоциональные и статусные.",quiz:[
+        ["Что человек чаще всего покупает на самом глубоком уровне?",["Набор характеристик продукта","Ожидаемое изменение своей ситуации","Самую низкую цену"],1],
+        ["Что является характеристикой, а не результатом? ",["Адаптивный дизайн","Меньше потерянных мобильных заявок","Больше доверия к компании"],0]
+      ]},
+      {title:"Проблема, потребность, желание и мотив",time:"15 мин",objective:"Научиться копать глубже первой формулировки клиента.",theory:[
+        "Проблема — то, что сейчас не устраивает. Потребность — то, что должно измениться. Желание — конкретный результат или состояние, которого человек хочет. Мотив — почему этот результат важен лично ему.",
+        "Например: «у меня старый сайт» — проблема. «Мне нужен сайт, которому доверяют» — потребность. «Хочу получать заявки от более дорогих клиентов» — желание. «Хочу перестать чувствовать, что мой бизнес выглядит несерьёзно» — возможный мотив.",
+        "Одна и та же услуга может иметь разные мотивы у разных сегментов. Поэтому хороший маркетинг не строится на абстрактной аудитории «все предприниматели»."
+      ],remember:"Если клиент назвал инструмент, это ещё не значит, что ты поняла задачу. Спроси: «Зачем вам это? Что должно измениться после?».",practice:"Разбери 3 ситуации: эксперт заказывает сайт, салон красоты запускает новый сайт, интернет-магазин меняет карточки. Для каждой выпиши проблему → потребность → желание → мотив.",quiz:[
+        ["«Мне нужен сайт» — это прежде всего…",["Готовая причина покупки","Название решения, а не полная потребность","Доказательство высокой срочности"],1],
+        ["Зачем маркетологу разделять мотивы?",["Чтобы всем продавать одинаково","Чтобы понимать, какую ценность показывать конкретному сегменту","Чтобы сделать текст длиннее"],1]
+      ]},
+      {title:"Контекст покупки: почему сейчас?",time:"14 мин",objective:"Понимать триггеры, которые превращают потребность в действие.",theory:[
+        "Потребность может существовать месяцами и не приводить к покупке. Решение ускоряет событие: запуск продукта, падение продаж, новый конкурент, смена работы, дедлайн, рост команды, новый канал трафика или личное решение человека что-то изменить.",
+        "Это называется контекстом или триггером покупки. Если его знать, можно говорить с человеком не только о проблеме, но и о моменте, в котором она стала важной.",
+        "Важно не придумывать искусственную срочность. Задача маркетолога — обнаружить реальную причину, почему решение стало актуальным именно сейчас."
+      ],remember:"Вопрос «Почему вы решили заняться этим именно сейчас?» часто раскрывает больше, чем вопрос «Что вам нужно?».",practice:"Для услуги веб-дизайна составь 10 реальных триггеров покупки. Для каждого напиши, какое сообщение на сайте может его поддержать.",quiz:[
+        ["Что лучше всего описывает триггер покупки?",["Любая скидка","Событие или изменение, из-за которого решение становится актуальным сейчас","Красивый дизайн рекламы"],1],
+        ["Как работать со срочностью?",["Придумывать дедлайны","Показывать реальные последствия бездействия и реальные сроки","Всегда давать скидку"],1]
+      ]},
+      {title:"Страх, риск и доверие",time:"16 мин",objective:"Понимать, что может остановить человека даже при наличии желания купить.",theory:[
+        "Покупатель оценивает не только выгоду, но и риск: потерять деньги, время, контроль, репутацию или получить результат, который нельзя исправить.",
+        "Чем выше риск, тем больше человеку нужны доказательства: кейсы, понятный процесс, конкретные условия, отзывы, примеры результата, договор, прозрачные сроки и ответы на неудобные вопросы.",
+        "Доверие — не отдельный декоративный блок. Оно снижает неопределённость на пути к покупке."
+      ],remember:"Если человек сомневается, не всегда нужно убеждать сильнее. Иногда нужно сделать риск понятнее и меньше.",practice:"Составь карту из 7 страхов клиента при заказе сайта. Напротив каждого напиши доказательство, которое можно разместить на странице.",quiz:[
+        ["Что помогает снизить воспринимаемый риск?",["Обещать «100% результат»","Показывать конкретные доказательства и понятный процесс","Убрать все условия"],1],
+        ["Почему кейсы работают?",["Они заменяют любой анализ","Они дают человеку наблюдаемое доказательство того, что решение уже применялось","Они всегда продают дешевле"],1]
+      ]},
+      {title:"Почему «дорого» не всегда про деньги",time:"15 мин",objective:"Различать ценовое возражение и скрытую причину сомнения.",theory:[
+        "Фраза «дорого» может означать: «я не вижу ценности», «я не доверяю результату», «я сравниваю с более дешёвой альтернативой», «я не готов сейчас» или буквально «у меня нет такого бюджета».",
+        "Если сразу давать скидку, ты отвечаешь только на одну из причин и можешь обесценить предложение. Сначала нужно понять, с чем человек сравнивает, какой результат считает достаточным и что именно его останавливает.",
+        "Рабочая реакция — не защищать цену, а диагностировать возражение."
+      ],remember:"Не лечи цену, пока не поняла причину возражения.",practice:"Напиши по одному уточняющему вопросу для пяти разных значений фразы «80 000 ₽ дорого».",quiz:[
+        ["Как лучше начать работу с «дорого»?",["Сразу дать скидку","Уточнить, с чем человек сравнивает и какой результат ему нужен","Доказать, что конкуренты хуже"],1],
+        ["Что может скрываться за «дорого»?",["Только отсутствие денег","Несколько разных причин, включая низкую воспринимаемую ценность","Всегда желание получить скидку"],1]
+      ]},
+      {title:"Как человек принимает решение",time:"18 мин",objective:"Собрать психологию покупки в единый путь от триггера до действия.",theory:[
+        "Упрощённая модель: триггер → поиск вариантов → сравнение → проверка доверия → решение → опыт после покупки.",
+        "На каждом этапе человеку нужны разные ответы. В начале он пытается понять, актуальна ли проблема и есть ли решение. Затем сравнивает варианты. Перед покупкой ищет доказательства и оценивает риск. После покупки формируется следующий уровень доверия и рекомендаций.",
+        "Хороший сайт поэтому не просто рассказывает о компании. Он отвечает на вопросы человека в том порядке, в котором они возникают у него в голове."
+      ],remember:"Сильный маркетинг снижает неопределённость шаг за шагом.",practice:"Построй customer journey для клиента веб-дизайнера: что он думает до поиска, что проверяет после первого экрана, что хочет увидеть в кейсах, перед ценой и перед заявкой.",quiz:[
+        ["Что должно происходить с неопределённостью клиента по пути к покупке?",["Расти, чтобы решение казалось серьёзнее","Постепенно снижаться за счёт понятности и доказательств","Не иметь значения"],1],
+        ["Что должен делать хороший сайт?",["Только красиво рассказывать о компании","Отвечать на вопросы клиента в логичном порядке и вести к следующему шагу","Скрывать цену любой ценой"],1]
+      ]}
+    ]},
+    {id:2,icon:"🔎",name:"Исследование рынка",goal:"Получать факты о рынке, аудитории и конкурентах до того, как придумывать решение.",lessons:["Сегментация по поведению","Где искать язык клиента","Интервью и customer research","Анализ конкурентов","Карта альтернатив","Сборка customer insight"]},
+    {id:3,icon:"🎯",name:"Позиционирование",goal:"Выбирать понятную причину, по которой клиенту стоит обратить внимание именно на этот продукт.",lessons:["Что такое позиционирование","Сегмент и конкретный результат","УТП без клише","Категория и отличие","Ценность против характеристик","Позиционирование в одном предложении"]},
+    {id:4,icon:"✍️",name:"Оффер и копирайтинг",goal:"Превращать понимание клиента в сообщения, которые быстро объясняют ценность и ведут к действию.",lessons:["Hook и первый экран","Оффер","Структура продающего текста","Доказательства","Работа с возражениями","CTA и следующий шаг"]},
+    {id:5,icon:"₽",name:"Продажи",goal:"Проводить клиента от первого разговора до сделки через диагностику, вопросы и аргументацию ценности.",lessons:["Discovery","Правильные вопросы","Квалификация","Презентация решения","Возражения","Закрытие и follow-up"]},
+    {id:6,icon:"📣",name:"Каналы продвижения",goal:"Понимать, откуда брать внимание и как выбирать канал под продукт, аудиторию и цикл сделки.",lessons:["Как выбирать канал","Контент","Реклама","SEO","Партнёрства и блогеры","Экономика канала"]},
+    {id:7,icon:"📈",name:"Воронки и Growth",goal:"Видеть путь от внимания до денег и находить место, где бизнес теряет потенциальных клиентов.",lessons:["Архитектура воронки","Конверсии","CAC, CPL, CPA","LTV и AOV","Retention","Поиск узкого места"]},
+    {id:8,icon:"🧪",name:"Эксперименты",goal:"Перестать гадать и научиться проверять маркетинговые гипотезы системно.",lessons:["Как формулировать гипотезу","Метрика успеха","A/B-тесты","Приоритизация ICE","Разбор результатов","Когда остановить эксперимент"]},
+    {id:9,icon:"🧬",name:"Брендинг",goal:"Понять, как продукт становится узнаваемым через образ, язык, опыт и последовательные ассоциации.",lessons:["Бренд ≠ логотип","Образ бренда","Tone of voice","Визуальная система","Культурный контекст","Последовательность бренда"]},
+    {id:10,icon:"👑",name:"Marketing Brain",goal:"Собрать всё в единую систему и научиться диагностировать бизнес как маркетолог.",lessons:["Маркетинговое мышление","Диагностика бизнеса","Стратегическая карта","Маркетинговая система","Финальный кейс","Защита решения"]}
   ];
-  document.querySelectorAll("[data-lesson]").forEach(card=>card.addEventListener("click",()=>{
-    const l=lessons[Number(card.dataset.lesson)-1];
-    document.getElementById("lessonOpen").innerHTML='<div class="case-box lesson-view"><div class="tag">УРОК '+l[0]+' · +80 XP</div><h2 style="margin-top:9px">'+l[1]+'</h2><div class="lesson-text"><p>'+l[2]+'</p><div class="callout"><b>ЗАПОМНИ</b><br>'+l[3]+'</div><p><b>Практика:</b> примени идею к своему веб-дизайну. Что бы ты изменила в оффере, сайте или продаже?</p></div><div class="quiz"><div class="tag">МИНИ-ТЕСТ</div><h3>Что здесь главное?</h3><button class="option" data-answer="yes">Понять, какую ценность человек реально покупает.</button><button class="option">Сделать рекламу максимально громкой.</button><button class="option">Сразу дать скидку.</button><div id="quizResult" class="notice" style="margin-top:8px;display:none"></div></div></div>';
-    document.querySelectorAll("#lessonOpen .option").forEach((b,i)=>b.addEventListener("click",()=>{
-      document.querySelectorAll("#lessonOpen .option").forEach(x=>x.disabled=true);
-      const good=b.dataset.answer==="yes";b.classList.add(good?"good":"bad");
-      const r=document.getElementById("quizResult");r.style.display="block";r.textContent=good?"Верно. Сначала понимание ценности — потом инструменты. +80 XP":"Не совсем. Здесь важнее понять причину покупки, а не усиливать шум.";
+
+  function renderModules(active){
+    const tabs=document.getElementById("moduleTabs");
+    if(!tabs)return;
+    tabs.innerHTML=curriculum.map(m=>'<button data-module-id="'+m.id+'" class="'+(m.id===active?"active":"")+'">'+m.id+'. '+m.name+'</button>').join("");
+    tabs.querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>renderModules(Number(b.dataset.moduleId))));
+    const m=curriculum.find(x=>x.id===active)||curriculum[0];
+    const lessons=m.lessons;
+    document.getElementById("academyModule").innerHTML=
+      '<div class="card" style="margin-bottom:14px"><div class="tag">МОДУЛЬ '+String(m.id).padStart(2,"0")+' · '+m.icon+'</div><h2 style="margin-top:9px">'+m.name+'</h2><p>'+m.goal+'</p><div class="progress"><i style="width:0%"></i></div><div class="small">0% пройдено · 6 уроков</div></div>'+
+      '<div class="lesson-grid">'+lessons.map((l,i)=>{
+        const title=typeof l==="string"?l:l.title;
+        const desc=typeof l==="string"?"Внутри: теория, пример, практика и мини-тест.":l.objective;
+        const time=typeof l==="string"?"—":l.time;
+        return '<div class="card click lesson" data-curriculum-lesson="'+i+'"><div class="tag">УРОК '+String(i+1).padStart(2,"0")+(typeof l==="object"?" · "+time:"")+'</div><h3>'+title+'</h3><p>'+desc+'</p><div style="margin-top:13px" class="arrow">'+(m.id===1?"Открыть урок →":"Структура урока →")+'</div></div>';
+      }).join("")+'</div><div id="lessonOpen" style="margin-top:15px"></div>';
+
+    document.querySelectorAll("[data-curriculum-lesson]").forEach(card=>card.addEventListener("click",()=>{
+      const l=lessons[Number(card.dataset.curriculumLesson)];
+      if(typeof l==="string"){
+        document.getElementById("lessonOpen").innerHTML='<div class="case-box lesson-view"><div class="tag">УРОК · В ПРОГРАММЕ</div><h2 style="margin-top:9px">'+l+'</h2><p class="sub">Этот урок войдёт в следующий этап наполнения. Формат тот же: короткая теория → пример → практическое задание → мини-тест → закрепление.</p></div>';
+        return;
+      }
+      openLesson(m,l,Number(card.dataset.curriculumLesson));
     }));
-    document.getElementById("lessonOpen").scrollIntoView({behavior:"smooth",block:"start"});
-  }));
+  }
+
+  function openLesson(module,lesson,index){
+    const root=document.getElementById("lessonOpen");
+    root.innerHTML='<div class="case-box lesson-view">'+
+      '<div class="tag">МОДУЛЬ 01 · УРОК '+String(index+1).padStart(2,"0")+' · '+lesson.time+' · +80 XP</div>'+
+      '<h2 style="margin-top:9px">'+lesson.title+'</h2>'+
+      '<p class="sub"><b>Цель:</b> '+lesson.objective+'</p>'+
+      '<div class="lesson-text">'+lesson.theory.map((p,i)=>'<p>'+p+'</p>').join("")+
+      '<div class="callout"><b>ЗАПОМНИ</b><br>'+lesson.remember+'</div>'+
+      '<p><b>ПРАКТИКА</b><br>'+lesson.practice+'</p></div>'+
+      '<div class="quiz"><div class="tag">МИНИ-ТЕСТ · 2 ВОПРОСА</div>'+
+      lesson.quiz.map((q,qi)=>'<div class="quiz-question" data-q="'+qi+'" style="margin-top:18px"><h3>'+q[0]+'</h3>'+q[1].map((opt,oi)=>'<button class="option" data-answer="'+(oi===q[2]?'yes':'no')+'">'+opt+'</button>').join("")+'<div class="notice quiz-result" style="display:none;margin-top:7px"></div></div>').join("")+
+      '</div></div>';
+    root.querySelectorAll(".quiz-question").forEach(q=>{
+      q.querySelectorAll(".option").forEach(b=>b.addEventListener("click",()=>{
+        q.querySelectorAll(".option").forEach(x=>x.disabled=true);
+        const good=b.dataset.answer==="yes";
+        b.classList.add(good?"good":"bad");
+        const res=q.querySelector(".quiz-result");
+        res.style.display="block";
+        res.textContent=good?"Верно. +40 XP":"Не совсем. Перечитай ключевой принцип урока и попробуй ещё раз.";
+      }));
+    });
+    root.scrollIntoView({behavior:"smooth",block:"start"});
+  }
 
   const caseData=[
     ["Косметика","Начни с исследования аудитории, конкурентов, реальных проблем и ценности. Увеличивать бюджет вслепую рано."],
@@ -316,16 +429,16 @@ h3{font-size:17px;margin:8px 0}
     ["Одежда","Определи конкретную аудиторию, культурный контекст и позицию бренда, которую можно занять в голове клиента."]
   ];
   document.querySelectorAll("[data-case]").forEach(card=>card.addEventListener("click",()=>{
-    const c=caseData[Number(card.dataset.case)];
+    const x=caseData[Number(card.dataset.case)];
     document.getElementById("caseOpen").classList.add("show");
-    document.getElementById("caseOpen").innerHTML='<div class="case-box"><div class="tag">РАЗБОР · '+c[0]+'</div><h2>С чего начинаем?</h2><p class="sub">'+c[1]+'</p><div class="notice" style="margin-top:15px">Логика: сначала диагноз → затем гипотеза → потом решение. Не наоборот.</div></div>';
+    document.getElementById("caseOpen").innerHTML='<div class="case-box"><div class="tag">РАЗБОР · '+x[0]+'</div><h2>С чего начинаем?</h2><p class="sub">'+x[1]+'</p><div class="notice" style="margin-top:15px">Логика: сначала диагноз → затем гипотеза → потом решение. Не наоборот.</div></div>';
     document.getElementById("caseOpen").scrollIntoView({behavior:"smooth"});
   }));
 
   const salesData=[
-    ["«Мне кажется, 80 000 ₽ дорого»",["«Могу сделать за 60 000 ₽»","«А с чем вы сейчас сравниваете стоимость и какой результат от сайта для вас будет достаточным?»","«Но у меня очень качественная работа»"],1],
-    ["«Я подумаю и вернусь»",["«Хорошо, пишите когда-нибудь»","«Конечно. Что именно вам важно ещё обдумать, чтобы принять решение?»","«Давайте я дам скидку, чтобы вы решили сейчас»"],1],
-    ["«Другой дизайнер дешевле»",["«Я тоже могу сделать дешевле»","«У конкурента плохой дизайн»","«Что именно входит в его предложение и какой результат вы ожидаете от проекта?»"],2]
+    ["80 000 ₽ дорого",["Могу сделать за 60 000 ₽","С чем вы сейчас сравниваете стоимость и какой результат от сайта для вас будет достаточным?","Но у меня очень качественная работа"],1],
+    ["Я подумаю и вернусь",["Хорошо, пишите когда-нибудь","Конечно. Что именно вам важно ещё обдумать, чтобы принять решение?","Давайте я дам скидку, чтобы вы решили сейчас"],1],
+    ["Другой дизайнер дешевле",["Я тоже могу сделать дешевле","У конкурента плохой дизайн","Что именно входит в его предложение и какой результат вы ожидаете от проекта?"],2]
   ];
   document.querySelectorAll("[data-sales]").forEach(card=>card.addEventListener("click",()=>{
     const s=salesData[Number(card.dataset.sales)];
@@ -333,7 +446,8 @@ h3{font-size:17px;margin:8px 0}
     document.getElementById("salesOpen").innerHTML='<div class="case-box"><div class="tag">SALES SIMULATOR</div><h2>Клиент говорит:</h2><p style="font-size:18px">«'+s[0]+'»</p><div id="salesOptions"></div><div id="salesResult" class="notice" style="display:none;margin-top:9px"></div></div>';
     s[1].forEach((x,i)=>{
       const b=document.createElement("button");b.className="option";b.textContent=x;
-      b.onclick=()=>{document.querySelectorAll("#salesOptions .option").forEach(q=>q.disabled=true);const good=i===s[2];b.classList.add(good?"good":"bad");const r=document.getElementById("salesResult");r.style.display="block";r.textContent=good?"Да. Ты не защищаешься и не сливаешь цену — ты раскрываешь реальное возражение. +120 XP":"Не лучший ход. Ты либо защищаешься, либо предлагаешь скидку слишком рано.";};
+      b.onclick=()=>{document.querySelectorAll("#salesOptions .option").forEach(q=>q.disabled=true);const good=i===s[2];b.classList.add(good?"good":"bad");const rr=document.getElementById("salesResult");rr.style.display="block";rr.textContent=good?"Да. Ты сначала выясняешь реальную причину, а не защищаешься и не сливаешь цену. +120 XP":"Не лучший ход. Ты отвечаешь на предположение, не выяснив причину.";
+      };
       document.getElementById("salesOptions").appendChild(b);
     });
     document.getElementById("salesOpen").scrollIntoView({behavior:"smooth"});
@@ -345,20 +459,21 @@ h3{font-size:17px;margin:8px 0}
     ["«Скидка 30% только сегодня»","Скидка сама по себе не объясняет ценность. Если она главный аргумент, клиент привыкает ждать скидку."]
   ];
   document.querySelectorAll("[data-crime]").forEach(card=>card.addEventListener("click",()=>{
-    const c=crimeData[Number(card.dataset.crime)];
+    const x=crimeData[Number(card.dataset.crime)];
     document.getElementById("crimeOpen").classList.add("show");
-    document.getElementById("crimeOpen").innerHTML='<div class="case-box"><div class="tag">MARKETING CRIME</div><h2>'+c[0]+'</h2><div class="callout"><b>ДИАГНОЗ</b><br>'+c[1]+'</div><div class="notice">Правило: хорошее маркетинговое сообщение должно помогать человеку понять ценность и причину выбора.</div></div>';
+    document.getElementById("crimeOpen").innerHTML='<div class="case-box"><div class="tag">MARKETING CRIME</div><h2>'+x[0]+'</h2><div class="callout"><b>ДИАГНОЗ</b><br>'+x[1]+'</div><div class="notice">Правило: хорошее маркетинговое сообщение должно помогать человеку понять ценность и причину выбора.</div></div>';
     document.getElementById("crimeOpen").scrollIntoView({behavior:"smooth"});
   }));
 
   const send=document.getElementById("send");
-  send.addEventListener("click",()=>{
+  if(send)send.addEventListener("click",()=>{
     const input=document.getElementById("chatInput"),v=input.value.trim();if(!v)return;
     document.getElementById("messages").insertAdjacentHTML("beforeend",'<div class="msg me">'+v.replace(/[<>]/g,"")+'</div>');
     input.value="";
     setTimeout(()=>document.getElementById("messages").insertAdjacentHTML("beforeend",'<div class="msg"><b>Marketing Coach</b><br>Разложим ситуацию: кто клиент → какую задачу он решает → почему текущий способ не устраивает → какую ценность ты можешь предложить → какое следующее действие нужно получить.</div>'),250);
   });
-  document.getElementById("chatInput").addEventListener("keydown",e=>{if(e.key==="Enter")send.click()});
+  const chatInput=document.getElementById("chatInput");
+  if(chatInput)chatInput.addEventListener("keydown",e=>{if(e.key==="Enter"&&send)send.click()});
 
   renderModules(1);
   hash();
