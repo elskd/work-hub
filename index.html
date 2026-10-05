@@ -3,559 +3,116 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#0b090d">
-<title>Marketing Girl — Academy</title>
+<title>Work Hub</title>
 <style>
-:root{
-  --bg:#0b090d;--panel:#131017;--card:#17131c;--card2:#1d1722;
-  --line:#2c2531;--text:#f8f4f8;--muted:#a69ca9;--pink:#ff5aa8;
-  --pink2:#ff9ac9;--green:#79dfad;--yellow:#ffd36a;--red:#ff718b;
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:radial-gradient(900px 520px at 85% -5%,#4a1935 0,transparent 55%),var(--bg);color:var(--text);font:14px Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-button,a{font:inherit}
-button{cursor:pointer}
-a{text-decoration:none;color:inherit}
-.app{min-height:100vh}
-.sidebar{position:fixed;left:0;top:0;bottom:0;width:250px;background:#09080c;border-right:1px solid var(--line);padding:25px 15px;z-index:20}
-.brand{font-size:24px;font-weight:900;letter-spacing:-1.2px;padding:5px 10px 30px}
-.brand span{color:var(--pink)}
-.label{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#655d68;padding:16px 10px 7px}
-.nav{display:grid;gap:3px}
-.nav a{display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:11px;color:#9e96a2}
-.nav a:hover,.nav a.active{background:#1d1722;color:#fff}
-.nav a.active{box-shadow:inset 2px 0 var(--pink)}
-.icon{width:20px;text-align:center;color:var(--pink2)}
-.main{margin-left:250px;padding:36px 40px 80px}
-.wrap{max-width:1180px;margin:auto}
-.page{display:none}
-.page.active{display:block}
-.hero{display:grid;grid-template-columns:1fr 280px;gap:24px;align-items:start}
-.eyebrow{font-size:10px;font-weight:900;letter-spacing:.18em;color:var(--pink);text-transform:uppercase}
-h1{font-size:48px;line-height:.98;letter-spacing:-.055em;margin:9px 0 16px}
-h2{font-size:30px;letter-spacing:-.04em;margin:0 0 8px}
-h3{font-size:17px;margin:8px 0}
-.sub{max-width:700px;color:var(--muted);line-height:1.65;margin:0}
-.level{background:linear-gradient(145deg,#1b151e,#121016);border:1px solid var(--line);border-radius:18px;padding:18px}
-.level-title{display:flex;justify-content:space-between;font-weight:800}
-.progress{height:8px;background:#2a2430;border-radius:99px;overflow:hidden;margin:12px 0 7px}
-.progress i{display:block;height:100%;width:12%;background:linear-gradient(90deg,var(--pink),var(--pink2))}
-.muted{color:var(--muted)}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:28px 0 34px}
-.stat{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:15px}
-.stat b{display:block;font-size:27px}
-.stat span{font-size:11px;color:var(--muted)}
-.section-head{display:flex;justify-content:space-between;align-items:end;margin:30px 0 13px}
-.section-head .muted{font-size:12px}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
-.card{background:linear-gradient(145deg,var(--card),#121016);border:1px solid var(--line);border-radius:18px;padding:19px}
-.click{cursor:pointer;transition:.15s transform,.15s border-color}
-.click:hover{transform:translateY(-2px);border-color:#604054}
-.tag{font-size:10px;font-weight:900;letter-spacing:.12em;color:var(--pink2);text-transform:uppercase}
-.number{font-size:34px;font-weight:900;color:#4a3d4b;line-height:1}
-.card p{color:var(--muted);line-height:1.55;margin:0;font-size:12px}
-.card .small{font-size:11px;color:var(--muted)}
-.module{min-height:205px;display:flex;flex-direction:column}
-.module .bottom{margin-top:auto}
-.arrow{color:var(--pink2);font-weight:800;font-size:12px}
-.lesson-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.lesson{min-height:170px}
-.lesson .check{float:right;color:var(--green);font-size:12px}
-.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
-.back{color:var(--muted);font-size:12px}
-.tabs{display:flex;gap:7px;overflow:auto;padding-bottom:4px;margin:18px 0}
-.tabs button{border:1px solid var(--line);background:var(--panel);color:var(--muted);padding:9px 12px;border-radius:10px;white-space:nowrap}
-.tabs button.active{background:var(--pink);border-color:var(--pink);color:#180a11;font-weight:900}
-.lesson-view{max-width:820px}
-.lesson-section{margin-top:24px}
-.lesson-section p{margin:10px 0}
-.example-section,.practice-section{padding:17px 18px;background:#17131c;border:1px solid var(--line);border-radius:14px}
-.practice-section{border-color:#513246}
-.quiz-question{padding-top:4px}
-
-.lesson-text{font-size:16px;line-height:1.8;color:#e8e1e8}
-.callout{margin:22px 0;padding:17px 18px;border-left:3px solid var(--pink);background:var(--panel);border-radius:0 14px 14px 0}
-.quiz{margin-top:22px}
-.option{width:100%;text-align:left;border:1px solid var(--line);background:#19151e;color:#fff;border-radius:11px;padding:13px;margin:5px 0}
-.option:hover{border-color:#765367}
-.option.good{border-color:var(--green);background:#10241b}
-.option.bad{border-color:var(--red);background:#28131a}
-.case-card{min-height:210px}
-.case-open{display:none;margin-top:18px}
-.case-open.show{display:block}
-.case-box{background:#211620;border:1px solid #513246;border-radius:20px;padding:22px}
-.notice{padding:13px 15px;background:#1b161e;border:1px solid var(--line);border-radius:12px;color:var(--muted);font-size:12px;line-height:1.55}
-.skill{padding:16px;background:var(--panel);border:1px solid var(--line);border-radius:15px}
-.skill-row{display:flex;justify-content:space-between}
-.badges{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
-.badge{display:flex;gap:14px;align-items:center}
-.badge-icon{width:48px;height:48px;border-radius:14px;background:#2a1a25;display:grid;place-items:center;font-size:21px}
-.chat{min-height:480px;display:flex;flex-direction:column}
-.messages{flex:1;display:flex;flex-direction:column;gap:9px;padding:8px 0}
-.msg{max-width:75%;padding:12px 14px;border-radius:14px;background:var(--panel);line-height:1.5}
-.msg.me{align-self:flex-end;background:#57223e}
-.composer{display:flex;gap:8px;border-top:1px solid var(--line);padding-top:12px}
-.composer input{flex:1;background:#0f0d12;border:1px solid var(--line);border-radius:11px;color:#fff;padding:11px;outline:none}
-.primary{border:0;background:var(--pink);color:#180a11;font-weight:900;border-radius:11px;padding:11px 15px}
-.mobile{display:none}
-@media(max-width:900px){
- .sidebar{width:72px;padding:18px 8px}.brand{font-size:0;text-align:center;padding:4px 0 24px}.brand:after{content:"M";font-size:23px;color:var(--pink)}
- .label{display:none}.nav a{justify-content:center;padding:12px 5px}.nav a span:not(.icon){display:none}
- .main{margin-left:72px;padding:24px 16px 80px}.hero{grid-template-columns:1fr}.grid,.lesson-grid{grid-template-columns:1fr 1fr}.stats{grid-template-columns:1fr 1fr}
-}
-@media(max-width:600px){
- h1{font-size:36px}.grid,.grid2,.lesson-grid{grid-template-columns:1fr}.badges{grid-template-columns:1fr}.main{padding:20px 13px 75px}.mobile{display:flex;position:fixed;left:0;right:0;bottom:0;height:58px;background:#09080c;border-top:1px solid var(--line);z-index:30}.mobile a{flex:1;display:grid;place-items:center;color:#8e8691;font-size:10px}.mobile a.active{color:var(--pink)}
-}
+:root{--bg:#f4f2ef;--card:#fff;--soft:#faf8f6;--ink:#171615;--muted:#8b8580;--line:#e6e1dc;--accent:#971f45;--accent-soft:#f5e5eb;--dark:#1b1a19;--sidebar:236px;--r:18px;--shadow:0 10px 35px rgba(25,22,20,.055)}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input,textarea,select{font:inherit}button{cursor:pointer}
+.sidebar{position:fixed;inset:0 auto 0 0;width:var(--sidebar);background:#191817;color:#fff;padding:28px 14px;z-index:10}.logo{font-size:21px;font-weight:800;letter-spacing:-.8px;padding:0 12px 34px}.logo span{color:#b96783}.nav-group{margin:20px 0}.nav-label{padding:0 12px 8px;color:#716c68;font-size:10px;letter-spacing:1.5px;text-transform:uppercase}.nav button{display:block;width:100%;border:0;background:transparent;color:#aaa6a2;text-align:left;padding:10px 12px;border-radius:10px;margin:2px 0;font-size:13px}.nav button:hover,.nav button.active{background:#2b2927;color:#fff}.nav button.active{font-weight:700}
+.main{margin-left:var(--sidebar);padding:34px 40px 70px}.shell{max-width:1280px;margin:auto}.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}.page-title h1{font-size:31px;letter-spacing:-1.4px;margin:0 0 5px}.page-title p{margin:0;color:var(--muted);font-size:13px}.top-actions{display:flex;gap:10px;align-items:center}.avatar{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:#e5d0d8;color:#702740;font-weight:800}
+.page{display:none}.page.active{display:block}.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:18px}.s12{grid-column:span 12}.s8{grid-column:span 8}.s7{grid-column:span 7}.s6{grid-column:span 6}.s5{grid-column:span 5}.s4{grid-column:span 4}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}.pad{padding:22px}.section-head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:17px}.section-head h2,.section-head h3{margin:0;font-size:17px;letter-spacing:-.4px}.section-head p{margin:5px 0 0;color:var(--muted);font-size:12px}.primary,.ghost,.dark{border-radius:11px;padding:10px 14px;border:1px solid var(--line);font-weight:700}.primary{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 7px 18px rgba(151,31,69,.15)}.ghost{background:#fff;color:var(--ink)}.dark{background:var(--dark);border-color:var(--dark);color:#fff}.link{border:0;background:none;color:var(--accent);font-size:12px;font-weight:700}.badge{display:inline-flex;padding:5px 8px;border-radius:7px;background:var(--accent-soft);color:var(--accent);font-size:10px;font-weight:800}.muted{color:var(--muted)}.eyebrow{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px}
+.hero{padding:27px}.hero-top{display:flex;justify-content:space-between}.hero h2{font-size:27px;letter-spacing:-1px;margin:27px 0 6px}.meta{font-size:12px;color:var(--muted)}.actions{display:flex;gap:9px;margin-top:20px}.progress-wrap{margin-top:25px}.progress-label{display:flex;justify-content:space-between;color:var(--muted);font-size:11px;margin-bottom:7px}.progress{height:7px;border-radius:99px;background:#ebe8e4;overflow:hidden}.progress i{display:block;height:100%;background:var(--accent);border-radius:99px}.callout{margin-top:20px;background:var(--soft);border-radius:12px;padding:15px}.callout b{font-size:10px;letter-spacing:.5px}.callout p{margin:5px 0 0;font-size:13px}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:12px}.kpi{padding:18px;min-height:142px}.kpi small{font-size:11px;color:var(--muted)}.kpi strong{display:block;font-size:23px;letter-spacing:-.7px;margin-top:8px}.kpi span{display:block;color:var(--muted);font-size:10px;margin-top:5px}
+.task-list{display:flex;flex-direction:column}.task{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}.task:last-child{border-bottom:0}.check{width:19px;height:19px;border:1.5px solid #bbb5af;border-radius:6px;background:#fff;flex:none}.task.done .check{background:var(--accent);border-color:var(--accent)}.task.done .check:after{content:"✓";color:#fff;font-size:12px;display:block;text-align:center}.task.done .title{text-decoration:line-through;color:var(--muted)}.task-info{flex:1;min-width:0}.title{font-size:13px;font-weight:650}.task .meta{font-size:10px;margin-top:3px}
+.timeline{display:grid;grid-template-columns:54px 1fr}.time{font-size:10px;color:var(--muted);padding-top:13px}.slot{border-left:1px solid #ddd8d3;padding:7px 0 7px 13px;position:relative;min-height:61px}.slot:before{content:"";position:absolute;left:-4px;top:18px;width:7px;height:7px;border-radius:50%;background:#c8c2bc}.slot-card{padding:10px 12px;border:1px solid var(--line);border-radius:11px;background:var(--soft)}.slot-card.focus{background:var(--accent-soft);border-color:#e6cbd3}.slot-card b{font-size:12px}.slot-card span{display:block;color:var(--muted);font-size:10px;margin-top:3px}
+.table{width:100%}.tr{display:grid;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--line);font-size:12px}.tr:last-child{border:0}.th{font-size:10px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted)}.tasks-table .tr{grid-template-columns:1.8fr .8fr .7fr .6fr}.clients-table .tr{grid-template-columns:1.5fr 1fr .7fr .7fr}
+.project-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.project{padding:20px}.project h3{margin:0;font-size:16px}.project p{margin:5px 0 0;color:var(--muted);font-size:11px}.project-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:16px}.project-meta div{background:var(--soft);border-radius:9px;padding:9px}.project-meta small{display:block;color:var(--muted);font-size:9px}.project-meta b{display:block;font-size:11px;margin-top:3px}.project .progress{margin-top:15px}.project-actions{display:flex;gap:8px;margin-top:14px}.project-actions button{font-size:10px;padding:8px 10px;border-radius:9px;border:1px solid var(--line);background:#fff}.project-actions .accent{background:var(--accent);border-color:var(--accent);color:#fff}
+.board{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.board-col{background:#efedea;border-radius:13px;padding:11px;min-height:300px}.board-head{font-size:11px;font-weight:750;display:flex;justify-content:space-between;margin-bottom:9px}.board-head span{color:var(--muted);font-weight:500}.lead{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px;margin-bottom:8px}.lead b{font-size:11px}.lead small{display:block;color:var(--muted);font-size:9px;margin-top:4px}
+.money-card{padding:23px}.money-card strong{font-size:34px;letter-spacing:-1.4px;display:block;margin:8px 0}.finance-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.finance-item{padding:17px}.finance-item small{color:var(--muted);font-size:10px}.finance-item strong{display:block;font-size:20px;margin-top:6px}.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}.day{min-height:65px;border:1px solid var(--line);border-radius:8px;padding:7px;font-size:10px;background:#fff}.day b{font-size:11px}.day.pay{background:var(--accent-soft);border-color:#e5c8d1}.day span{display:block;color:var(--accent);font-size:9px;margin-top:7px}
+.case-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.case{overflow:hidden}.cover{height:145px;background:#e9e3de;padding:15px;display:flex;align-items:flex-end;font-size:14px;font-weight:800}.case:nth-child(2) .cover{background:#ddd6d0}.case:nth-child(3) .cover{background:#eee9e5}.case-body{padding:16px}.case-body h3{font-size:14px;margin:0}.case-body p{font-size:10px;color:var(--muted);margin:5px 0}.case-foot{display:flex;justify-content:space-between;margin-top:14px;font-size:10px;color:var(--muted)}
+.ref-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.ref{padding:12px}.ref-img{height:110px;background:#eee9e5;border-radius:10px;margin-bottom:10px;display:flex;align-items:flex-end;padding:12px;font-weight:800}.ref h3{font-size:12px;margin:0}.ref p{font-size:10px;color:var(--muted);margin:5px 0 0}
+.assistant{display:grid;grid-template-columns:270px 1fr;min-height:610px}.chats{border-right:1px solid var(--line);padding:15px}.chats-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.chats-head b{font-size:13px}.chat{padding:11px;border-radius:10px;margin-bottom:3px}.chat.active,.chat:hover{background:var(--soft)}.chat b{font-size:11px}.chat small{display:block;color:var(--muted);font-size:9px;margin-top:4px}.chat-main{display:flex;flex-direction:column}.chat-head{padding:17px 20px;border-bottom:1px solid var(--line)}.chat-head b{font-size:13px}.chat-head span{display:block;color:var(--muted);font-size:9px;margin-top:4px}.messages{flex:1;padding:22px;display:flex;flex-direction:column;gap:10px}.msg{max-width:75%;padding:12px 14px;border-radius:12px;font-size:11px;line-height:1.5}.msg.ai{background:var(--soft)}.msg.me{background:var(--accent);color:#fff;align-self:flex-end}.msg b{display:block;margin-bottom:4px}.composer{display:flex;gap:8px;padding:13px;border-top:1px solid var(--line)}.composer input{flex:1;border:1px solid var(--line);border-radius:10px;padding:10px 12px;outline:0}.ai-tools{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.tool{padding:16px}.tool h3{font-size:12px;margin:0}.tool p{font-size:10px;color:var(--muted);line-height:1.45;min-height:43px}
+.focus{padding:30px}.focus-time{text-align:center;font-size:68px;letter-spacing:-4px;font-variant-numeric:tabular-nums}.focus-title{text-align:center;font-size:19px;font-weight:750;margin-top:5px}.focus-desc{text-align:center;color:var(--muted);font-size:11px;margin-top:5px}.center-actions{display:flex;justify-content:center;gap:8px;margin-top:18px}
+.stuck{padding:23px}.choice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.choice{padding:13px;border:1px solid var(--line);background:#fff;border-radius:10px;text-align:left}.choice b{font-size:11px}.choice span{display:block;color:var(--muted);font-size:9px;margin-top:4px}.help{display:none;margin-top:15px;background:var(--soft);border-radius:11px;padding:15px;font-size:11px;line-height:1.55}
+.character{display:grid;grid-template-columns:280px 1fr;gap:18px}.avatar-big{height:260px;border-radius:16px;background:linear-gradient(145deg,#ead9df,#f6ecef);display:grid;place-items:center;font-size:78px;font-weight:900;color:#7c2845}.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px}.stat{padding:18px}.stat small{color:var(--muted);font-size:10px}.stat strong{display:block;font-size:25px;margin-top:7px}.xp{margin-top:8px}
+.settings{display:grid;grid-template-columns:1fr 1fr;gap:18px}.setting{padding:20px}.setting h3{margin:0;font-size:14px}.setting p{color:var(--muted);font-size:10px;line-height:1.5}.toggle{width:42px;height:24px;border:0;border-radius:99px;background:#d7d2cd;position:relative}.toggle:after{content:"";position:absolute;width:18px;height:18px;border-radius:50%;background:#fff;top:3px;left:3px}.toggle.on{background:var(--accent)}.toggle.on:after{left:21px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field label{display:block;font-size:10px;color:var(--muted);margin-bottom:6px}.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:9px;padding:10px;background:#fff;outline:0}.field textarea{min-height:90px;resize:vertical}.full{grid-column:1/-1}
+.modal-bg{position:fixed;inset:0;background:rgba(20,18,17,.55);display:none;align-items:center;justify-content:center;padding:20px;z-index:50}.modal-bg.show{display:flex}.modal{width:min(650px,100%);background:#fff;border-radius:18px;padding:22px}.modal-head{display:flex;justify-content:space-between;align-items:center}.modal h2{margin:0;font-size:19px}.close{border:0;background:#f0ede9;border-radius:8px;width:30px;height:30px}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}.toast{position:fixed;right:22px;bottom:22px;background:#1d1c1a;color:#fff;border-radius:10px;padding:11px 14px;font-size:11px;display:none;z-index:70}
+@media(max-width:1050px){.main{padding:26px 22px}.project-grid,.case-grid{grid-template-columns:1fr 1fr}.assistant{grid-template-columns:220px 1fr}.board{grid-template-columns:repeat(3,1fr)}.ai-tools{grid-template-columns:1fr 1fr}}
+@media(max-width:800px){:root{--sidebar:72px}.sidebar{padding:22px 9px}.logo{font-size:0}.logo:after{content:"WH";font-size:18px}.nav-label{display:none}.nav button{font-size:0;text-align:center}.nav button:before{content:"•";font-size:18px}.main{padding:20px 14px}.grid{grid-template-columns:1fr}.s12,.s8,.s7,.s6,.s5,.s4{grid-column:1}.project-grid,.case-grid,.settings,.character{grid-template-columns:1fr}.assistant{grid-template-columns:1fr}.chats{border-right:0;border-bottom:1px solid var(--line);display:flex;gap:5px;overflow:auto}.chat{min-width:180px}.board{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.full{grid-column:auto}.table{overflow:auto}.tr{min-width:620px}}
 </style>
 </head>
 <body>
-<div class="app">
-<aside class="sidebar">
-  <div class="brand">Marketing <span>Girl</span></div>
-  <div class="label">Обучение</div>
-  <nav class="nav">
-    <a href="#home" data-page="home" class="active"><span class="icon">⌂</span><span>Главная</span></a>
-    <a href="#academy" data-page="academy"><span class="icon">◈</span><span>Академия</span></a>
-    <a href="#cases" data-page="cases"><span class="icon">◇</span><span>Кейсы</span></a>
-    <a href="#sales" data-page="sales"><span class="icon">₽</span><span>Sales Simulator</span></a>
-    <a href="#crimes" data-page="crimes"><span class="icon">×</span><span>Marketing Crimes</span></a>
-  </nav>
-  <div class="label">Твой прогресс</div>
-  <nav class="nav">
-    <a href="#stats" data-page="stats"><span class="icon">↗</span><span>Статистика</span></a>
-    <a href="#achievements" data-page="achievements"><span class="icon">★</span><span>Достижения</span></a>
-    <a href="#profile" data-page="profile"><span class="icon">○</span><span>Мой профиль</span></a>
-    <a href="#coach" data-page="coach"><span class="icon">AI</span><span>Marketing Coach</span></a>
-  </nav>
-</aside>
-
-<main class="main"><div class="wrap">
-
-<section id="home" class="page active">
-  <div class="hero">
-    <div>
-      <div class="eyebrow">MARKETING GIRL / VERSION 2</div>
-      <h1>Стань человеком,<br>который понимает продажи.</h1>
-      <p class="sub">Не зубрим термины. Учимся видеть человека, его мотивацию, оффер, воронку и деньги. Каждый раздел ниже — отдельный рабочий экран, который можно открыть и пройти.</p>
-    </div>
-    <div class="level">
-      <div class="level-title"><span>Уровень</span><span style="color:var(--pink2)">NPC</span></div>
-      <div class="progress"><i></i></div>
-      <div class="muted" style="font-size:11px">120 / 1000 XP</div>
-    </div>
-  </div>
-
-  <div class="stats">
-    <div class="stat"><b>0</b><span>уроков пройдено</span></div>
-    <div class="stat"><b>0</b><span>тестов</span></div>
-    <div class="stat"><b>0</b><span>кейсов</span></div>
-    <div class="stat"><b>1</b><span>день серии</span></div>
-  </div>
-
-  <div class="section-head"><h2>Продолжить обучение</h2><span class="muted">следующий шаг</span></div>
-  <a class="card click" href="#academy" data-page-link="academy" style="display:block">
-    <div class="tag">01 / ПЕРВЫЙ УРОВЕНЬ</div>
-    <h3 style="font-size:22px">Психология покупателя</h3>
-    <p>Почему человек покупает, что на самом деле стоит за «мне нужен сайт», откуда берётся «дорого» и как работает мотивация.</p>
-    <div class="bottom" style="margin-top:17px"><span class="arrow">Открыть академию →</span></div>
-  </a>
-
-  <div class="section-head"><h2>Карта обучения</h2><span class="muted">10 модулей</span></div>
-  <div class="grid">
-    <a class="card click module" href="#academy" data-page-link="academy">
-      <div><div class="number">01</div><div class="tag" style="margin-top:9px">🧠 МОДУЛЬ</div><h3>Психология покупателя</h3><p>Почему люди покупают и что стоит за решением.</p></div>
-      <div class="bottom"><div class="progress"><i style="width:0%"></i></div><span class="small">4 урока · 0% пройдено</span><span class="arrow" style="float:right">→</span></div>
-    </a><a class="card click module" href="#academy" data-page-link="academy">
-      <div><div class="number">02</div><div class="tag" style="margin-top:9px">🔎 МОДУЛЬ</div><h3>Исследование рынка</h3><p>Как находить реальные боли, желания и язык аудитории.</p></div>
-      <div class="bottom"><div class="progress"><i style="width:0%"></i></div><span class="small">3 урока · 0% пройдено</span><span class="arrow" style="float:right">→</span></div>
-    </a><a class="card click module" href="#academy" data-page-link="academy">
-      <div><div class="number">03</div><div class="tag" style="margin-top:9px">🎯 МОДУЛЬ</div><h3>Позиционирование</h3><p>Как занять понятное место в голове клиента.</p></div>
-      <div class="bottom"><div class="progress"><i style="width:0%"></i></div><span class="small">3 урока · 0% пройдено</span><span class="arrow" style="float:right">→</span></div>
-    </a><a class="card click module" href="#academy" data-page-link="academy">
-      <div><div class="number">04</div><div class="tag" style="margin-top:9px">✍️ МОДУЛЬ</div><h3>Копирайтинг</h3><p>Hook, оффер, возражения и тексты, которые ведут к действию.</p></div>
-      <div class="bottom"><div class="progress"><i style="width:0%"></i></div><span class="small">3 урока · 0% пройдено</span><span class="arrow" style="float:right">→</span></div>
-    </a><a class="card click module" href="#academy" data-page-link="academy">
-      <div><div class="number">05</div><div class="tag" style="margin-top:9px">₽ МОДУЛЬ</div><h3>Продажи</h3><p>Discovery, вопросы, переговоры и закрытие сделки.</p></div>
-      <div class="bottom"><div class="progress"><i style="width:0%"></i></div><span class="small">3 урока · 0% пройдено</span><span class="arrow" style="float:right">→</span></div>
-    </a><a class="card click module" href="#academy" data-page-link="academy">
-      <div><div class="number">06</div><div class="tag" style="margin-top:9px">📣 МОДУЛЬ</div><h3>Каналы продвижения</h3><p>Контент, реклама, SEO, блогеры и выбор канала.</p></div>
-      <div class="bottom"><div class="progress"><i style="width:0%"></i></div><span class="small">3 урока · 0% пройдено</span><span class="arrow" style="float:right">→</span></div>
-    </a><a class="card click module" href="#academy" data-page-link="academy">
-      <div><div class="number">07</div><div class="tag" style="margin-top:9px">📈 МОДУЛЬ</div><h3>Воронки и Growth</h3><p>Метрики, конверсия, CAC, LTV и retention.</p></div>
-      <div class="bottom"><div class="progress"><i style="width:0%"></i></div><span class="small">3 урока · 0% пройдено</span><span class="arrow" style="float:right">→</span></div>
-    </a><a class="card click module" href="#academy" data-page-link="academy">
-      <div><div class="number">08</div><div class="tag" style="margin-top:9px">🧪 МОДУЛЬ</div><h3>Эксперименты</h3><p>Гипотезы, A/B-тесты и приоритизация.</p></div>
-      <div class="bottom"><div class="progress"><i style="width:0%"></i></div><span class="small">3 урока · 0% пройдено</span><span class="arrow" style="float:right">→</span></div>
-    </a><a class="card click module" href="#academy" data-page-link="academy">
-      <div><div class="number">09</div><div class="tag" style="margin-top:9px">🧬 МОДУЛЬ</div><h3>Брендинг</h3><p>Ассоциации, tone of voice и культурный контекст.</p></div>
-      <div class="bottom"><div class="progress"><i style="width:0%"></i></div><span class="small">3 урока · 0% пройдено</span><span class="arrow" style="float:right">→</span></div>
-    </a><a class="card click module" href="#academy" data-page-link="academy">
-      <div><div class="number">10</div><div class="tag" style="margin-top:9px">👑 МОДУЛЬ</div><h3>Marketing Brain</h3><p>Финальная сборка всего маркетингового мышления.</p></div>
-      <div class="bottom"><div class="progress"><i style="width:0%"></i></div><span class="small">3 урока · 0% пройдено</span><span class="arrow" style="float:right">→</span></div>
-    </a>
-  </div>
-</section>
-
-<section id="academy" class="page">
-  <div class="topbar"><a class="back" href="#home">← На главную</a><div class="tag">ACADEMY</div></div>
-  <div class="eyebrow">10 МОДУЛЕЙ · ОТ ЧЕЛОВЕКА К СИСТЕМЕ</div>
-  <h1>Академия</h1>
-  <p class="sub">Последовательная программа: сначала понимаем человека, потом рынок и ценность, затем учимся превращать это в сообщение, продажу, систему привлечения и измеримый рост.</p>
-  <div class="tabs" id="moduleTabs"></div>
-  <div id="academyModule"></div>
-</section>
-
-<section id="cases" class="page">
-  <div class="topbar"><a class="back" href="#home">← На главную</a><div class="tag">CASE LAB</div></div>
-  <div class="eyebrow">ПРАКТИКА</div><h1>Кейсы</h1><p class="sub">Тебе дают бизнес-ситуацию. Ты выбираешь, с чего начать, и сразу видишь разбор.</p>
-  <div class="grid" id="caseGrid">
-    <div class="card click case-card" data-case="0"><div class="tag">CASE 01</div><h3>Косметика</h3><p>Красивый бренд сыворотки, средняя цена, но слабые продажи. Реклама обещает «инновационную формулу».</p><div style="margin-top:15px" class="arrow">Разобрать →</div></div>
-    <div class="card click case-card" data-case="1"><div class="tag">CASE 02</div><h3>Эксперт</h3><p>1000 посещений сайта в месяц, но только 7 заявок. Трафик есть, продаж почти нет.</p><div style="margin-top:15px" class="arrow">Разобрать →</div></div>
-    <div class="card click case-card" data-case="2"><div class="tag">CASE 03</div><h3>Одежда</h3><p>Новый бренд выглядит красиво, но воспринимается как ещё один магазин одежды.</p><div style="margin-top:15px" class="arrow">Разобрать →</div></div>
-  </div>
-  <div id="caseOpen" class="case-open"></div>
-</section>
-
-<section id="sales" class="page">
-  <div class="topbar"><a class="back" href="#home">← На главную</a><div class="tag">SALES SIMULATOR</div></div>
-  <div class="eyebrow">ПЕРЕГОВОРЫ</div><h1>Продай, не впаривая.</h1><p class="sub">Выбирай реплику. Твоя задача — не спорить и не сливать цену, а понять реальную причину возражения.</p>
-  <div class="grid" id="salesGrid">
-    <div class="card click" data-sales="0"><div class="tag">СЦЕНАРИЙ 01</div><h3>«80 000 ₽ дорого»</h3><p>Клиент сравнивает цену с чем-то неизвестным.</p><div style="margin-top:15px" class="arrow">Начать симуляцию →</div></div>
-    <div class="card click" data-sales="1"><div class="tag">СЦЕНАРИЙ 02</div><h3>«Я подумаю»</h3><p>Клиент не говорит, что именно его останавливает.</p><div style="margin-top:15px" class="arrow">Начать симуляцию →</div></div>
-    <div class="card click" data-sales="2"><div class="tag">СЦЕНАРИЙ 03</div><h3>«Другой дизайнер дешевле»</h3><p>Тебя сравнивают только по цене.</p><div style="margin-top:15px" class="arrow">Начать симуляцию →</div></div>
-  </div>
-  <div id="salesOpen" class="case-open"></div>
-</section>
-
-<section id="crimes" class="page">
-  <div class="topbar"><a class="back" href="#home">← На главную</a><div class="tag">MARKETING CRIMES</div></div>
-  <div class="eyebrow">РАССЛЕДОВАНИЕ</div><h1>Что здесь пошло не так?</h1><p class="sub">Находи размытое позиционирование, пустые обещания и маркетинговые решения без причины.</p>
-  <div class="grid" id="crimeGrid">
-    <div class="card click" data-crime="0"><div class="tag">CRIME 01</div><h3>«Мы работаем со всеми нишами»</h3><p>Почему такая фраза не помогает человеку выбрать компанию?</p><div style="margin-top:15px" class="arrow">Раскрыть преступление →</div></div>
-    <div class="card click" data-crime="1"><div class="tag">CRIME 02</div><h3>«У нас высокое качество»</h3><p>Что именно доказывает качество и почему одной фразы недостаточно?</p><div style="margin-top:15px" class="arrow">Раскрыть преступление →</div></div>
-    <div class="card click" data-crime="2"><div class="tag">CRIME 03</div><h3>«Скидка 30% только сегодня»</h3><p>Что происходит, когда скидка становится главным аргументом?</p><div style="margin-top:15px" class="arrow">Раскрыть преступление →</div></div>
-  </div>
-  <div id="crimeOpen" class="case-open"></div>
-</section>
-
-<section id="stats" class="page">
-  <div class="topbar"><a class="back" href="#home">← На главную</a><div class="tag">YOUR PROGRESS</div></div>
-  <div class="eyebrow">ПРОГРЕСС</div><h1>Статистика</h1><p class="sub">Не просто «сколько прочитано», а какие навыки ты постепенно собираешь.</p>
-  <div class="grid2" style="margin-top:22px">
-    <div class="skill"><div class="skill-row"><b>Психология</b><span class="muted">12 / 100</span></div><div class="progress"><i style="width:12%"></i></div></div><div class="skill"><div class="skill-row"><b>Исследования</b><span class="muted">10 / 100</span></div><div class="progress"><i style="width:10%"></i></div></div><div class="skill"><div class="skill-row"><b>Стратегия</b><span class="muted">8 / 100</span></div><div class="progress"><i style="width:8%"></i></div></div><div class="skill"><div class="skill-row"><b>Копирайтинг</b><span class="muted">6 / 100</span></div><div class="progress"><i style="width:6%"></i></div></div><div class="skill"><div class="skill-row"><b>Продажи</b><span class="muted">8 / 100</span></div><div class="progress"><i style="width:8%"></i></div></div><div class="skill"><div class="skill-row"><b>Каналы</b><span class="muted">4 / 100</span></div><div class="progress"><i style="width:4%"></i></div></div><div class="skill"><div class="skill-row"><b>Аналитика</b><span class="muted">3 / 100</span></div><div class="progress"><i style="width:3%"></i></div></div><div class="skill"><div class="skill-row"><b>Брендинг</b><span class="muted">7 / 100</span></div><div class="progress"><i style="width:7%"></i></div></div>
-  </div>
-</section>
-
-<section id="achievements" class="page">
-  <div class="topbar"><a class="back" href="#home">← На главную</a><div class="tag">ACHIEVEMENTS</div></div>
-  <div class="eyebrow">ДОСТИЖЕНИЯ</div><h1>Достижения</h1><p class="sub">Они открываются по мере прохождения уроков, кейсов и симуляций.</p>
-  <div class="badges" style="margin-top:22px">
-    <div class="card badge"><div class="badge-icon">🔥</div><div><b>Первый XP</b><p>Заработать первые очки</p></div></div><div class="card badge"><div class="badge-icon">📚</div><div><b>Первый урок</b><p>Пройти первый урок</p></div></div><div class="card badge"><div class="badge-icon">🧠</div><div><b>Мозг включён</b><p>Пройти 5 уроков</p></div></div><div class="card badge"><div class="badge-icon">₽</div><div><b>Sales Girl</b><p>Успешно пройти Sales Simulator</p></div></div><div class="card badge"><div class="badge-icon">×</div><div><b>Раскрыто</b><p>Раскрыть первое Marketing Crime</p></div></div><div class="card badge"><div class="badge-icon">👑</div><div><b>Boss Battle</b><p>Решить 3 кейса</p></div></div>
-  </div>
-</section>
-
-<section id="profile" class="page">
-  <div class="topbar"><a class="back" href="#home">← На главную</a><div class="tag">PROFILE</div></div>
-  <div class="eyebrow">ТВОЙ ПУТЬ</div><h1>Мой профиль</h1><p class="sub">От NPC до Marketing Menace. Здесь собраны текущий ранг и главная задача обучения.</p>
-  <div class="grid2" style="margin-top:22px">
-    <div class="card"><div class="tag">ТЕКУЩИЙ РАНГ</div><h2 style="margin-top:10px">NPC</h2><p>120 / 1000 XP до следующего уровня.</p><div class="progress"><i></i></div></div>
-    <div class="card"><div class="tag">МИССИЯ</div><h2 style="margin-top:10px">Научиться видеть систему.</h2><p>Сначала понять человека. Затем ценность. Затем оффер. Потом канал, воронку и метрики.</p></div>
-  </div>
-</section>
-
-<section id="coach" class="page">
-  <div class="topbar"><a class="back" href="#home">← На главную</a><div class="tag">AI COACH</div></div>
-  <div class="eyebrow">MARKETING COACH</div><h1>Разбери ситуацию.</h1><p class="sub">Учебный чат внутри прототипа. Он пока отвечает по заранее заданной логике — интерфейс уже готов под будущий AI.</p>
-  <div class="card chat" style="margin-top:22px">
-    <div class="messages" id="messages"><div class="msg"><b>Marketing Coach</b><br>Кидай ситуацию: «Клиент говорит, что сайт ему не нужен». Я помогу разобрать клиента, проблему, ценность и следующий вопрос.</div></div>
-    <div class="composer"><input id="chatInput" placeholder="Напиши ситуацию…"><button class="primary" id="send">Отправить</button></div>
-  </div>
-</section>
-
-</div></main>
-<nav class="mobile">
-  <a href="#home" data-page="home" class="active">Главная</a>
-  <a href="#academy" data-page="academy">Академия</a>
-  <a href="#cases" data-page="cases">Кейсы</a>
-  <a href="#sales" data-page="sales">Продажи</a>
-  <a href="#stats" data-page="stats">Прогресс</a>
-</nav>
-</div>
-
+<aside class="sidebar"><div class="logo">Work <span>Hub</span></div><nav class="nav">
+<div class="nav-group"><div class="nav-label">Работа</div><button class="active" data-page="home">⌂ &nbsp; Главная</button><button data-page="tasks">✓ &nbsp; Задачи</button><button data-page="clients">◌ &nbsp; Клиенты и проекты</button></div>
+<div class="nav-group"><div class="nav-label">Финансы</div><button data-page="money">₽ &nbsp; Деньги</button></div>
+<div class="nav-group"><div class="nav-label">Дизайн</div><button data-page="design">◇ &nbsp; Дизайн</button></div>
+<div class="nav-group"><div class="nav-label">ИИ</div><button data-page="assistant">✦ &nbsp; Помощник</button></div>
+<div class="nav-group"><div class="nav-label">Состояние</div><button data-page="stuck">◐ &nbsp; Не могу начать</button><button data-page="character">♢ &nbsp; Мой персонаж</button></div>
+<div class="nav-group"><div class="nav-label">Система</div><button data-page="settings">⚙ &nbsp; Настройки</button><button data-page="admin">▦ &nbsp; Админ</button></div>
+</nav></aside>
+<main class="main"><div class="shell"><header class="topbar"><div class="page-title"><h1 id="title">Главная</h1><p id="subtitle">Главное на сегодня — без лишнего шума.</p></div><div class="top-actions"><button class="ghost" onclick="newTask()">＋ Новая задача</button><div class="avatar">Э</div></div></header>
+<section class="page active" id="home"><div class="grid">
+<section class="card hero s8"><div class="hero-top"><span class="badge">ГЛАВНАЯ ЗАДАЧА</span><span class="eyebrow">Сегодня</span></div><h2>Собрать первый экран сайта</h2><div class="meta">Сайт эксперта Анны · Дизайн</div><div class="actions"><button class="dark" onclick="go('stuck')">Начать</button><button class="ghost" onclick="doneHome()">Готово</button></div><div class="progress-wrap"><div class="progress-label"><span>Прогресс проекта</span><b>68%</b></div><div class="progress"><i style="width:68%"></i></div></div><div class="callout"><b>ФОКУС ДНЯ</b><p>Закончить первый экран и отправить его клиенту.</p></div></section>
+<div class="kpis s4"><div class="card kpi"><small>Фокус сегодня</small><strong>2ч 34м</strong><span>рабочего времени</span></div><div class="card kpi"><small>Заработано</small><strong>₽82 000</strong><span>за месяц</span></div><div class="card kpi"><small>Активных проектов</small><strong>3</strong><span>в работе</span></div><div class="card kpi"><small>До цели месяца</small><strong>₽68 000</strong><span>осталось до 150 000</span></div></div>
+<section class="card pad s7"><div class="section-head"><div><h3>Задачи на сегодня</h3><p>Только то, что ты решила делать сегодня.</p></div><button class="link" onclick="go('tasks')">Все задачи →</button></div><div class="task-list"><div class="task" onclick="toggle(this)"><div class="check"></div><div class="task-info"><div class="title">Собрать первый экран</div><div class="meta">Сайт эксперта Анны · высокий приоритет</div></div></div><div class="task" onclick="toggle(this)"><div class="check"></div><div class="task-info"><div class="title">Отправить дизайн клиенту</div><div class="meta">Сайт эксперта Анны · до 18:00</div></div></div><div class="task" onclick="toggle(this)"><div class="check"></div><div class="task-info"><div class="title">Подготовить 3 лида</div><div class="meta">Продажи · обычный</div></div></div></div></section>
+<section class="card pad s5"><div class="section-head"><div><h3>План дня</h3><p>Твои рабочие блоки.</p></div><button class="link" onclick="go('tasks')">Календарь →</button></div><div class="timeline"><div class="time">10:00</div><div class="slot"><div class="slot-card"><b>Разбор входящих</b><span>15 минут</span></div></div><div class="time">10:30</div><div class="slot"><div class="slot-card focus"><b>Собрать первый экран</b><span>90 минут · Анна</span></div></div><div class="time">12:00</div><div class="slot"><div class="slot-card"><b>Перерыв</b><span>30 минут</span></div></div><div class="time">12:30</div><div class="slot"><div class="slot-card"><b>Отправить дизайн</b><span>20 минут · Анна</span></div></div></div></section>
+<section class="card pad s12"><div class="section-head"><div><h3>Прогресс финансовой цели</h3><p>Ближайшая цель — 150 000 ₽ в месяц.</p></div><button class="link" onclick="go('money')">Открыть деньги →</button></div><div class="progress-label"><span>₽82 000 из ₽150 000</span><b>55%</b></div><div class="progress"><i style="width:55%"></i></div></section>
+<section class="card pad s12"><div class="section-head"><div><h3>Активная работа</h3><p>Краткая информация по текущим проектам.</p></div><button class="link" onclick="go('clients')">Открыть проекты →</button></div><div class="project-grid"><article class="card project"><h3>Сайт эксперта Анны</h3><p>Дизайн → Tilda</p><div class="project-meta"><div><small>Этап</small><b>Дизайн</b></div><div><small>Прогресс</small><b>68%</b></div><div><small>Сумма</small><b>100 000 ₽</b></div></div></article><article class="card project"><h3>Портфолио</h3><p>Личные материалы</p><div class="project-meta"><div><small>Этап</small><b>Сборка</b></div><div><small>Прогресс</small><b>42%</b></div><div><small>Цель</small><b>3 кейса</b></div></div></article></div></section>
+</div></section>
+<section class="page" id="tasks"><div class="grid"><section class="card pad s12"><div class="section-head"><div><h2>Задачи</h2><p>Любые рабочие задачи. Без привязки к одному типу деятельности.</p></div><button class="primary" onclick="newTask()">＋ Новая задача</button></div><div class="tasks-table table"><div class="tr th"><div>ЗАДАЧА</div><div>ПРОЕКТ</div><div>ПРИОРИТЕТ</div><div>ДЕДЛАЙН</div></div><div class="tr"><div><b>Собрать первый экран сайта</b><div class="meta">Дизайн первого экрана</div></div><div>Анна</div><div><span class="badge">Высокий</span></div><div>17 сент.</div></div><div class="tr"><div><b>Отправить дизайн клиенту</b><div class="meta">Проверить ссылку и сообщение</div></div><div>Анна</div><div>Важно</div><div>Сегодня</div></div><div class="tr"><div><b>Подготовить 3 лида</b><div class="meta">Найти потенциальных клиентов</div></div><div>Продажи</div><div>Обычный</div><div>Сегодня</div></div><div class="tr"><div><b>Добавить новый кейс в портфолио</b><div class="meta">Подготовить обложку и описание</div></div><div>Портфолио</div><div>Обычный</div><div>20 сент.</div></div></div></section>
+<section class="card pad s12"><div class="section-head"><div><h3>Календарь задач</h3><p>Неделя · задачи можно будет перетаскивать между днями.</p></div><button class="ghost" onclick="toast('Режим календаря подготовлен')">Месяц / Неделя / День</button></div><div class="calendar"><div class="day"><b>Пн</b><span>3 задачи</span></div><div class="day"><b>Вт</b><span>2 задачи</span></div><div class="day pay"><b>Ср</b><span>Дедлайн: Анна</span></div><div class="day"><b>Чт</b><span>1 задача</span></div><div class="day"><b>Пт</b><span>2 задачи</span></div><div class="day"><b>Сб</b><span>—</span></div><div class="day"><b>Вс</b><span>—</span></div></div></section></div></section>
+<section class="page" id="clients"><div class="grid"><section class="card pad s12"><div class="section-head"><div><h2>Клиенты и проекты</h2><p>Клиенты, проекты и путь от первого контакта до запуска.</p></div><div class="top-actions"><button class="ghost" onclick="newClient()">＋ Клиент</button><button class="primary" onclick="newProject()">＋ Проект</button></div></div><div class="clients-table table"><div class="tr th"><div>КЛИЕНТ</div><div>КОНТАКТ</div><div>ПРОЕКТОВ</div><div>СТАТУС</div></div><div class="tr"><div><b>Анна Петрова</b><div class="meta">Эксперт</div></div><div>@anna</div><div>1</div><div><span class="badge">В работе</span></div></div><div class="tr"><div><b>Мария</b><div class="meta">Потенциальный клиент</div></div><div>@maria</div><div>0</div><div>Созвон</div></div></div></section>
+<section class="card pad s12"><div class="section-head"><div><h3>CRM</h3><p>Этапы можно менять под твою реальную работу.</p></div></div><div class="board"><div class="board-col"><div class="board-head">Нашла клиента <span>2</span></div><div class="lead"><b>Мария</b><small>Telegram · сайт</small></div><div class="lead"><b>Илья</b><small>Рекомендация</small></div></div><div class="board-col"><div class="board-head">Созвон <span>1</span></div><div class="lead"><b>Анна</b><small>Сегодня · 16:00</small></div></div><div class="board-col"><div class="board-head">Бриф <span>0</span></div></div><div class="board-col"><div class="board-head">КП <span>0</span></div></div><div class="board-col"><div class="board-head">Договор / оплата <span>0</span></div></div></div></section>
+<section class="card pad s12"><div class="section-head"><div><h3>Сайт эксперта Анны</h3><p>Все данные проекта в одном месте.</p></div><span class="badge">ДИЗАЙН</span></div><div class="project-meta"><div><small>Стоимость</small><b>100 000 ₽</b></div><div><small>Дедлайн</small><b>30 сент.</b></div><div><small>Прогресс</small><b>68%</b></div></div><div class="project-actions"><button class="accent" onclick="proposal()">Создать КП</button><button onclick="contract()">Создать договор</button><button onclick="price()">Рассчитать стоимость</button><button onclick="go('assistant')">Чат с ИИ</button></div></section></div></section>
+<section class="page" id="money"><div class="grid"><section class="card money-card s12"><div class="eyebrow">ЦЕЛЬ МЕСЯЦА</div><strong>₽82 000</strong><div class="meta">из ₽150 000 · осталось ₽68 000</div><div class="progress-wrap"><div class="progress"><i style="width:55%"></i></div></div></section><div class="finance-grid s12"><div class="card finance-item"><small>Оплачено</small><strong>₽82 000</strong></div><div class="card finance-item"><small>Должны клиенты</small><strong>₽18 000</strong></div><div class="card finance-item"><small>Ожидаемые деньги</small><strong>₽100 000</strong></div><div class="card finance-item"><small>Расходы</small><strong>₽24 500</strong></div><div class="card finance-item"><small>Долги</small><strong>₽160 000</strong></div><div class="card finance-item"><small>Прибыль</small><strong>₽57 500</strong></div></div>
+<section class="card pad s12"><div class="section-head"><div><h3>Платежи</h3><p>Регулярные и разовые платежи.</p></div><button class="primary" onclick="newPayment()">＋ Добавить платеж</button></div><div class="tasks-table table"><div class="tr th"><div>ПЛАТЁЖ</div><div>КАТЕГОРИЯ</div><div>СУММА</div><div>ДАТА</div></div><div class="tr"><div><b>Аренда</b><div class="meta">Повторяется ежемесячно</div></div><div>Жильё</div><div>75 000 ₽</div><div>5 число</div></div><div class="tr"><div><b>Кредитная карта</b><div class="meta">Минимальный платёж</div></div><div>Долги</div><div>5 000 ₽</div><div>15 число</div></div></div></section>
+<section class="card pad s12"><div class="section-head"><div><h3>Календарь платежей</h3><p>Платежи в рублях, долларах и евро.</p></div></div><div class="calendar"><div class="day"><b>1</b></div><div class="day pay"><b>5</b><span>75 000 ₽</span></div><div class="day"><b>10</b></div><div class="day pay"><b>15</b><span>5 000 ₽</span></div><div class="day"><b>20</b></div><div class="day"><b>25</b></div><div class="day"><b>30</b></div></div></section></div></section>
+<section class="page" id="design"><div class="grid"><section class="card pad s12"><div class="section-head"><div><h2>Дизайн</h2><p>Портфолио, референсы и профессиональная помощь.</p></div><button class="primary" onclick="toast('Добавление кейса')">＋ Новый кейс</button></div><div class="case-grid"><article class="card case"><div class="cover">Экспертный лендинг</div><div class="case-body"><h3>Экспертный лендинг</h3><p>Лендинг · UX/UI</p><div class="case-foot"><span>Черновик</span><b>Продолжить →</b></div></div></article><article class="card case"><div class="cover">Сайт студии N</div><div class="case-body"><h3>Сайт студии N</h3><p>Корпоративный сайт · UI</p><div class="case-foot"><span>Черновик</span><b>Продолжить →</b></div></div></article><article class="card case"><div class="cover">Концепт магазина</div><div class="case-body"><h3>Концепт магазина</h3><p>Интернет-магазин · UX</p><div class="case-foot"><span>Черновик</span><b>Продолжить →</b></div></div></article></div></section><section class="card pad s6"><div class="section-head"><div><h3>ИИ-помощь по дизайну</h3><p>Покажи скриншот, макет или сайт — получи профессиональный разбор.</p></div></div><button class="primary" onclick="go('assistant')">Открыть помощника</button></section><section class="card pad s6"><div class="section-head"><div><h3>Библиотека референсов</h3><p>Твоя коллекция, которую ты пополняешь сама.</p></div><button class="ghost" onclick="toast('Референс добавлен')">＋ Добавить</button></div><div class="ref-grid"><div class="ref"><div class="ref-img">HERO</div><h3>Первый экран</h3><p>Экспертные сайты</p></div><div class="ref"><div class="ref-img">CTA</div><h3>Призыв к действию</h3><p>Сильные варианты</p></div></div></section></div></section>
+<section class="page" id="assistant"><div class="grid"><section class="card assistant s12"><aside class="chats"><div class="chats-head"><b>Мои чаты</b><button class="link" onclick="newChat()">＋</button></div><div class="chat active"><b>Общий рабочий чат</b><small>Любые вопросы</small></div><div class="chat"><b>Сайт эксперта Анны</b><small>Привязан к проекту</small></div><div class="chat"><b>Продажи</b><small>Поиск и созвоны</small></div></aside><div class="chat-main"><div class="chat-head"><b>Work Hub AI</b><span>Senior web designer · UX/UI · маркетинг · продажи · project management · Tilda</span></div><div class="messages" id="messages"><div class="msg ai"><b>Work Hub AI</b>Я здесь, чтобы помогать тебе не общими советами, а конкретными решениями. Можешь прислать дизайн, переписку, бриф, КП, договор или просто описать ситуацию.</div><div class="msg ai"><b>Следующий шаг</b>Если вопрос связан с текущей работой — я помогу определить, что делать первым.</div></div><div class="composer"><input id="chatInput" placeholder="Спроси что угодно по работе…"><button class="primary" onclick="sendChat()">Отправить</button></div></div></section><div class="ai-tools s12"><div class="card tool"><h3>Работа</h3><p>Этапы, Figma, Tilda, клиенты и организация проекта.</p><button class="ghost">Открыть</button></div><div class="card tool"><h3>Продажи</h3><p>Поиск клиентов, сообщения, созвоны и возражения.</p><button class="ghost">Открыть</button></div><div class="card tool"><h3>Проекты</h3><p>Бриф, структура, дедлайны, презентация и правки.</p><button class="ghost">Открыть</button></div><div class="card tool"><h3>Дизайн</h3><p>Разбор макетов, UX/UI и визуальные решения.</p><button class="ghost" onclick="go('design')">Открыть</button></div></div></div></section>
+<section class="page" id="stuck"><div class="grid"><section class="card stuck s8"><div class="section-head"><div><h2>Тяжело начать?</h2><p>Тебе не нужно сейчас решать всю работу. Нужно только начать.</p></div><span class="badge">БЕЗ ДАВЛЕНИЯ</span></div><div class="choice-grid"><button class="choice" onclick="help('Не знаю, что делать')"><b>Не знаю, что делать</b><span>Разложи мне первый шаг</span></button><button class="choice" onclick="help('Задача огромная')"><b>Задача огромная</b><span>Уменьши её</span></button><button class="choice" onclick="help('Боюсь сделать плохо')"><b>Боюсь сделать плохо</b><span>Помоги начать черновик</span></button><button class="choice" onclick="help('Боюсь клиента')"><b>Боюсь клиента</b><span>Разберём ситуацию</span></button><button class="choice" onclick="help('Отвлекаюсь')"><b>Постоянно отвлекаюсь</b><span>Дай короткий режим</span></button><button class="choice" onclick="help('Мне совсем тяжело')"><b>Мне совсем тяжело</b><span>Помоги сделать минимум</span></button></div><div class="help" id="help"></div></section><section class="card focus s4"><div class="eyebrow">5 МИНУТ</div><div class="focus-time" id="focusTime">05:00</div><div class="focus-title">Просто начни.</div><div class="focus-desc">Через пять минут ты можешь остановиться.</div><div class="center-actions"><button class="dark" onclick="start5()">Начать 5 минут</button><button class="ghost" onclick="reset5()">Сбросить</button></div></section><section class="card pad s12"><div class="section-head"><div><h3>Следующий шаг</h3><p>Не думай о всём проекте. Сделай только это.</p></div></div><div class="callout" style="margin:0"><b>СЕЙЧАС</b><p>Открой Figma → открой первый экран → сделай один черновой вариант. Не оценивай его пока.</p></div></section></div></section>
+<section class="page" id="character"><div class="grid"><section class="card pad s12"><div class="section-head"><div><h2>Мой персонаж</h2><p>Ты прокачиваешь его, выполняя реальные рабочие действия.</p></div><span class="badge">УРОВЕНЬ 4</span></div></section><section class="character s12"><div class="card avatar-big">Э</div><div class="stats"><div class="card stat"><small>Уровень</small><strong>4</strong><div class="progress xp"><i style="width:62%;display:block;height:7px;background:var(--accent);border-radius:99px"></i></div><p class="muted">620 / 1000 XP</p></div><div class="card stat"><small>Задач выполнено</small><strong>37</strong><p class="muted">за всё время</p></div><div class="card stat"><small>Проектов завершено</small><strong>0</strong><p class="muted">первый ещё впереди</p></div><div class="card stat"><small>Заработано</small><strong>₽82K</strong><p class="muted">этот месяц</p></div></div></section></div></section>
+<section class="page" id="settings"><div class="settings"><section class="card setting"><h3>Интерфейс</h3><p>Настройки внешнего вида и отображения информации.</p><div class="task"><div class="task-info"><div class="title">Показывать финансовую цель на Главной</div></div><button class="toggle on" onclick="this.classList.toggle('on')"></button></div><div class="task"><div class="task-info"><div class="title">Компактный режим</div></div><button class="toggle" onclick="this.classList.toggle('on')"></button></div></section><section class="card setting"><h3>Планирование</h3><p>Как приложение работает с твоими задачами.</p><div class="task"><div class="task-info"><div class="title">Автоматически переносить незавершённые задачи</div><div class="meta">Сейчас выключено</div></div><button class="toggle" onclick="this.classList.toggle('on')"></button></div><div class="task"><div class="task-info"><div class="title">Синхронизация с Planner</div></div><button class="toggle on" onclick="this.classList.toggle('on')"></button></div></section><section class="card setting"><h3>ИИ</h3><p>Профиль будущего ИИ-помощника.</p><div class="callout"><b>ПРОФИЛЬ</b><p>Опытный веб-дизайнер · UX/UI · маркетолог · sales · project manager · Tilda.</p></div></section><section class="card setting"><h3>Данные</h3><p>Управление локальными данными Work Hub.</p><button class="ghost" onclick="toast('Экспорт подготовлен')">Экспортировать данные</button></section></div></section>
+<section class="page" id="admin"><div class="grid"><section class="card pad s12"><div class="section-head"><div><h2>Админ</h2><p>Техническое управление приложением. Позже здесь можно будет менять блоки без изменения кода.</p></div><span class="badge">РАЗРАБОТКА</span></div></section><div class="card pad s4"><h3>Разделы</h3><p class="muted">Включение и выключение разделов.</p><button class="ghost">Управлять</button></div><div class="card pad s4"><h3>Шаблоны</h3><p class="muted">КП, договоры, этапы проектов.</p><button class="ghost">Управлять</button></div><div class="card pad s4"><h3>ИИ-профиль</h3><p class="muted">Правила, знания и стиль помощника.</p><button class="ghost">Управлять</button></div></div></section>
+</div></main><div class="modal-bg" id="modal"><div class="modal" id="modalBody"></div></div><div class="toast" id="toast"></div>
 <script>
-(function(){
-  const pages=[...document.querySelectorAll(".page")];
-  const links=[...document.querySelectorAll("[data-page]")];
-
-  function show(id){
-    id=(id||"home").replace("#","");
-    if(!document.getElementById(id)) id="home";
-    pages.forEach(p=>p.classList.toggle("active",p.id===id));
-    links.forEach(a=>a.classList.toggle("active",a.dataset.page===id));
+const titles={home:["Главная","Главное на сегодня — без лишнего шума."],tasks:["Задачи","Любые рабочие задачи и календарь."],clients:["Клиенты и проекты","Клиенты, проекты и путь от контакта до запуска."],money:["Деньги","Доходы, расходы, долги, платежи и цели."],design:["Дизайн","Портфолио, референсы и профессиональная помощь."],assistant:["Помощник","Твой универсальный ИИ-эксперт по работе."],stuck:["Тяжело начать?","Место, куда можно прийти без чувства вины и просто начать."],character:["Мой персонаж","Прокачивай персонажа вместе с реальным рабочим прогрессом."],settings:["Настройки","Настройки поведения и отображения Work Hub."],admin:["Админ","Техническое управление системой."]};
+function go(page){document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));document.getElementById(page).classList.add("active");document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===page));document.getElementById("title").textContent=titles[page][0];document.getElementById("subtitle").textContent=titles[page][1];window.scrollTo(0,0)}
+document.querySelectorAll(".nav button").forEach(b=>b.onclick=()=>go(b.dataset.page));
+function toast(t){let e=document.getElementById("toast");e.textContent=t;e.style.display="block";clearTimeout(window.tt);window.tt=setTimeout(()=>e.style.display="none",1800)}
+function toggle(e){e.classList.toggle("done");if(e.classList.contains("done"))toast("Задача выполнена")}
+function doneHome(){toast("Готово. Следующий шаг — отправить дизайн клиенту")}
+function openModal(c){document.getElementById("modalBody").innerHTML=c;document.getElementById("modal").classList.add("show")}function closeModal(){document.getElementById("modal").classList.remove("show")}document.getElementById("modal").onclick=e=>{if(e.target.id==="modal")closeModal()}
+function newTask(){openModal('<div class="modal-head"><h2>Новая задача</h2><button class="close" onclick="closeModal()">×</button></div><div class="form-grid" style="margin-top:18px"><div class="field full"><label>Название</label><input placeholder="Что нужно сделать?"></div><div class="field"><label>Проект</label><select><option>Без проекта</option><option>Сайт эксперта Анны</option></select></div><div class="field"><label>Приоритет</label><select><option>Обычный</option><option>Важно</option><option>Высокий</option></select></div><div class="field"><label>Дедлайн</label><input type="date"></div><div class="field"><label>Показать в Planner</label><select><option>Нет</option><option>Да</option></select></div></div><div class="modal-actions"><button class="ghost" onclick="closeModal()">Отмена</button><button class="primary" onclick="closeModal();toast('Задача добавлена')">Добавить</button></div>')}
+function newClient(){openModal('<div class="modal-head"><h2>Новый клиент</h2><button class="close" onclick="closeModal()">×</button></div><div class="form-grid" style="margin-top:18px"><div class="field"><label>Имя</label><input placeholder="Имя клиента"></div><div class="field"><label>Компания</label><input placeholder="Если есть"></div><div class="field"><label>Контакт</label><input placeholder="Telegram / почта"></div><div class="field"><label>Заметки</label><input placeholder="Контекст"></div></div><div class="modal-actions"><button class="ghost" onclick="closeModal()">Отмена</button><button class="primary" onclick="closeModal();toast('Клиент добавлен')">Добавить</button></div>')}
+function newProject(){openModal('<div class="modal-head"><h2>Новый проект</h2><button class="close" onclick="closeModal()">×</button></div><p class="muted" style="font-size:11px">После создания можно выбрать и изменить этапы.</p><div class="form-grid" style="margin-top:16px"><div class="field"><label>Название</label><input placeholder="Например: сайт эксперта"></div><div class="field"><label>Клиент</label><input placeholder="Клиент"></div><div class="field"><label>Стоимость</label><input placeholder="100 000 ₽"></div><div class="field"><label>Дедлайн</label><input type="date"></div></div><div class="modal-actions"><button class="ghost" onclick="closeModal()">Отмена</button><button class="primary" onclick="closeModal();toast('Проект создан')">Создать</button></div>')}
+function proposal(){openModal('<div class="modal-head"><h2>Создать КП</h2><button class="close" onclick="closeModal()">×</button></div><p class="muted">Здесь будет твой утверждённый шаблон. ИИ заполнит его данными проекта.</p><div class="callout"><b>ДАННЫЕ</b><p>Клиент · задача · состав работ · сроки · стоимость · условия оплаты.</p></div><div class="modal-actions"><button class="primary" onclick="closeModal();toast('КП сформировано')">Сформировать</button></div>')}
+function contract(){openModal('<div class="modal-head"><h2>Создать договор</h2><button class="close" onclick="closeModal()">×</button></div><p class="muted">Данные клиента и проекта будут подставлены автоматически.</p><div class="callout"><b>РАЗДЕЛЫ</b><p>Предмет · стоимость · этапы · оплата · правки · сроки · передача результата.</p></div><div class="modal-actions"><button class="primary" onclick="closeModal();toast('Договор сформирован')">Сформировать</button></div>')}
+function price(){openModal('<div class="modal-head"><h2>Рассчитать стоимость</h2><button class="close" onclick="closeModal()">×</button></div><div class="form-grid" style="margin-top:16px"><div class="field"><label>Тип</label><select><option>Лендинг</option><option>Многостраничный сайт</option><option>Интернет-магазин</option><option>Tilda-сборка</option></select></div><div class="field"><label>Срок</label><input value="14 дней"></div><div class="field"><label>Дизайн</label><select><option>Да</option><option>Нет</option></select></div><div class="field"><label>Tilda</label><select><option>Да</option><option>Нет</option></select></div><div class="field full"><label>Особенности</label><textarea placeholder="Страницы, анимации, сложность…"></textarea></div></div><div class="callout"><b>МОДЕЛЬ ЦЕНЫ</b><p>Точные правила расчёта зададим отдельно, чтобы цена не придумывалась случайно.</p></div><div class="modal-actions"><button class="primary" onclick="closeModal();toast('Расчёт сохранён')">Сохранить</button></div>')}
+function newPayment(){openModal('<div class="modal-head"><h2>Новый платеж</h2><button class="close" onclick="closeModal()">×</button></div><div class="form-grid" style="margin-top:18px"><div class="field"><label>Название</label><input placeholder="Например: аренда"></div><div class="field"><label>Категория</label><input placeholder="Жильё"></div><div class="field"><label>Сумма</label><input placeholder="75 000"></div><div class="field"><label>Валюта</label><select><option>RUB ₽</option><option>USD $</option><option>EUR €</option></select></div><div class="field"><label>Дата</label><input type="date"></div><div class="field"><label>Повторять</label><select><option>Не повторять</option><option>Каждый месяц</option></select></div></div><div class="modal-actions"><button class="ghost" onclick="closeModal()">Отмена</button><button class="primary" onclick="closeModal();toast('Платёж добавлен')">Добавить</button></div>')}
+function newChat(){let n=prompt("Название чата");if(n)toast("Чат «"+n+"» создан")}
+function sendChat(){let i=document.getElementById("chatInput"),v=i.value.trim();if(!v)return;let m=document.getElementById("messages");m.insertAdjacentHTML("beforeend",'<div class="msg me">'+v+"</div>");i.value="";setTimeout(()=>m.insertAdjacentHTML("beforeend",'<div class="msg ai"><b>Work Hub AI</b>Разберём. Я сначала выделю проблему, потом дам конкретный следующий шаг. Для точного ответа можешь прислать контекст, скриншот или документ.</div>'),350)}
+function help(x){let map={"Не знаю, что делать":"Не решай весь проект. Открой только Figma и создай один frame первого экрана.","Задача огромная":"Разбей её до действия на 5–10 минут. Сейчас: открыть проект и написать первый микрошаг.","Боюсь сделать плохо":"Сделай черновик без оценки. Финальное качество проверим после.","Боюсь клиента":"Сейчас не нужно писать клиенту. Сначала подготовим, что именно ты хочешь ему сказать.","Отвлекаюсь":"Убери всё лишнее и поставь таймер на 5 минут. Только одна задача.","Мне тяжело":"Сделай минимальную версию: открой рабочий файл и просто начни с одного элемента."};let e=document.getElementById("help");e.style.display="block";e.innerHTML="<b>"+x+"</b><br>"+map[x]}
+let t5=null,s5=300;function render5(){let m=Math.floor(s5/60),s=s5%60;document.getElementById("focusTime").textContent=String(m).padStart(2,"0")+":"+String(s).padStart(2,"0")}function start5(){if(t5){clearInterval(t5);t5=null;return}t5=setInterval(()=>{s5--;render5();if(s5<=0){clearInterval(t5);t5=null;toast("5 минут закончились. Можешь остановиться или продолжить.")}},1000)}function reset5(){clearInterval(t5);t5=null;s5=300;render5()}
+</script>
+<script>
+(function () {
+  const titles = {
+    home:["Главная","Главное на сегодня — без лишнего шума."],
+    tasks:["Задачи","Любые рабочие задачи и календарь."],
+    clients:["Клиенты и проекты","Клиенты, проекты и путь от контакта до запуска."],
+    money:["Деньги","Доходы, расходы, долги, платежи и цели."],
+    design:["Дизайн","Портфолио, референсы и профессиональная помощь."],
+    assistant:["Помощник","Твой универсальный ИИ-эксперт по работе."],
+    stuck:["Тяжело начать?","Место, куда можно прийти без чувства вины и просто начать."],
+    character:["Мой персонаж","Прокачивай персонажа вместе с реальным рабочим прогрессом."],
+    settings:["Настройки","Настройки поведения и отображения Work Hub."],
+    admin:["Админ","Техническое управление системой."]
+  };
+  function show(page) {
+    document.querySelectorAll(".page").forEach(function(el){el.classList.toggle("active", el.id === page);});
+    document.querySelectorAll(".nav button").forEach(function(el){el.classList.toggle("active", el.dataset.page === page);});
+    if (titles[page]) {
+      var t=document.getElementById("title"), s=document.getElementById("subtitle");
+      if(t)t.textContent=titles[page][0];
+      if(s)s.textContent=titles[page][1];
+    }
     window.scrollTo(0,0);
   }
-  function hash(){show(location.hash||"#home")}
-  window.addEventListener("hashchange",hash);
-  document.querySelectorAll("[data-page-link]").forEach(a=>a.addEventListener("click",()=>show(a.dataset.pageLink)));
-
-  /*
-   * CURRICULUM:
-   * 1. Psychology — understand the buyer.
-   * 2. Research — collect evidence before making claims.
-   * 3. Positioning — choose a clear place in the customer's mind.
-   * 4. Offer & copy — turn insight into a message.
-   * 5. Sales — turn conversations into decisions.
-   * 6. Channels — acquire attention where the audience already is.
-   * 7. Funnels & growth — connect attention to revenue.
-   * 8. Experiments — replace guesses with tests.
-   * 9. Branding — build recognition and meaning.
-   * 10. Marketing Brain — integrate everything into diagnosis and strategy.
-   *
-   * The order is deliberate: person -> evidence -> value -> message -> sale
-   * -> acquisition -> economics -> experimentation -> brand -> strategy.
-   */
-  const curriculum=[
-    {id:1,icon:"🧠",name:"Психология покупателя",goal:"Научиться понимать, что происходит в голове человека до, во время и после покупки: какую проблему он решает, чего хочет, чего боится, что сравнивает и почему в итоге выбирает один вариант.",lessons:[
-      {title:"Почему люди покупают: от проблемы к ценности",time:"25 мин",objective:"Понять фундаментальную логику покупки и научиться находить настоящую ценность продукта.",theory:[
-        ["Начнём с самого главного","Маркетинг нужен для того, чтобы соединить подходящего человека с подходящим предложением. Но прежде чем писать рекламу или проектировать сайт, нужно понять, зачем человеку вообще нужен этот продукт. Человек редко покупает вещь только ради самой вещи. Он покупает изменение своей ситуации."],
-        ["Продукт — это не ценность","Представь, что тебе продают дрель. Саму дрель ты покупать не хочешь. Тебе нужно сделать отверстие в стене, чтобы повесить полку. Полка нужна тебе, чтобы организовать пространство дома. Поэтому один и тот же продукт можно рассматривать на нескольких уровнях: что это такое → что он позволяет сделать → что это меняет в жизни человека."],
-        ["Четыре уровня, которые нужно видеть","Первый уровень — характеристика: что есть в продукте. Второй — преимущество: чем эта характеристика полезна. Третий — результат: что изменится у клиента. Четвёртый — ценность: почему это изменение действительно важно человеку. Например: «адаптивный сайт» → «удобен на телефоне» → «пользователь может без проблем оставить заявку» → «бизнес меньше теряет потенциальных клиентов»."],
-        ["Почему один продукт покупают по разным причинам","Представь двух клиентов, которым нужен сайт. Первому нужно увеличить количество заявок. Второму важно выглядеть серьёзнее перед дорогими клиентами. Услуга одна, но ценность разная. Поэтому маркетолог не должен пытаться найти одну универсальную причину покупки для всех. Нужно понимать конкретного клиента или сегмент."],
-        ["Какая ценность бывает","Функциональная ценность помогает человеку что-то сделать проще, быстрее или удобнее. Финансовая связана с деньгами: заработать, сэкономить, уменьшить потери. Эмоциональная связана с состоянием: спокойствием, уверенностью, удовольствием. Статусная связана с тем, как человек воспринимает себя или хочет выглядеть в глазах других."],
-        ["Главный вопрос маркетолога","Вместо вопроса «Как нам рассказать о продукте?» сначала задавай вопрос: «Что человек хочет изменить благодаря покупке?» Затем спроси: «Почему это изменение важно именно ему?» Именно из этих ответов потом появляются сильные офферы, тексты, рекламные сообщения и аргументы продаж."]
-      ],remember:"Люди покупают не характеристики сами по себе. Они покупают ожидаемый результат и изменение своей ситуации.",example:"Эксперт говорит: «Мне нужен сайт». Маркетолог не останавливается на этом. Он выясняет: эксперт запускает новый продукт, хочет принимать заявки с рекламы и перейти в более высокий ценовой сегмент. Значит, в коммуникации важны не только дизайн и страницы, а доверие, понятная презентация продукта и путь к заявке.",practice:"Выбери любой продукт или услугу. Выпиши: 1) 5 характеристик; 2) что каждая характеристика даёт; 3) какой результат получает клиент; 4) почему этот результат может быть для него важен. Затем напиши один оффер, который говорит именно о результате.",quiz:[
-        ["Что человек обычно покупает на уровне результата?",["Саму характеристику продукта","Изменение своей ситуации, которое он ожидает получить","Красивое описание продукта","Количество функций"],1],
-        ["Что из этого является характеристикой сайта?",["Адаптивная вёрстка","Больше заявок","Выше доверие","Меньше потерь с мобильного трафика"],0],
-        ["Что из этого является результатом?",["Шрифт Inter","Адаптивная сетка","Пользователь может удобно оставить заявку с телефона","Количество блоков"],2],
-        ["Почему один и тот же сайт можно продавать разным клиентам по-разному?",["Потому что нужно менять цену","Потому что у разных клиентов могут быть разные задачи и причины покупки","Потому что характеристики сайта не важны","Потому что всем нужен разный дизайн"],1],
-        ["Что относится к эмоциональной ценности?",["Скорость загрузки","Экономия 20 000 ₽","Чувство уверенности в своём бизнесе","Количество страниц"],2],
-        ["Что относится к финансовой ценности?",["Красивый интерфейс","Удобство","Возможность увеличить количество оплаченных заказов","Престиж"],2],
-        ["Какой вопрос лучше всего помогает найти ценность?",["Какой цвет вам нравится?","Что должно измениться после покупки?","Какой шрифт выбрать?","Сколько блоков сделать?"],1],
-        ["Почему перечисление характеристик часто плохо продаёт?",["Потому что характеристики запрещены","Потому что человеку приходится самому додумывать, зачем они ему нужны","Потому что характеристики всегда дорогие","Потому что характеристики видят только дизайнеры"],1],
-        ["Что маркетолог должен выяснить до создания сообщения?",["Только название продукта","Что человек хочет получить и почему это важно","Только цены конкурентов","Только визуальный стиль"],1],
-        ["Какая цепочка построена правильно?",["Характеристика → результат → ценность","Цена → скидка → покупка","Логотип → цвет → продажа","Реклама → лайк → характеристика"],0]
-      ]},
-
-      {title:"Проблема, потребность, желание и мотив",time:"25 мин",objective:"Научиться отделять поверхностную формулировку клиента от настоящей причины, по которой он хочет купить.",theory:[
-        ["Зачем вообще разделять эти понятия","Когда клиент говорит «мне нужен сайт», он уже предлагает тебе решение. Но он ещё не объяснил, какую задачу пытается решить. Если принять первую формулировку за истину, можно построить маркетинг вокруг неправильной проблемы."],
-        ["Проблема","Проблема — это то, что сейчас не устраивает человека или мешает ему получить желаемый результат. Например: «с сайта почти нет заявок», «клиенты не понимают, чем мы отличаемся», «менеджеры теряют обращения», «я не могу нормально презентовать новую услугу»."],
-        ["Потребность","Потребность — это то, что человеку необходимо получить или изменить, чтобы решить проблему. Например, при проблеме «клиенты не понимают предложение» потребность может быть в более понятной коммуникации ценности."],
-        ["Желание","Желание — конкретный результат или состояние, которого человек хочет. Например: «хочу получать больше заявок», «хочу продавать дороже», «хочу запустить новый продукт без хаоса»."],
-        ["Мотив","Мотив отвечает на вопрос: «Почему это настолько важно человеку?» За желанием заработать больше могут стоять безопасность, свобода, статус, развитие бизнеса или желание перестать постоянно переживать из-за денег. Мотив не всегда нужно буквально писать в рекламе, но его важно понимать."],
-        ["Как докапываться до причины","После первой фразы клиента не спеши предлагать решение. Спроси: «Почему это важно?», «Что сейчас не устраивает?», «Что изменится, если проблема исчезнет?», «Почему вы решили заняться этим сейчас?». Несколько хороших уточнений часто дают больше информации, чем длинная анкета."]
-      ],remember:"Первая фраза клиента — это гипотеза о его задаче, а не обязательно полная правда. Задача маркетолога — докопаться до причины.",example:"Клиент: «Мне нужен новый сайт». → Почему? «Старый выглядит дешёво». → Что это меняет? «Мне сложнее продавать дорогие услуги». → Почему важно? «Я хочу перейти в другой ценовой сегмент». Здесь реальная задача уже не просто «сделать сайт», а помочь бизнесу соответствовать новому уровню предложения.",practice:"Придумай 3 разных бизнеса и для каждого распиши: проблема → потребность → желание → возможный мотив. Затем придумай по 3 уточняющих вопроса, которые помогли бы проверить твою гипотезу.",quiz:[
-        ["Что такое проблема?",["То, что сейчас не устраивает или мешает получить результат","Любая характеристика продукта","Рекламный слоган","Цена"],0],
-        ["Что такое потребность?",["Название продукта","То, что человеку необходимо изменить или получить для решения задачи","Цвет бренда","Канал рекламы"],1],
-        ["Что лучше всего описывает желание?",["Конкретный результат или состояние, которого человек хочет","Техническую документацию","Конкурента","Бюджет компании"],0],
-        ["Что отвечает на вопрос «почему это важно лично ему?»",["Характеристика","Мотив","CTA","Канал"],1],
-        ["«У нас почти нет заявок» — это прежде всего...",["Проблема","Мотив","Статус","Оффер"],0],
-        ["«Хочу больше заявок от дорогих клиентов» — это прежде всего...",["Желаемый результат","Техническая проблема","Характеристика","Канал"],0],
-        ["Почему нельзя сразу принимать «мне нужен сайт» за задачу?",["Потому что сайт никогда не нужен","Потому что человек уже назвал решение, но не обязательно причину","Потому что сайты не продают","Потому что нужно всегда продавать рекламу"],1],
-        ["Какой вопрос лучше помогает копнуть глубже?",["Какой цвет вам нравится?","Что должно измениться после покупки?","Какой шрифт поставить?","Сколько страниц вам нравится?"],1],
-        ["Почему мотив полезен маркетологу?",["Он помогает понять личную значимость результата и сильнее понять контекст покупки","Он заменяет исследование","Он определяет шрифт","Он всегда должен быть написан в заголовке"],0],
-        ["Какой порядок наиболее логичен?",["Проблема → потребность → желание → мотив","Мотив → шрифт → цена → проблема","Цена → проблема → логотип → желание","Канал → оффер → проблема → мотив"],0]
-      ]},
-
-      {title:"Контекст покупки: почему сейчас?",time:"25 мин",objective:"Понять, почему человек может долго ничего не делать, а потом внезапно начать искать решение, и как маркетологу использовать этот контекст.",theory:[
-        ["Наличие проблемы ещё не означает покупку","У бизнеса может годами быть неудобный сайт, а человек всё равно ничего не делает. Причина проста: проблема существует, но пока не кажется достаточно важной, срочной или дорогой."],
-        ["Что превращает проблему в действие","Обычно происходит изменение: запускается реклама, падают продажи, появляется новый конкурент, открывается новая точка, выходит новый продукт, заканчивается контракт, появляется дедлайн или человек понимает, сколько денег теряет из-за текущей ситуации."],
-        ["Триггеры бывают внешними и внутренними","Внешний триггер приходит из ситуации вокруг человека: новый конкурент, изменение рынка, запуск проекта. Внутренний связан с самим человеком: усталость от текущего процесса, желание расти, страх упустить возможность, готовность перейти на новый уровень."],
-        ["Почему это важно для сообщения","Один и тот же продукт нужно объяснять через разные ситуации. Если клиент только запускает рекламу, ему может быть важна конверсия. Если он открывает премиальный филиал, ему может быть важен образ и доверие. Если компания растёт, важна масштабируемость процессов."],
-        ["Срочность без манипуляций","Маркетинг может показывать последствия бездействия, но не должен придумывать несуществующий дефицит. Настоящая срочность возникает из реальной ситуации клиента: дедлайна, денег, запуска, проблемы или возможности."]
-      ],remember:"Чтобы понять покупку, изучай не только «что человеку нужно», но и «что изменилось, из-за чего это стало нужно именно сейчас».",example:"Компания много лет использовала старый сайт. После запуска рекламы посещаемость выросла в три раза, но заявки почти не изменились. Проблема была и раньше, но теперь она стала напрямую связана с расходами на рекламу. Контекст сделал решение срочным.",practice:"Составь 10 реальных триггеров покупки для клиента веб-дизайнера. Для каждого напиши: что произошло → чего теперь боится или хочет клиент → какой маркетинговый аргумент будет релевантен.",quiz:[
-        ["Почему человек может годами не решать проблему?",["Проблема ещё не кажется достаточно важной или срочной","У него нет интернета","Маркетинг запрещён"],0],
-        ["Что такое триггер покупки?",["Событие или изменение, которое делает решение актуальным","Всегда скидка","Любая кнопка"],0],
-        ["Что является внешним триггером?",["Запуск новой рекламной кампании","Желание чувствовать себя увереннее","Усталость от ручной работы"],0],
-        ["Что является внутренним триггером?",["Появление конкурента","Желание перейти на новый уровень","Открытие новой точки"],1],
-        ["Зачем знать контекст покупки?",["Чтобы говорить с клиентом о его реальной ситуации","Чтобы всем продавать одинаково","Чтобы всегда повышать цену"],0],
-        ["Что делать с реальной срочностью?",["Показывать последствия и причины действовать сейчас","Придумывать фальшивый дедлайн","Скрывать условия"],0],
-        ["Если вырос рекламный трафик, почему сайт может стать более срочной проблемой?",["Потому что увеличилась цена ошибки и потенциальных потерь","Потому что сайт автоматически устарел","Потому что дизайн перестал существовать"],0],
-        ["Какой вопрос лучше всего исследует контекст?",["Почему вы решили заняться этим именно сейчас?","Какой цвет нравится?","Какая кнопка красивее?"],0],
-        ["Что происходит, когда сообщение учитывает контекст?",["Оно становится более релевантным конкретной ситуации клиента","Оно всегда становится дешевле","Оно перестаёт нуждаться в доказательствах"],0],
-        ["Какой подход является маркетингово здоровым?",["Создавать искусственный страх","Показывать реальную цену бездействия и реальную возможность получить результат","Всегда использовать таймер"],1]
-      ]},
-
-      {title:"Страх, риск и доверие",time:"25 мин",objective:"Понять, что может остановить покупателя и как конкретными доказательствами снижать неопределённость.",theory:[
-        ["Почему желание купить может не привести к покупке","Человек может понимать, что продукт ему нужен, но всё равно ничего не покупать. Причина часто в риске: «А вдруг не получится?», «А вдруг я потрачу деньги зря?», «А вдруг подрядчик исчезнет?», «А вдруг результат будет не таким, как обещали?»."],
-        ["Что такое воспринимаемый риск","Это не обязательно реальная вероятность проблемы. Это то, насколько опасной покупка кажется человеку. Даже хороший специалист может восприниматься как рискованный, если о нём мало информации."],
-        ["Какие риски бывают","Финансовый — потерять деньги. Временной — потерять недели или месяцы. Функциональный — получить результат хуже ожиданий. Социальный — выглядеть глупо перед партнёрами или клиентами. Психологический — пожалеть о решении."],
-        ["Как строится доверие","Доверие появляется, когда обещание подтверждается доказательствами. Это могут быть релевантные кейсы, отзывы, цифры, демонстрация процесса, договор, понятные сроки, реальные ограничения, портфолио и объяснение того, как принимаются решения."],
-        ["Почему конкретика сильнее громких обещаний","«Сделаем лучший сайт» почти ничего не доказывает. «Вот похожий проект, вот задача клиента, вот что мы изменили и вот результат» снижает неопределённость намного сильнее. Хороший маркетинг не просто обещает — он показывает, почему обещанию можно верить."]
-      ],remember:"Доверие — это снижение неопределённости с помощью конкретных доказательств.",example:"Два специалиста предлагают сайт за 100 000 ₽. Первый показывает только красивые макеты. Второй показывает похожий проект, объясняет этапы, сроки, договор, промежуточные результаты и отвечает на вопросы о процессе. Цена одинаковая, но воспринимаемый риск разный.",practice:"Составь таблицу: 7 страхов клиента → что именно он боится потерять → какое доказательство может снять этот страх → где это доказательство показать на сайте.",quiz:[
-        ["Почему человек может не купить нужный продукт?",["Он может бояться риска и неопределённости","Потому что любой продукт бесполезен","Потому что ему всегда нужна скидка"],0],
-        ["Что такое воспринимаемый риск?",["То, насколько опасной или неопределённой кажется покупка","Только цена","Количество функций"],0],
-        ["Какой риск связан с потраченными деньгами?",["Финансовый","Социальный","Функциональный"],0],
-        ["Что сильнее подтверждает обещание?",["Конкретный релевантный кейс","Громкая фраза","Слово «лучший»"],0],
-        ["Зачем показывать процесс работы?",["Чтобы снизить неопределённость и показать, чего ожидать","Чтобы сделать страницу длиннее","Чтобы заменить результат"],0],
-        ["Что делает хороший кейс?",["Показывает только картинку","Связывает исходную задачу, решение и результат","Скрывает ограничения"],1],
-        ["Почему «100% гарантированный результат» может быть слабым аргументом?",["Потому что обещание без доказательств не обязательно вызывает доверие","Потому что длинные слова запрещены","Потому что клиент не умеет читать"],0],
-        ["Какой вопрос помогает найти реальный страх?",["Что вас больше всего беспокоит при выборе подрядчика?","Какой цвет вам нравится?","Сколько блоков нужно?"],0],
-        ["Что должно происходить с неопределённостью на хорошем пути покупки?",["Постепенно снижаться","Постепенно расти","Оставаться максимальной"],0],
-        ["Главная функция trust-блоков?",["Подтвердить обещание и уменьшить сомнения","Украсить страницу","Спрятать цену"],0]
-      ]},
-
-      {title:"Почему «дорого» не всегда про деньги",time:"25 мин",objective:"Научиться понимать разные причины ценового возражения и выбирать ответ после диагностики.",theory:[
-        ["Что человек может иметь в виду под «дорого»","Фраза короткая, но причин у неё много. У человека может действительно не быть бюджета. Он может не видеть ценности. Может сравнивать тебя с более дешёвым вариантом. Может не доверять результату. Может считать задачу неважной прямо сейчас."],
-        ["Цена существует вместе с ценностью","Одна и та же сумма может казаться маленькой одному человеку и огромной другому. Но важен не только бюджет. Человек сравнивает цену с тем, что, как он ожидает, получит взамен, и с альтернативами, которые у него есть."],
-        ["Почему нельзя сразу давать скидку","Если клиент говорит «дорого», а ты сразу снижаешь цену, ты не узнала причину. Более того, человек может решить, что первоначальная цена была завышена. Скидка может быть уместной в некоторых ситуациях, но она не должна быть автоматической реакцией."],
-        ["Как диагностировать","Можно спросить: «С чем вы сравниваете стоимость?», «Что именно кажется дорогим?», «Какой результат для вас должен быть, чтобы эта инвестиция имела смысл?», «Есть ли сейчас ограничение именно по бюджету или вы сомневаетесь в ценности?»."],
-        ["Что делать после диагностики","Если проблема в ценности — объяснить результат и доказательства. Если в доверии — показать релевантные кейсы и процесс. Если бюджет объективно меньше — изменить объём или формат. Если задача пока не приоритетна — не давить, а понять, что должно измениться."]
-      ],remember:"«Дорого» — это не диагноз. Это сигнал, что нужно выяснить причину.",example:"Цена сайта — 80 000 ₽. Клиент А не располагает такими деньгами. Клиент Б располагает, но сравнивает тебя с вариантом за 30 000 ₽ и не понимает разницы. Клиент В считает задачу неважной. У всех одна фраза — «дорого», но три разных ответа.",practice:"Придумай 5 разных причин, по которым клиент может сказать «дорого». Для каждой напиши: уточняющий вопрос → настоящая проблема → корректный ответ.",quiz:[
-        ["Что может означать «дорого»?",["Только отсутствие денег","Несколько разных причин","Всегда желание получить скидку"],1],
-        ["Что делать первым?",["Дать скидку","Понять причину возражения","Критиковать конкурента"],1],
-        ["Что означает «я не вижу ценности»?",["Человек не понимает, почему результат оправдывает цену","У него обязательно нет денег","Ему не нужен продукт"],0],
-        ["Какой вопрос помогает понять сравнение?",["С чем вы сейчас сравниваете стоимость?","Какой цвет выбрать?","Нужен ли вам вообще бизнес?"],0],
-        ["Если бюджет действительно ограничен, что можно сделать?",["Рассмотреть другой объём или формат","Сразу работать бесплатно","Сказать, что клиент ничего не понимает"],0],
-        ["Почему автоматическая скидка может навредить?",["Она может обесценить предложение и не решить настоящую причину","Она всегда запрещена","Она автоматически увеличивает риск"],0],
-        ["Если человек не доверяет результату, что полезнее?",["Релевантные доказательства","Скидка без объяснения","Спор"],0],
-        ["Если задача не приоритетна, что нужно понять?",["Почему она пока не достаточно важна и что может изменить приоритет","Как сильнее надавить","Как спрятать цену"],0],
-        ["Какой ответ является диагностическим?",["Что именно в предложении кажется вам дорогим?","Могу сделать в два раза дешевле","Конкуренты ещё хуже"],0],
-        ["Главный принцип работы с возражением?",["Сначала понять причину, потом выбирать ответ","Всегда защищать цену","Всегда давать скидку"],0]
-      ]},
-
-      {title:"Как человек принимает решение",time:"30 мин",objective:"Собрать весь модуль в единую модель поведения покупателя и научиться применять её к сайтам, рекламе и продажам.",theory:[
-        ["Путь покупки не начинается с кнопки «Купить»","До покупки человек должен заметить проблему или возможность, признать её важность, начать искать варианты и понять, кому можно доверять. Поэтому маркетолог смотрит не только на момент оплаты, а на весь путь."],
-        ["Шаг 1 — триггер и осознание","Происходит событие, после которого проблема становится заметной или важной. Человек начинает думать: «Мне нужно что-то с этим сделать»."],
-        ["Шаг 2 — поиск решений","Человек изучает варианты: ищет в интернете, спрашивает знакомых, смотрит соцсети, читает отзывы, открывает сайты. На этом этапе ему нужно быстро понять, что ты вообще предлагаешь и для кого."],
-        ["Шаг 3 — сравнение","Он сравнивает варианты по критериям, которые важны именно ему: результат, цена, опыт, формат, сроки, удобство, доверие. Поэтому фраза «мы качественные» почти бесполезна без конкретики."],
-        ["Шаг 4 — снижение риска","Перед решением человек пытается убедиться, что ошибка маловероятна. Здесь работают кейсы, отзывы, демонстрации, понятные условия, ответы на вопросы и прозрачный процесс."],
-        ["Шаг 5 — решение и действие","Когда ценность кажется достаточной, риск приемлемым, а следующий шаг понятным, человек действует: оставляет заявку, покупает, записывается или связывается."],
-        ["После покупки всё продолжается","Опыт после покупки влияет на отзыв, повторную покупку и рекомендации. Поэтому хороший маркетолог думает не только о конверсии в оплату, но и о том, что клиент получит дальше."]
-      ],remember:"Хороший маркетинг последовательно отвечает на вопросы человека и уменьшает неопределённость от первого интереса до покупки и после неё.",example:"Человек замечает, что старый сайт перестал соответствовать бизнесу. Ищет дизайнеров. Смотрит первые экраны сайтов. Отбирает несколько специалистов. Сравнивает кейсы и цены. Проверяет отзывы. Пишет двум дизайнерам. Задаёт вопросы. Выбирает того, чьё предложение лучше отвечает его задаче и вызывает доверие. После проекта оценивает результат и решает, рекомендовать ли специалиста.",practice:"Построй customer journey для клиента веб-дизайнера. Для каждого этапа укажи: 1) что человек думает; 2) чего боится; 3) какой вопрос у него возникает; 4) что должен показать маркетинг; 5) какое действие он должен сделать дальше.",quiz:[
-        ["Что обычно запускает путь покупки?",["Триггер, проблема или возможность","Логотип","Случайная кнопка"],0],
-        ["Что человек хочет понять на этапе поиска?",["Какие решения существуют и подходят ли они ему","Только цвет сайта","Только размер компании"],0],
-        ["Что он делает на этапе сравнения?",["Сопоставляет варианты по важным для него критериям","Сразу покупает первый вариант","Перестаёт думать о проблеме"],0],
-        ["Зачем нужны кейсы перед покупкой?",["Чтобы снизить риск и показать подтверждение результата","Чтобы сделать сайт длиннее","Чтобы спрятать условия"],0],
-        ["Что должно происходить с неопределённостью?",["Она должна постепенно снижаться","Она должна расти","Она не имеет значения"],0],
-        ["Почему CTA должен быть понятным?",["Человек должен понимать, какой следующий шаг от него требуется","Потому что кнопки всегда продают","Чтобы заменить всю теорию"],0],
-        ["Почему путь клиента не всегда линейный?",["Люди могут возвращаться, сравнивать, советоваться и откладывать решение","Потому что маркетинг не работает","Потому что у всех одинаковые потребности"],0],
-        ["Что происходит после покупки?",["Формируется опыт, который влияет на повторные покупки и рекомендации","Ничего","Маркетинг автоматически прекращается"],0],
-        ["Как использовать customer journey в работе?",["Чтобы понять, какие вопросы и доказательства нужны на разных этапах","Чтобы выбрать шрифт","Чтобы сделать один универсальный текст"],0],
-        ["Что является общей задачей маркетолога?",["Помочь подходящему человеку понять ценность, снизить неопределённость и сделать следующий шаг","Заставить любого человека купить","Сделать рекламу максимально громкой"],0]
-      ]}
-    ]},
-    {id:2,icon:"🔎",name:"Исследование рынка",goal:"Получать факты о рынке, аудитории и конкурентах до того, как придумывать решение.",lessons:["Сегментация по поведению","Где искать язык клиента","Интервью и customer research","Анализ конкурентов","Карта альтернатив","Сборка customer insight"]},
-    {id:3,icon:"🎯",name:"Позиционирование",goal:"Выбирать понятную причину, по которой клиенту стоит обратить внимание именно на этот продукт.",lessons:["Что такое позиционирование","Сегмент и конкретный результат","УТП без клише","Категория и отличие","Ценность против характеристик","Позиционирование в одном предложении"]},
-    {id:4,icon:"✍️",name:"Оффер и копирайтинг",goal:"Превращать понимание клиента в сообщения, которые быстро объясняют ценность и ведут к действию.",lessons:["Hook и первый экран","Оффер","Структура продающего текста","Доказательства","Работа с возражениями","CTA и следующий шаг"]},
-    {id:5,icon:"₽",name:"Продажи",goal:"Проводить клиента от первого разговора до сделки через диагностику, вопросы и аргументацию ценности.",lessons:["Discovery","Правильные вопросы","Квалификация","Презентация решения","Возражения","Закрытие и follow-up"]},
-    {id:6,icon:"📣",name:"Каналы продвижения",goal:"Понимать, откуда брать внимание и как выбирать канал под продукт, аудиторию и цикл сделки.",lessons:["Как выбирать канал","Контент","Реклама","SEO","Партнёрства и блогеры","Экономика канала"]},
-    {id:7,icon:"📈",name:"Воронки и Growth",goal:"Видеть путь от внимания до денег и находить место, где бизнес теряет потенциальных клиентов.",lessons:["Архитектура воронки","Конверсии","CAC, CPL, CPA","LTV и AOV","Retention","Поиск узкого места"]},
-    {id:8,icon:"🧪",name:"Эксперименты",goal:"Перестать гадать и научиться проверять маркетинговые гипотезы системно.",lessons:["Как формулировать гипотезу","Метрика успеха","A/B-тесты","Приоритизация ICE","Разбор результатов","Когда остановить эксперимент"]},
-    {id:9,icon:"🧬",name:"Брендинг",goal:"Понять, как продукт становится узнаваемым через образ, язык, опыт и последовательные ассоциации.",lessons:["Бренд ≠ логотип","Образ бренда","Tone of voice","Визуальная система","Культурный контекст","Последовательность бренда"]},
-    {id:10,icon:"👑",name:"Marketing Brain",goal:"Собрать всё в единую систему и научиться диагностировать бизнес как маркетолог.",lessons:["Маркетинговое мышление","Диагностика бизнеса","Стратегическая карта","Маркетинговая система","Финальный кейс","Защита решения"]}
-  ];
-
-  function renderModules(active){
-    const tabs=document.getElementById("moduleTabs");
-    if(!tabs)return;
-    tabs.innerHTML=curriculum.map(m=>'<button data-module-id="'+m.id+'" class="'+(m.id===active?"active":"")+'">'+m.id+'. '+m.name+'</button>').join("");
-    tabs.querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>renderModules(Number(b.dataset.moduleId))));
-    const m=curriculum.find(x=>x.id===active)||curriculum[0];
-    const lessons=m.lessons;
-    document.getElementById("academyModule").innerHTML=
-      '<div class="card" style="margin-bottom:14px"><div class="tag">МОДУЛЬ '+String(m.id).padStart(2,"0")+' · '+m.icon+'</div><h2 style="margin-top:9px">'+m.name+'</h2><p>'+m.goal+'</p><div class="progress"><i style="width:0%"></i></div><div class="small">0% пройдено · 6 уроков</div></div>'+
-      '<div class="lesson-grid">'+lessons.map((l,i)=>{
-        const title=typeof l==="string"?l:l.title;
-        const desc=typeof l==="string"?"Внутри: теория, пример, практика и мини-тест.":l.objective;
-        const time=typeof l==="string"?"—":l.time;
-        return '<div class="card click lesson" data-curriculum-lesson="'+i+'"><div class="tag">УРОК '+String(i+1).padStart(2,"0")+(typeof l==="object"?" · "+time:"")+'</div><h3>'+title+'</h3><p>'+desc+'</p><div style="margin-top:13px" class="arrow">'+(m.id===1?"Открыть урок →":"Структура урока →")+'</div></div>';
-      }).join("")+'</div><div id="lessonOpen" style="margin-top:15px"></div>';
-
-    document.querySelectorAll("[data-curriculum-lesson]").forEach(card=>card.addEventListener("click",()=>{
-      const l=lessons[Number(card.dataset.curriculumLesson)];
-      if(typeof l==="string"){
-        document.getElementById("lessonOpen").innerHTML='<div class="case-box lesson-view"><div class="tag">УРОК · В ПРОГРАММЕ</div><h2 style="margin-top:9px">'+l+'</h2><p class="sub">Этот урок войдёт в следующий этап наполнения. Формат тот же: короткая теория → пример → практическое задание → мини-тест → закрепление.</p></div>';
-        return;
-      }
-      openLesson(m,l,Number(card.dataset.curriculumLesson));
-    }));
-  }
-
-  function openLesson(module,lesson,index){
-    const root=document.getElementById("lessonOpen");
-    root.innerHTML='<div class="case-box lesson-view">'+
-      '<div class="tag">МОДУЛЬ 01 · УРОК '+String(index+1).padStart(2,"0")+' · '+lesson.time+' · +80 XP</div>'+
-      '<h2 style="margin-top:9px">'+lesson.title+'</h2>'+
-      '<p class="sub"><b>Цель:</b> '+lesson.objective+'</p>'+
-      '<div class="lesson-text">'+
-      '<div class="lesson-section"><div class="tag">ТЕОРИЯ</div>'+lesson.theory.map((p,i)=>'<p>'+p+'</p>').join("")+'</div>'+
-      '<div class="callout"><b>ГЛАВНАЯ МЫСЛЬ</b><br>'+lesson.remember+'</div>'+
-      '<div class="lesson-section example-section"><div class="tag">ПРИМЕР</div><p>'+lesson.example+'</p></div>'+
-      '<div class="lesson-section practice-section"><div class="tag">ПРАКТИКА</div><p>'+lesson.practice+'</p></div>'+
-      '</div>'+
-      '<div class="quiz"><div class="tag">МИНИ-ТЕСТ · 2 ВОПРОСА</div>'+
-      lesson.quiz.map((q,qi)=>'<div class="quiz-question" data-q="'+qi+'" style="margin-top:18px"><h3>'+q[0]+'</h3>'+q[1].map((opt,oi)=>'<button class="option" data-answer="'+(oi===q[2]?'yes':'no')+'">'+opt+'</button>').join("")+'<div class="notice quiz-result" style="display:none;margin-top:7px"></div></div>').join("")+
-      '</div></div>';
-    root.querySelectorAll(".quiz-question").forEach(q=>{
-      q.querySelectorAll(".option").forEach(b=>b.addEventListener("click",()=>{
-        q.querySelectorAll(".option").forEach(x=>x.disabled=true);
-        const good=b.dataset.answer==="yes";
-        b.classList.add(good?"good":"bad");
-        const res=q.querySelector(".quiz-result");
-        res.style.display="block";
-        res.textContent=good?"Верно. +40 XP":"Не совсем. Перечитай ключевой принцип урока и попробуй ещё раз.";
-      }));
-    });
-    root.scrollIntoView({behavior:"smooth",block:"start"});
-  }
-
-  const caseData=[
-    ["Косметика","Начни с исследования аудитории, конкурентов, реальных проблем и ценности. Увеличивать бюджет вслепую рано."],
-    ["Эксперт","Проверь путь пользователя, соответствие оффера трафику, доверие, CTA и конверсию каждого этапа."],
-    ["Одежда","Определи конкретную аудиторию, культурный контекст и позицию бренда, которую можно занять в голове клиента."]
-  ];
-  document.querySelectorAll("[data-case]").forEach(card=>card.addEventListener("click",()=>{
-    const x=caseData[Number(card.dataset.case)];
-    document.getElementById("caseOpen").classList.add("show");
-    document.getElementById("caseOpen").innerHTML='<div class="case-box"><div class="tag">РАЗБОР · '+x[0]+'</div><h2>С чего начинаем?</h2><p class="sub">'+x[1]+'</p><div class="notice" style="margin-top:15px">Логика: сначала диагноз → затем гипотеза → потом решение. Не наоборот.</div></div>';
-    document.getElementById("caseOpen").scrollIntoView({behavior:"smooth"});
-  }));
-
-  const salesData=[
-    ["80 000 ₽ дорого",["Могу сделать за 60 000 ₽","С чем вы сейчас сравниваете стоимость и какой результат от сайта для вас будет достаточным?","Но у меня очень качественная работа"],1],
-    ["Я подумаю и вернусь",["Хорошо, пишите когда-нибудь","Конечно. Что именно вам важно ещё обдумать, чтобы принять решение?","Давайте я дам скидку, чтобы вы решили сейчас"],1],
-    ["Другой дизайнер дешевле",["Я тоже могу сделать дешевле","У конкурента плохой дизайн","Что именно входит в его предложение и какой результат вы ожидаете от проекта?"],2]
-  ];
-  document.querySelectorAll("[data-sales]").forEach(card=>card.addEventListener("click",()=>{
-    const s=salesData[Number(card.dataset.sales)];
-    document.getElementById("salesOpen").classList.add("show");
-    document.getElementById("salesOpen").innerHTML='<div class="case-box"><div class="tag">SALES SIMULATOR</div><h2>Клиент говорит:</h2><p style="font-size:18px">«'+s[0]+'»</p><div id="salesOptions"></div><div id="salesResult" class="notice" style="display:none;margin-top:9px"></div></div>';
-    s[1].forEach((x,i)=>{
-      const b=document.createElement("button");b.className="option";b.textContent=x;
-      b.onclick=()=>{document.querySelectorAll("#salesOptions .option").forEach(q=>q.disabled=true);const good=i===s[2];b.classList.add(good?"good":"bad");const rr=document.getElementById("salesResult");rr.style.display="block";rr.textContent=good?"Да. Ты сначала выясняешь реальную причину, а не защищаешься и не сливаешь цену. +120 XP":"Не лучший ход. Ты отвечаешь на предположение, не выяснив причину.";
-      };
-      document.getElementById("salesOptions").appendChild(b);
-    });
-    document.getElementById("salesOpen").scrollIntoView({behavior:"smooth"});
-  }));
-
-  const crimeData=[
-    ["«Мы работаем со всеми нишами»","Позиционирование размыто: человек не понимает, почему именно эта компания подходит ему."],
-    ["«У нас высокое качество»","Качество без конкретного доказательства — базовое ожидание, а не причина выбрать компанию."],
-    ["«Скидка 30% только сегодня»","Скидка сама по себе не объясняет ценность. Если она главный аргумент, клиент привыкает ждать скидку."]
-  ];
-  document.querySelectorAll("[data-crime]").forEach(card=>card.addEventListener("click",()=>{
-    const x=crimeData[Number(card.dataset.crime)];
-    document.getElementById("crimeOpen").classList.add("show");
-    document.getElementById("crimeOpen").innerHTML='<div class="case-box"><div class="tag">MARKETING CRIME</div><h2>'+x[0]+'</h2><div class="callout"><b>ДИАГНОЗ</b><br>'+x[1]+'</div><div class="notice">Правило: хорошее маркетинговое сообщение должно помогать человеку понять ценность и причину выбора.</div></div>';
-    document.getElementById("crimeOpen").scrollIntoView({behavior:"smooth"});
-  }));
-
-  const send=document.getElementById("send");
-  if(send)send.addEventListener("click",()=>{
-    const input=document.getElementById("chatInput"),v=input.value.trim();if(!v)return;
-    document.getElementById("messages").insertAdjacentHTML("beforeend",'<div class="msg me">'+v.replace(/[<>]/g,"")+'</div>');
-    input.value="";
-    setTimeout(()=>document.getElementById("messages").insertAdjacentHTML("beforeend",'<div class="msg"><b>Marketing Coach</b><br>Разложим ситуацию: кто клиент → какую задачу он решает → почему текущий способ не устраивает → какую ценность ты можешь предложить → какое следующее действие нужно получить.</div>'),250);
+  window.go = show;
+  document.addEventListener("click", function(e){
+    var b=e.target.closest(".nav button[data-page]");
+    if(b){e.preventDefault();show(b.dataset.page);}
   });
-  const chatInput=document.getElementById("chatInput");
-  if(chatInput)chatInput.addEventListener("keydown",e=>{if(e.key==="Enter"&&send)send.click()});
-
-  renderModules(1);
-  hash();
 })();
-</script>
-</body>
-</html>
+</script></body></html>
