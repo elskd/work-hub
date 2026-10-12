@@ -1374,7 +1374,7 @@ textarea:focus-visible {
   margin: 0;
   border-bottom: 1px solid var(--line);
 }
-#task-form {
+.editor-form {
   display: grid;
   grid-template-rows: minmax(0, 1fr) auto;
   min-height: 0;

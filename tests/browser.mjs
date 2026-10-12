@@ -1,3 +1,4 @@
+import { crmChecks } from "./crm-browser.mjs";
 import { layoutChecks, optionalWebkitLayoutChecks } from "./layout.mjs";
 import { extendedChecks } from "./integration.mjs";
 import http from "node:http";
@@ -209,6 +210,7 @@ await p.getByRole("alert").waitFor();
 assert.equal(await p.evaluate((k) => localStorage.getItem(k), key), "{broken");
 await bad.close();
 const extended = await extendedChecks(browser, url);
+const crm = await crmChecks(browser,url);
 const layout = await layoutChecks(browser, url);
 const webkit = await optionalWebkitLayoutChecks(url);
 assert.deepEqual(errors, []);
@@ -221,6 +223,7 @@ await fs.writeFile(
       pageErrors: errors,
       result: "PASS",
       extended,
+      crm,
       layout,
       webkit,
       scenarios: [

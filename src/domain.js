@@ -17,7 +17,7 @@ export function addDays(value, amount) {
   return result;
 }
 
-export const emptyState = () => ({schema: 1, revision: 0, tasks: [], projects: [], payments: [], settings: {theme: 'light', accent: 'black', goal: 150000}});
+export const emptyState = () => ({schema: 1, revision: 0, tasks: [], projects: [], clients: [], leads: [], payments: [], settings: {theme: 'light', accent: 'black', goal: 150000}});
 
 function validateRepeat(repeat, plannedDate) {
   if (!repeat || !['none', 'daily', 'weekly', 'monthly'].includes(repeat.frequency)) throw Error('Выберите правило повторения.');
@@ -222,7 +222,7 @@ export function recommendation(state, today = dateKey()) {
   open.sort((a, b) => rank(a) - rank(b) || (priorities[a.priority] ?? 1) - (priorities[b.priority] ?? 1) || (a.deadline || '9999').localeCompare(b.deadline || '9999') || (a.start || '99').localeCompare(b.start || '99'));
   const task = open[0];
   if (!task) {
-    const projects = state.projects.filter(project => !project.archived && !['completed', 'cancelled'].includes(project.status));
+    const projects = state.projects.filter(project => !project.archived && (!project.status || ['active', 'revisions'].includes(project.status)));
     projects.sort((a, b) => (a.deadline || '9999').localeCompare(b.deadline || '9999'));
     const project = projects[0];
     if (project) return {task: null, project, reason: project.deadline && project.deadline < today ? 'Срок активного проекта уже прошёл. Откройте проект и определите ближайшее действие.' : 'Для активного проекта пока нет открытых задач. Выберите ближайшее действие по проекту.'};

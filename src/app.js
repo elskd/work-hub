@@ -1,3 +1,4 @@
+import { createCrmUI } from "./crm-ui.js";
 import {
   uid,
   dateKey,
@@ -58,8 +59,6 @@ const names = {
   settings: "Настройки",
 };
 const later = {
-  projects: "Клиенты, этапы проектов, сметы и связанные материалы.",
-  search: "Отдельная воронка лидов и превращение договорённости в проект.",
   money: "Проектные поступления, ожидаемые оплаты, расходы, налоги и долги.",
   content: "Идеи, черновики, этапы и календарь ручных публикаций.",
   design: "Изображения, ссылки, категории и библиотека визуальных референсов.",
@@ -158,7 +157,7 @@ const empty = (title, description, action = "") =>
   addButton = (label = "Новая задача") =>
     `<button class="btn primary" data-action="new">${icon("plus")}${label}</button>`;
 function taskRow(t) {
-  return `<div class="task-row ${t.done ? "done" : ""}"><label class="check-label"><input type="checkbox" data-toggle="${esc(t.id)}" ${t.done ? "checked" : ""} aria-label="${t.done ? "Вернуть в работу" : "Выполнить"}: ${esc(t.title)}"></label><div class="task-body"><button class="task-title" data-edit="${esc(t.id)}">${esc(t.title)}</button><div class="task-meta"><span>${pLabels[t.priority]} приоритет</span>${t.deadline ? `<span class="${!t.done && t.deadline < dateKey() ? "overdue" : ""}">${!t.done && t.deadline < dateKey() ? "Просрочено · " : ""}Срок ${dateLabel(t.deadline)}</span>` : ""}${t.plannedDate ? `<span>План ${dateLabel(t.plannedDate)}${t.start ? " · " + t.start + "–" + t.end : ""}</span>` : ""}${taskProject(t) ? `<a href="#projects">${esc(taskProject(t).title)}</a>` : ""}${t.repeat?.frequency !== "none" ? "<span>↻ Повторяется</span>" : ""}</div>${t.subtasks.length ? `<div class="subtasks-preview">${t.subtasks.filter((s) => s.done).length} из ${t.subtasks.length} подзадач</div>` : ""}</div><button class="icon-button" data-edit="${esc(t.id)}" aria-label="Редактировать: ${esc(t.title)}">${icon("more")}</button></div>`;
+  return `<div class="task-row ${t.done ? "done" : ""}"><label class="check-label"><input type="checkbox" data-toggle="${esc(t.id)}" ${t.done ? "checked" : ""} aria-label="${t.done ? "Вернуть в работу" : "Выполнить"}: ${esc(t.title)}"></label><div class="task-body"><button class="task-title" data-edit="${esc(t.id)}">${esc(t.title)}</button><div class="task-meta"><span>${pLabels[t.priority]} приоритет</span>${t.deadline ? `<span class="${!t.done && t.deadline < dateKey() ? "overdue" : ""}">${!t.done && t.deadline < dateKey() ? "Просрочено · " : ""}Срок ${dateLabel(t.deadline)}</span>` : ""}${t.plannedDate ? `<span>План ${dateLabel(t.plannedDate)}${t.start ? " · " + t.start + "–" + t.end : ""}</span>` : ""}${taskProject(t) ? `<a href="#projects" data-project-id="${esc(t.projectId)}">${esc(taskProject(t).title)}</a>` : ""}${t.repeat?.frequency !== "none" ? "<span>↻ Повторяется</span>" : ""}</div>${t.subtasks.length ? `<div class="subtasks-preview">${t.subtasks.filter((s) => s.done).length} из ${t.subtasks.length} подзадач</div>` : ""}</div><button class="icon-button" data-edit="${esc(t.id)}" aria-label="Редактировать: ${esc(t.title)}">${icon("more")}</button></div>`;
 }
 const card = (title, body, extra = "", subtitle = "") =>
   `<section class="card" data-section="${{ "Задачи на день": "today", Просроченные: "overdue", "Ближайшие дедлайны": "deadlines", "Активные проекты": "projects", "План по времени": "timeline", "Цель месяца": "goal" }[title] || "other"}"><div class="card-head"><div><h2>${title}</h2>${subtitle ? `<small>${subtitle}</small>` : ""}</div>${extra}</div>${body}</section>`;
@@ -184,7 +183,7 @@ function home() {
       )
       .sort((a, b) => a.deadline.localeCompare(b.deadline)),
     active = state.projects.filter(
-      (p) => p.status !== "completed" && !p.archived,
+      (p) => !["completed","refused","postponed","no-response"].includes(p.status) && !p.archived,
     ),
     projectDue = active.filter(
       (p) => p.deadline && p.deadline >= day && p.deadline <= addDays(day, 7),
@@ -204,7 +203,7 @@ function home() {
     },
   ).join(
     "",
-  )}</div><div class="date-controls"><label class="field"><span>Другая дата</span><input type="date" id="home-date" value="${day}"></label><button class="text-link" data-action="today">Сегодня</button></div><div class="dashboard"><div class="column"><section class="card next-step"><div class="next-top"><span class="eyebrow">Следующий шаг · сегодня</span><span class="pill">Без ИИ</span></div><h2>${rec.task ? esc(rec.task.title) : rec.project ? esc(rec.project.title) : "Начнём с одного действия"}</h2><p>${rec.reason}</p>${rec.task ? `<button class="btn primary" data-edit="${rec.task.id}">Открыть задачу ${icon("arrow")}</button>` : rec.project ? '<a class="btn primary" href="#projects">Открыть проекты →</a>' : addButton("Добавить первую задачу")}</section>${card("Задачи на день", todayTasks.length ? todayTasks.map(taskRow).join("") : empty("Пока свободно", "Добавьте задачу и укажите дату планирования. Так она появится здесь."), '<a class="text-link" href="#tasks">Все задачи →</a>', `${todayTasks.filter((t) => t.done).length} из ${todayTasks.length} выполнено`)}${late.length ? card("Просроченные", late.map(taskRow).join(""), "", "Срок прошёл, задачи остаются в работе") : ""}${card("Ближайшие дедлайны", obligations.length ? obligations.map(({ type, item }) => (type === "task" ? taskRow(item) : `<div class="task-row"><div class="task-body"><a class="task-title" href="#projects">${esc(item.title)}</a><div class="task-meta">Проект · Срок ${dateLabel(item.deadline)}</div></div></div>`)).join("") : empty("Без срочных обязательств", "На ближайшие 7 дней дедлайнов нет."), '<a class="text-link" href="#tasks">Все →</a>')}${card("Активные проекты", active.length ? active.map((p) => `<div class="task-row"><div class="task-body"><a class="task-title" href="#projects">${esc(p.title)}</a><div class="task-meta">${esc(p.clientName || "Клиент не указан")} · ${esc(p.stage || "Этап не указан")}</div><small>${p.deadline ? "Срок " + dateLabel(p.deadline) : "Ближайший срок не указан"}</small></div></div>`).join("") : empty("Проекты появятся здесь", "Клиенты, проекты и их этапы будут доступны на следующем этапе."), '<a class="text-link" href="#projects">Проекты →</a>')}</div><div class="column">${card("План по времени", schedule.length ? schedule.map((t) => `<div class="timeline-item"><time>${t.start}–${t.end}</time><div class="slot"><button data-edit="${t.id}">${esc(t.title)}</button><small>${t.done ? "✓ Выполнено" : esc(taskProject(t)?.title || "Без проекта")}</small></div></div>`).join("") + '<p class="note">Время вне указанных интервалов свободно. Рабочие часы пока не ограничены.</p>' : empty("День без расписания", "Укажите начало и окончание в задаче. Остальное время останется свободным."), icon("clock"), "Интервалы выбранного дня")}${card(
+  )}</div><div class="date-controls"><label class="field"><span>Другая дата</span><input type="date" id="home-date" value="${day}"></label><button class="text-link" data-action="today">Сегодня</button></div><div class="dashboard"><div class="column"><section class="card next-step"><div class="next-top"><span class="eyebrow">Следующий шаг · сегодня</span><span class="pill">Без ИИ</span></div><h2>${rec.task ? esc(rec.task.title) : rec.project ? esc(rec.project.title) : "Начнём с одного действия"}</h2><p>${rec.reason}</p>${rec.task ? `<button class="btn primary" data-edit="${rec.task.id}">Открыть задачу ${icon("arrow")}</button>` : rec.project ? `<a class="btn primary" href="#projects" data-project-id="${esc(rec.project.id)}">Открыть проект →</a>` : addButton("Добавить первую задачу")}</section>${card("Задачи на день", todayTasks.length ? todayTasks.map(taskRow).join("") : empty("Пока свободно", "Добавьте задачу и укажите дату планирования. Так она появится здесь."), '<a class="text-link" href="#tasks">Все задачи →</a>', `${todayTasks.filter((t) => t.done).length} из ${todayTasks.length} выполнено`)}${late.length ? card("Просроченные", late.map(taskRow).join(""), "", "Срок прошёл, задачи остаются в работе") : ""}${card("Ближайшие дедлайны", obligations.length ? obligations.map(({ type, item }) => (type === "task" ? taskRow(item) : `<div class="task-row"><div class="task-body"><a class="task-title" href="#projects" data-project-id="${esc(item.id)}">${esc(item.title)}</a><div class="task-meta">Проект · Срок ${dateLabel(item.deadline)}</div></div></div>`)).join("") : empty("Без срочных обязательств", "На ближайшие 7 дней дедлайнов нет."), '<a class="text-link" href="#tasks">Все →</a>')}${card("Активные проекты", active.length ? active.map((p) => `<div class="task-row"><div class="task-body"><a class="task-title" href="#projects" data-project-id="${esc(p.id)}">${esc(p.title)}</a><div class="task-meta">${esc(state.clients?.find(c=>c.id===p.clientId)?.name || p.clientName || "Клиент не указан")} · ${esc(p.stage || "Этап не указан")}</div><small>${p.deadline ? "Срок " + dateLabel(p.deadline) : "Ближайший срок не указан"}</small></div></div>`).join("") : empty("Проекты появятся здесь", "Добавьте первый проект: клиент, этапы, сроки и связанные задачи."), '<a class="text-link" href="#projects">Проекты →</a>')}</div><div class="column">${card("План по времени", schedule.length ? schedule.map((t) => `<div class="timeline-item"><time>${t.start}–${t.end}</time><div class="slot"><button data-edit="${t.id}">${esc(t.title)}</button><small>${t.done ? "✓ Выполнено" : esc(taskProject(t)?.title || "Без проекта")}</small></div></div>`).join("") + '<p class="note">Время вне указанных интервалов свободно. Рабочие часы пока не ограничены.</p>' : empty("День без расписания", "Укажите начало и окончание в задаче. Остальное время останется свободным."), icon("clock"), "Интервалы выбранного дня")}${card(
     "Цель месяца",
     `<div class="money-total">${money(income)} <span>из ${money(goal)}</span></div><div class="progress" role="progressbar" aria-label="Цель месяца" aria-valuemin="0" aria-valuemax="${goal}" aria-valuenow="${Math.min(goal, income)}"><span style="width:${Math.min(100, (income / goal) * 100)}%"></span></div><div class="money-foot"><span>Осталось ${money(Math.max(0, goal - income))}</span><span>${Math.round((income / goal) * 100)}%</span></div><p class="note">Только фактически полученные проектные платежи. Учёт платежей появится в следующем этапе.</p><a class="text-link" href="#money">Перейти в деньги →</a>`,
     `<div class="month-picker"><label class="field"><span>Месяц</span><select id="income-month" aria-label="Месяц доходов">${["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"].map((name, i) => `<option value="${String(i + 1).padStart(2, "0")}" ${Number(month.slice(5)) === i + 1 ? "selected" : ""}>${name}</option>`).join("")}</select></label><label class="field"><span>Год</span><select id="income-year" aria-label="Год доходов">${Array.from(
@@ -216,7 +215,7 @@ function home() {
           `<option ${y === Number(month.slice(0, 4)) ? "selected" : ""}>${y}</option>`,
       )
       .join("")}</select></label></div>`,
-  )}<div class="card stage-note"><div class="eyebrow">Первый этап</div><h2 style="margin-top:8px">Своё пространство для работы</h2><p class="note">Главная и задачи уже работают. Данные сохраняются в этом браузере. Общая база и синхронизация — следующие этапы.</p><a href="#settings" class="text-link">Настройки и резервная копия →</a></div></div></div>`;
+  )}<div class="card stage-note"><div class="eyebrow">Рабочее пространство</div><h2 style="margin-top:8px">Своё пространство для работы</h2><p class="note">Задачи, клиенты, проекты и поиск заказов в одном месте. Данные пока сохраняются только в этом браузере; синхронизация ещё не подключена.</p><a href="#settings" class="text-link">Настройки и резервная копия →</a></div></div></div>`;
 }
 function tasks() {
   let list = state.tasks.filter((t) =>
@@ -316,13 +315,17 @@ function render() {
         ? tasks()
         : route() === "settings"
           ? settings()
-          : placeholder());
+          : route() === "projects"
+            ? crm.renderProjects()
+            : route() === "search"
+              ? crm.renderLeads()
+              : placeholder());
   document.title = `${names[route()]} · Work Hub`;
 }
 function subrow(s = { id: uid(), title: "", done: false }) {
   return `<div class="subtask-edit" data-sub-id="${s.id}"><input type="checkbox" aria-label="Подзадача выполнена" ${s.done ? "checked" : ""}><input type="text" aria-label="Название подзадачи" placeholder="Одно небольшое действие" maxlength="500" value="${esc(s.title)}"><button class="icon-button" type="button" data-remove-sub aria-label="Удалить подзадачу">×</button></div>`;
 }
-function editor(id = null) {
+function editor(id = null, defaults = {}) {
   editId = id;
   const t = state.tasks.find((t) => t.id === id) || {
     title: "",
@@ -335,11 +338,12 @@ function editor(id = null) {
     end: "",
     repeat: { frequency: "none", interval: 1, weekdays: [] },
     subtasks: [],
+    ...defaults,
   };
   const field = (label, name, type = "text") =>
     `<label class="field"><span>${label}</span><input name="${name}" type="${type}" value="${esc(t[name])}"></label>`;
   $("#editor").innerHTML =
-    `<div class="dialog-head"><h2 id="editor-title">${id ? "Задача" : "Новая задача"}</h2><button class="icon-button" data-close="editor" aria-label="Закрыть форму">×</button></div><form id="task-form" novalidate><div class="dialog-body"><div class="form-grid"><label class="field full"><span>Название *</span><input name="title" required maxlength="500" placeholder="Что нужно сделать?" value="${esc(t.title)}" aria-describedby="title-error" autofocus><small id="title-error" class="field-error"></small></label><label class="field full"><span>Описание</span><textarea name="description" maxlength="10000">${esc(t.description)}</textarea></label><label class="field"><span>Приоритет</span><select name="priority">${Object.entries(
+    `<div class="dialog-head"><h2 id="editor-title">${id ? "Задача" : "Новая задача"}</h2><button class="icon-button" data-close="editor" aria-label="Закрыть форму">×</button></div><form id="task-form" class="editor-form" novalidate><div class="dialog-body"><div class="form-grid"><label class="field full"><span>Название *</span><input name="title" required maxlength="500" placeholder="Что нужно сделать?" value="${esc(t.title)}" aria-describedby="title-error" autofocus><small id="title-error" class="field-error"></small></label><label class="field full"><span>Описание</span><textarea name="description" maxlength="10000">${esc(t.description)}</textarea></label><label class="field"><span>Приоритет</span><select name="priority">${Object.entries(
       pLabels,
     )
       .map(
@@ -348,7 +352,7 @@ function editor(id = null) {
       )
       .join(
         "",
-      )}</select></label><label class="field"><span>Проект</span><select name="projectId"><option value="">Без проекта</option>${state.projects.map((p) => `<option value="${p.id}" ${t.projectId === p.id ? "selected" : ""}>${esc(p.title)}</option>`).join("")}</select><small>Управление проектами — следующий этап.</small></label>${field("Дедлайн · обещанный срок", "deadline", "date")}${field("Дата планирования", "plannedDate", "date")}${field("Начало", "start", "time")}${field("Окончание", "end", "time")}<div class="full"><p class="note" style="margin:0">План и дедлайн независимы. Пересечения интервалов разрешены с предупреждением.</p><p id="overlap-warning" class="warn" role="status"></p></div><label class="field"><span>Повторение</span><select name="frequency">${Object.entries(
+      )}</select></label><label class="field"><span>Проект</span><select name="projectId"><option value="">Без проекта</option>${state.projects.map((p) => `<option value="${p.id}" ${t.projectId === p.id ? "selected" : ""}>${esc(p.title)}</option>`).join("")}</select><small>Задача будет связана с выбранным проектом.</small></label>${field("Дедлайн · обещанный срок", "deadline", "date")}${field("Дата планирования", "plannedDate", "date")}${field("Начало", "start", "time")}${field("Окончание", "end", "time")}<div class="full"><p class="note" style="margin:0">План и дедлайн независимы. Пересечения интервалов разрешены с предупреждением.</p><p id="overlap-warning" class="warn" role="status"></p></div><label class="field"><span>Повторение</span><select name="frequency">${Object.entries(
       {
         none: "Не повторять",
         daily: "Каждый день",
@@ -363,7 +367,7 @@ function editor(id = null) {
       .join(
         "",
       )}</select></label><label class="field"><span>Через сколько дней / недель / месяцев</span><input name="interval" type="number" min="1" max="365" value="${t.repeat.interval || 1}"></label><div class="field full"><span>Дни недели · только для еженедельного повтора</span><div class="weekdays">${[1, 2, 3, 4, 5, 6, 0].map((d, i) => `<label><input type="checkbox" name="weekday" value="${d}" ${t.repeat.weekdays?.includes(d) ? "checked" : ""}>${["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"][i]}</label>`).join("")}</div><small>Без выбора — день планирования. Для 29–31 числа в коротком месяце — последний день.</small></div>${id && (t.repeat.frequency !== "none" || (t.futureTemplate?.repeat?.frequency && t.futureTemplate.repeat.frequency !== "none")) ? '<label class="field full"><span>Область изменения</span><select name="scope"><option value="one">Только этот экземпляр</option><option value="future">Этот и будущие невыполненные экземпляры</option></select></label>' : ""}<div class="full"><h3>Подзадачи</h3><div id="subtask-list" style="margin-top:12px">${t.subtasks.map(subrow).join("")}</div><button type="button" class="text-link" data-action="add-sub">＋ Добавить подзадачу</button></div></div></div><div class="dialog-footer"><div id="form-error" class="error" role="alert"></div><div class="dialog-actions">${id ? `<button type="button" class="btn danger" data-delete="${id}">Удалить</button><button type="button" class="btn" data-archive="${id}">${t.archived ? "Из архива" : "В архив"}</button>` : ""}<button type="button" class="btn" data-close="editor">Отмена</button><button class="btn primary" type="submit">Сохранить</button></div></div></form>`;
-  $("#editor").showModal();
+  if(!$("#editor").open)$("#editor").showModal();
   $("#editor").scrollTop = 0;
   $(".dialog-body").scrollTop = 0;
 }
@@ -470,6 +474,8 @@ document.addEventListener("click", async (e) => {
   const el = e.target.closest("button,a");
   if (!el) return;
   if (el.closest("#more-nav")) close("more");
+  if(el.dataset.projectId){e.preventDefault();crm.openProject(el.dataset.projectId);return;}
+  if (await crm.handleClick(e)) return;
   if (el.dataset.close) close(el.dataset.close);
   if (el.dataset.edit) editor(el.dataset.edit);
   if (el.dataset.day) {
@@ -549,6 +555,7 @@ document.addEventListener("click", async (e) => {
   }
 });
 document.addEventListener("change", async (e) => {
+  if(await crm.handleChange(e))return;
   const el = e.target;
   if (el.dataset.toggle) complete(el.dataset.toggle);
   if (el.id === "home-date" && el.value) {
@@ -588,6 +595,7 @@ document.addEventListener("change", async (e) => {
   }
 });
 document.addEventListener("input", (e) => {
+  if(crm.handleInput(e))return;
   if (e.target.id === "task-search") {
     const pos = e.target.selectionStart;
     query = e.target.value;
@@ -597,6 +605,7 @@ document.addEventListener("input", (e) => {
   }
 });
 document.addEventListener("submit", async (e) => {
+  if(e.target.id==="crm-form"){e.preventDefault();await crm.handleSubmit(e);return;}
   if (e.target.id === "task-form") saveTask(e);
   if (e.target.id === "goal-form") {
     e.preventDefault();
@@ -624,6 +633,21 @@ window.addEventListener("storage", (e) => {
     );
 });
 matchMedia("(prefers-color-scheme:dark)").addEventListener("change", theme);
+let crmReturnFocus=null;
+const crm=createCrmUI({
+  getState:()=>state,mutate,render,toast,esc,icon,
+  openTask:id=>editor(id),
+  newTask:defaults=>editor(null,defaults),
+  openDialog:html=>{
+    const dialog=$("#editor");
+    if(!dialog.open)crmReturnFocus=document.activeElement;
+    dialog.innerHTML=html;
+    if(!dialog.open)dialog.showModal();
+    dialog.scrollTop=0;
+    const body=dialog.querySelector(".dialog-body");if(body)body.scrollTop=0;
+  },
+  closeDialog:()=>{ $("#editor").close(); (crmReturnFocus?.isConnected?crmReturnFocus:$("#main"))?.focus(); }
+});
 try {
   repository = new LocalRepository();
   state = await repository.load();
