@@ -1155,3 +1155,433 @@ dialog::backdrop {
     max-width: none;
   }
 }
+/* Screenshot-led alignment pass: native Safari controls and stable dialog chrome. */
+input:not([type="checkbox"]),
+select {
+  height: 44px;
+  min-height: 44px;
+  line-height: 22px;
+}
+select {
+  -webkit-appearance: none;
+  appearance: none;
+  padding: 10px 36px 10px 12px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='m4 6 4 4 4-4' fill='none' stroke='%23787b77' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  box-sizing: border-box;
+}
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline-width: 2px;
+  outline-offset: 2px;
+}
+.date-controls {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+  margin: 0 0 20px;
+}
+.date-controls .text-link {
+  height: 44px;
+}
+.date-controls .field {
+  max-width: 190px;
+}
+.month-picker {
+  display: grid;
+  grid-template-columns: minmax(110px, 1.2fr) minmax(90px, 1fr);
+  gap: 8px;
+  width: 230px;
+  max-width: 100%;
+}
+.month-picker select {
+  font-size: 12px;
+}
+[data-section="goal"] > .card-head {
+  align-items: flex-end;
+}
+.card-head {
+  margin-bottom: 16px;
+  min-height: 24px;
+}
+.card-head .text-link {
+  min-height: 24px;
+}
+.dashboard {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 20px;
+  align-items: stretch;
+}
+.dashboard > .column {
+  display: contents;
+}
+.dashboard .next-step {
+  order: 0;
+  grid-column: 1/-1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 24px;
+}
+.next-step .next-top {
+  grid-column: 1/-1;
+}
+.next-step h2 {
+  font-size: 17px;
+  margin: 8px 0 4px;
+}
+.next-step p {
+  grid-column: 1;
+}
+.next-step > .btn {
+  grid-column: 2;
+  grid-row: 2/4;
+  align-self: center;
+  margin: 0;
+}
+.dashboard [data-section="today"] {
+  order: 1;
+}
+.dashboard [data-section="timeline"] {
+  order: 2;
+}
+.dashboard [data-section="overdue"] {
+  order: 3;
+  grid-column: 1/-1;
+}
+.dashboard [data-section="deadlines"] {
+  order: 4;
+}
+.dashboard [data-section="projects"] {
+  order: 5;
+}
+.dashboard [data-section="goal"] {
+  order: 6;
+}
+.dashboard .stage-note {
+  order: 7;
+}
+.empty {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  column-gap: 12px;
+  align-content: start;
+  max-width: none;
+  padding: 0;
+}
+.empty-symbol {
+  grid-column: 1;
+  grid-row: 1/3;
+  width: 32px;
+  height: 32px;
+  margin: 0;
+}
+.empty-symbol svg {
+  width: 16px;
+  height: 16px;
+}
+.empty h3 {
+  grid-column: 2;
+  line-height: 1.45;
+  font-size: 13px;
+}
+.empty p {
+  grid-column: 2;
+  margin: 4px 0 0;
+  line-height: 1.5;
+}
+.empty > .btn {
+  grid-column: 2;
+  justify-self: start;
+}
+.card-head:has(+ .empty) {
+  margin-bottom: 16px;
+}
+.task-row {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr) 32px;
+  gap: 8px;
+  padding: 12px 0;
+}
+.check-label {
+  width: 32px;
+  min-width: 32px;
+  height: 32px;
+  min-height: 32px;
+  padding: 0;
+  place-items: center;
+}
+.check-label input {
+  appearance: none;
+  -webkit-appearance: none;
+  border: 1.5px solid var(--muted);
+  border-radius: 5px;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  position: relative;
+  background: var(--surface);
+}
+.check-label input:checked {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.check-label input:checked:after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 2px;
+  width: 4px;
+  height: 8px;
+  border: solid var(--on-accent);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+.task-title {
+  min-height: 32px;
+  padding: 6px 0 4px;
+  line-height: 20px;
+}
+.task-row > .icon-button {
+  min-width: 32px;
+  width: 32px;
+  min-height: 32px;
+  height: 32px;
+  margin: 0;
+  font-size: 20px;
+}
+.task-meta {
+  margin-top: 0;
+}
+.task-row:not(:has(.check-label)) {
+  grid-template-columns: minmax(0, 1fr);
+}
+#editor {
+  padding: 0;
+  overflow: hidden;
+  height: min(820px, calc(100dvh - 32px));
+  max-height: calc(100dvh - 32px);
+}
+#editor[open] {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+}
+#editor > .dialog-head {
+  padding: 16px 24px;
+  margin: 0;
+  border-bottom: 1px solid var(--line);
+}
+#task-form {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  min-height: 0;
+  overflow: hidden;
+}
+.dialog-body {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 20px 24px;
+  min-height: 0;
+  scroll-padding: 16px;
+}
+.dialog-footer {
+  padding: 12px 24px 16px;
+  border-top: 1px solid var(--line);
+  background: var(--surface);
+}
+#editor .dialog-actions {
+  position: static;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  gap: 8px;
+}
+.dialog-footer .error {
+  margin: 0 0 10px;
+  padding: 8px 10px;
+}
+.field-error {
+  color: var(--danger);
+  font-size: 11px;
+}
+.field-error:empty {
+  display: none;
+}
+[aria-invalid="true"] {
+  border-color: var(--danger);
+}
+.filter-toggle {
+  display: none;
+}
+.filter-toolbar:empty {
+  display: none;
+}
+@media (max-width: 850px) {
+  .dashboard {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .dashboard .next-step {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .next-step > .btn {
+    grid-column: 1;
+    grid-row: auto;
+    justify-self: start;
+    margin-top: 12px;
+  }
+  .dashboard [data-section="overdue"] {
+    grid-column: auto;
+  }
+  .dashboard [data-section="timeline"] {
+    order: 3;
+  }
+  .dashboard [data-section="overdue"] {
+    order: 2;
+  }
+}
+@media (max-width: 600px) {
+  .card {
+    padding: 16px;
+    border-radius: 18px;
+  }
+  .dashboard {
+    gap: 16px;
+  }
+  .card-head {
+    gap: 12px;
+  }
+  .month-picker {
+    width: 100%;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  }
+  [data-section="goal"] > .card-head {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  .month-picker select {
+    font-size: 16px;
+  }
+  .task-row {
+    grid-template-columns: 36px minmax(0, 1fr) 36px;
+    gap: 4px;
+  }
+  .check-label,
+  .task-row > .icon-button {
+    width: 36px;
+    min-width: 36px;
+    min-height: 44px;
+    height: 44px;
+  }
+  .task-title {
+    padding: 12px 0 8px;
+    min-height: 44px;
+  }
+  .timeline-item {
+    display: block;
+    padding: 12px;
+    border: 1px solid var(--line);
+    background: var(--soft);
+    border-radius: 12px;
+    margin-top: 8px;
+  }
+  .timeline-item time {
+    display: block;
+    padding: 0;
+    margin-bottom: 6px;
+  }
+  .timeline-item .slot {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+  }
+  .timeline-item:last-child {
+    padding-bottom: 12px;
+  }
+  .tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    max-width: 100%;
+    scrollbar-width: thin;
+  }
+  .tabs button {
+    flex: none;
+    white-space: nowrap;
+  }
+  .filter-toggle {
+    display: inline-flex;
+    min-height: 36px;
+    font-size: 12px;
+  }
+  .filter-toolbar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 12px;
+  }
+  .filters {
+    grid-template-columns: minmax(0, 1fr);
+    margin-bottom: 8px;
+  }
+  .filters:not(.expanded) > .field:not(.search-field) {
+    display: none;
+  }
+  .list-count {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    gap: 8px;
+  }
+  #editor {
+    height: calc(100dvh - 24px);
+    max-height: calc(100dvh - 24px);
+    border-radius: 18px;
+  }
+  #editor > .dialog-head {
+    padding: 12px 16px;
+  }
+  .dialog-body {
+    padding: 16px;
+  }
+  .dialog-footer {
+    padding: 12px 16px max(12px, env(safe-area-inset-bottom));
+  }
+  #editor .dialog-actions .btn {
+    flex: 1;
+    min-width: calc(50% - 8px);
+    padding: 8px;
+  }
+  #editor .dialog-actions .danger {
+    margin: 0;
+  }
+  .form-grid {
+    gap: 16px;
+  }
+}
+.month-picker select {
+  font-size: 13px;
+}
+.stage-note {
+  align-self: start;
+}
+@media (max-width: 600px) {
+  .month-picker select {
+    font-size: 16px;
+  }
+}
+@media (min-width: 601px) and (max-width: 1100px) {
+  [data-section="goal"] > .card-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline-width: 1.5px;
+  outline-offset: 1px;
+}

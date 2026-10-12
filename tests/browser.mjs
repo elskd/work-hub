@@ -1,3 +1,4 @@
+import { layoutChecks, optionalWebkitLayoutChecks } from "./layout.mjs";
 import { extendedChecks } from "./integration.mjs";
 import http from "node:http";
 import path from "node:path";
@@ -208,6 +209,8 @@ await p.getByRole("alert").waitFor();
 assert.equal(await p.evaluate((k) => localStorage.getItem(k), key), "{broken");
 await bad.close();
 const extended = await extendedChecks(browser, url);
+const layout = await layoutChecks(browser, url);
+const webkit = await optionalWebkitLayoutChecks(url);
 assert.deepEqual(errors, []);
 await fs.writeFile(
   "test-results/result.json",
@@ -218,6 +221,8 @@ await fs.writeFile(
       pageErrors: errors,
       result: "PASS",
       extended,
+      layout,
+      webkit,
       scenarios: [
         "create",
         "edit",

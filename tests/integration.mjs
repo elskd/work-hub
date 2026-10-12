@@ -53,8 +53,8 @@ export async function extendedChecks(browser, url) {
     await page.locator("[data-section=deadlines]").innerText(),
     /Тестовый проект/,
   );
-  await page.locator("#income-month").fill("2026-09");
-  await page.locator("#income-month").dispatchEvent("change");
+  await page.locator("#income-month").selectOption("09");
+
   assert.match(await page.locator(".money-total").innerText(), /10\s?000/);
   await page.goto(url + "/#tasks");
   await page.locator(".page-head [data-action=new]").click();
@@ -68,6 +68,7 @@ export async function extendedChecks(browser, url) {
   await page.waitForFunction(() => !document.querySelector("#editor").open);
   await page.reload();
   assert.match(await page.locator(".task-meta").innerText(), /Тестовый проект/);
+  await page.locator("[data-action=toggle-filters]").click();
   await page.locator("#project-filter").selectOption("none");
   assert.equal(await page.locator(".task-title").count(), 0);
   await page.locator("#project-filter").selectOption("qa-project");
