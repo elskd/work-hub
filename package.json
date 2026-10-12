@@ -1,0 +1,13 @@
+{
+  "name": "work-hub",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/domain.test.js",
+    "test:browser": "node tests/browser.mjs",
+    "start": "python3 -m http.server 4173 --bind 127.0.0.1"
+  },
+  "devDependencies": {
+    "playwright": "1.58.2"
+  }
+}
